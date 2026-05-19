@@ -11,6 +11,8 @@ import {
   FiClock,
 } from "react-icons/fi";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { redirectToThankYou } from "@/components/shared/contactSuccessRedirect";
 
 // Dynamically import the map component with no SSR
 const ClientSideMap = dynamic(() => import("./ClientSideMap"), {
@@ -23,10 +25,10 @@ const ClientSideMap = dynamic(() => import("./ClientSideMap"), {
 });
 
 const officePosition = [38.7742, -75.1398];
-const officeAddress =
-  "16192 Coastal Highway, Lewes, DE 19958";
+const officeAddress = "16192 Coastal Highway, Lewes, DE 19958";
 
 const ContactUs = () => {
+  const router = useRouter();
   const [position, setPosition] = useState(officePosition);
   const [formData, setFormData] = useState({
     name: "",
@@ -48,19 +50,19 @@ const ContactUs = () => {
     const payload = { name, email, message, phone: formData.phone };
 
     try {
-      const res = await fetch("https://a2-it-backend.vercel.app/api/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...payload, to: "service@a2itllc.com" }),
-      });
+      const res = await fetch(
+        "https://a2-it-backend.vercel.app/api/send-email",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...payload, to: "service@a2itllc.com" }),
+        },
+      );
 
       const data = await res.json();
       if (data.success) {
-        alert("Message sent successfully!");
-        setName("");
-        setEmail("");
-        setMessage("");
-        setFormData({ name: "", email: "", phone: "", message: "" });
+        redirectToThankYou(router);
+        return;
       } else {
         alert("Failed to send message.");
       }
@@ -98,7 +100,7 @@ const ContactUs = () => {
   }
 
   return (
-    <div 
+    <div
       className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed"
       style={{ backgroundImage: "url('/Contact-Us.png')" }}
     >
@@ -119,7 +121,8 @@ const ContactUs = () => {
             CONTACT US
           </h1>
           <p className="text-xl text-gray-700 max-w-2xl mx-auto">
-            We work with ambitious leaders who want to define the future, not hide from it.
+            We work with ambitious leaders who want to define the future, not
+            hide from it.
           </p>
         </motion.div>
 
@@ -134,7 +137,9 @@ const ContactUs = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200"
           >
-            <h2 className="text-2xl font-bold mb-6 text-gray-900">Send us a message</h2>
+            <h2 className="text-2xl font-bold mb-6 text-gray-900">
+              Send us a message
+            </h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Name Field */}
@@ -234,7 +239,9 @@ const ContactUs = () => {
                 disabled={isSubmitting}
                 className="w-full bg-gray-900 text-white font-semibold py-4 px-6 rounded-lg hover:bg-gray-800 transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center space-x-2 mt-8"
               >
-                <span className="tracking-wide">{isSubmitting ? "SENDING..." : "LET'S GET TO WORK"}</span>
+                <span className="tracking-wide">
+                  {isSubmitting ? "SENDING..." : "LET'S GET TO WORK"}
+                </span>
                 <FiSend className="ml-2" />
               </button>
             </form>
@@ -249,49 +256,72 @@ const ContactUs = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200"
           >
-            <h2 className="text-2xl font-bold mb-8 text-gray-900">Contact Information</h2>
+            <h2 className="text-2xl font-bold mb-8 text-gray-900">
+              Contact Information
+            </h2>
 
             <div className="space-y-8">
               {/* USA Address */}
               <div className="space-y-3">
                 <div className="flex items-start">
-                  <FiMapPin className="text-gray-700 mt-1 mr-3 flex-shrink-0" size={20} />
+                  <FiMapPin
+                    className="text-gray-700 mt-1 mr-3 flex-shrink-0"
+                    size={20}
+                  />
                   <div>
-                    <h3 className="font-bold text-lg text-gray-800">USA Office</h3>
+                    <h3 className="font-bold text-lg text-gray-800">
+                      USA Office
+                    </h3>
                     <p className="text-gray-600 leading-relaxed mt-1">
-                      16192 Coastal Highway,<br />
+                      16192 Coastal Highway,
+                      <br />
                       Lewes, DE 19958
                     </p>
-                    <p className="text-gray-800 text-lg font-medium mt-2">+1 (808) 301-5039</p>
+                    <p className="text-gray-800 text-lg font-medium mt-2">
+                      +1 (808) 301-5039
+                    </p>
                   </div>
                 </div>
               </div>
               {/* Bangladesh Address */}
               <div className="space-y-3">
                 <div className="flex items-start">
-                  <FiMapPin className="text-gray-700 mt-1 mr-3 flex-shrink-0" size={20} />
+                  <FiMapPin
+                    className="text-gray-700 mt-1 mr-3 flex-shrink-0"
+                    size={20}
+                  />
                   <div>
-                    <h3 className="font-bold text-lg text-gray-800">Bangladesh Office</h3>
+                    <h3 className="font-bold text-lg text-gray-800">
+                      Bangladesh Office
+                    </h3>
                     <p className="text-gray-600 leading-relaxed mt-1">
-                      Plot No 470, Road No 06 (Old 29),<br />
-                      DOHS Mirpur, Dhaka Division,<br />
+                      Plot No 470, Road No 06 (Old 29),
+                      <br />
+                      DOHS Mirpur, Dhaka Division,
+                      <br />
                       Bangladesh
                     </p>
-                    <p className="text-gray-800 text-lg font-medium mt-2">+880 1846-937397</p>
+                    <p className="text-gray-800 text-lg font-medium mt-2">
+                      +880 1846-937397
+                    </p>
                   </div>
                 </div>
               </div>
 
-
-
-
               {/* Email */}
               <div className="space-y-3">
                 <div className="flex items-start">
-                  <FiMail className="text-gray-700 mt-1 mr-3 flex-shrink-0" size={20} />
+                  <FiMail
+                    className="text-gray-700 mt-1 mr-3 flex-shrink-0"
+                    size={20}
+                  />
                   <div>
-                    <h3 className="font-bold text-lg text-gray-800">Email Address</h3>
-                    <p className="text-gray-800 text-lg font-medium mt-1">info@a2itllc.com</p>
+                    <h3 className="font-bold text-lg text-gray-800">
+                      Email Address
+                    </h3>
+                    <p className="text-gray-800 text-lg font-medium mt-1">
+                      info@a2itllc.com
+                    </p>
                   </div>
                 </div>
               </div>
@@ -299,9 +329,14 @@ const ContactUs = () => {
               {/* Working Hours */}
               <div className="space-y-3">
                 <div className="flex items-start">
-                  <FiClock className="text-gray-700 mt-1 mr-3 flex-shrink-0" size={20} />
+                  <FiClock
+                    className="text-gray-700 mt-1 mr-3 flex-shrink-0"
+                    size={20}
+                  />
                   <div>
-                    <h3 className="font-bold text-lg text-gray-800">Working Hours</h3>
+                    <h3 className="font-bold text-lg text-gray-800">
+                      Working Hours
+                    </h3>
                     <p className="text-gray-600 mt-1">
                       Monday - Thursday 10AM - 7PM
                     </p>
@@ -313,7 +348,8 @@ const ContactUs = () => {
             {/* Quote */}
             <div className="mt-12 pt-8 border-t border-gray-300">
               <p className="text-gray-700 text-center italic font-medium">
-                "We work with ambitious leaders who want to define the future, not hide from it."
+                "We work with ambitious leaders who want to define the future,
+                not hide from it."
               </p>
             </div>
           </motion.div>

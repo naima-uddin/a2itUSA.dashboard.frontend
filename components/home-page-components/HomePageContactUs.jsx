@@ -10,10 +10,13 @@ import {
   FiSend,
   FiClock,
 } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+import { redirectToThankYou } from "@/components/shared/contactSuccessRedirect";
 
 const officePosition = [23.836236, 90.358672];
 
 const HomePageContactUs = () => {
+  const router = useRouter();
   const [position, setPosition] = useState(officePosition);
   const [formData, setFormData] = useState({
     name: "",
@@ -35,19 +38,19 @@ const HomePageContactUs = () => {
     const payload = { name, email, message, phone: formData.phone };
 
     try {
-      const res = await fetch("https://a2-it-backend.vercel.app/api/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        "https://a2-it-backend.vercel.app/api/send-email",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
 
       const data = await res.json();
       if (data.success) {
-        alert("Message sent successfully!");
-        setName("");
-        setEmail("");
-        setMessage("");
-        setFormData({ name: "", email: "", phone: "", message: "" });
+        redirectToThankYou(router);
+        return;
       } else {
         alert("Failed to send message.");
       }
@@ -92,14 +95,14 @@ const HomePageContactUs = () => {
   return (
     <div className="relative w-full min-h-[600px] flex items-center overflow-hidden">
       {/* Background Image with Overlay */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/Contact-Us.png')" }}
       />
-      
+
       {/* Dark overlay for better readability */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/30 to-black/40"></div>
-      
+
       {/* Subtle pattern overlay */}
       <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#ffffff_1px,transparent_1px)] bg-[length:20px_20px]"></div>
 
@@ -113,7 +116,6 @@ const HomePageContactUs = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          
           <h1 className="text-4xl md:text-5xl font-bold mb-3 text-white tracking-tight">
             GET IN <span className="text-blue-600">TOUCH</span>
           </h1>
@@ -138,21 +140,26 @@ const HomePageContactUs = () => {
                 <div className="w-8 h-0.5 bg-blue-500 mr-3"></div>
                 Contact Information
               </h2>
-              
+
               <div className="space-y-6">
-                                {/* USA Address */}
+                {/* USA Address */}
                 <div className="group transform transition-all duration-300 hover:translate-x-1">
                   <div className="flex items-start">
                     <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-3 rounded-lg mr-4">
                       <FiMapPin className="text-white" size={20} />
                     </div>
                     <div>
-                      <h3 className="font-bold text-lg text-white mb-2">USA Office</h3>
+                      <h3 className="font-bold text-lg text-white mb-2">
+                        USA Office
+                      </h3>
                       <p className="text-gray-200 text-base leading-relaxed">
-                        16192 Coastal Highway,<br />
+                        16192 Coastal Highway,
+                        <br />
                         Lewes, DE 19958
                       </p>
-                      <p className="text-gray-900 text-xl font-bold mt-2">+1 (808) 301-5039</p>
+                      <p className="text-gray-900 text-xl font-bold mt-2">
+                        +1 (808) 301-5039
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -163,13 +170,19 @@ const HomePageContactUs = () => {
                       <FiMapPin className="text-white" size={20} />
                     </div>
                     <div>
-                      <h3 className="font-bold text-lg text-white mb-2">Bangladesh Office</h3>
+                      <h3 className="font-bold text-lg text-white mb-2">
+                        Bangladesh Office
+                      </h3>
                       <p className="text-gray-200 text-base leading-relaxed">
-                        Plot No 470, Road No 06 (Old 29),<br />
-                        DOHS Mirpur, Dhaka Division,<br />
+                        Plot No 470, Road No 06 (Old 29),
+                        <br />
+                        DOHS Mirpur, Dhaka Division,
+                        <br />
                         Bangladesh
                       </p>
-                      <p className="text-gray-900 text-xl font-bold mt-2">+880 1846-937397</p>
+                      <p className="text-gray-900 text-xl font-bold mt-2">
+                        +880 1846-937397
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -180,8 +193,12 @@ const HomePageContactUs = () => {
                       <FiMail className="text-white" size={20} />
                     </div>
                     <div>
-                      <h3 className="font-bold text-lg text-white mb-2">Email Address</h3>
-                      <p className="text-gray-900 text-xl font-bold">info@a2itllc.com</p>
+                      <h3 className="font-bold text-lg text-white mb-2">
+                        Email Address
+                      </h3>
+                      <p className="text-gray-900 text-xl font-bold">
+                        info@a2itllc.com
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -193,9 +210,14 @@ const HomePageContactUs = () => {
                       <FiClock className="text-white" size={20} />
                     </div>
                     <div>
-                      <h3 className="font-bold text-lg text-white mb-2">Working Hours</h3>
+                      <h3 className="font-bold text-lg text-white mb-2">
+                        Working Hours
+                      </h3>
                       <p className="text-gray-200 text-base">
-                        Monday - Thursday <span className="text-gray-900 font-semibold">10AM - 7PM</span>
+                        Monday - Thursday{" "}
+                        <span className="text-gray-900 font-semibold">
+                          10AM - 7PM
+                        </span>
                       </p>
                     </div>
                   </div>
@@ -206,7 +228,8 @@ const HomePageContactUs = () => {
             {/* Quote */}
             <div className="pt-4 border-t border-white/20">
               <p className="text-gray-200 text-base italic">
-                "We work with ambitious leaders who want to define the future, not hide from it."
+                "We work with ambitious leaders who want to define the future,
+                not hide from it."
               </p>
             </div>
           </motion.div>
@@ -222,7 +245,9 @@ const HomePageContactUs = () => {
           >
             <div className="flex items-center mb-2">
               <div className="w-8 h-0.5 bg-blue-600 mr-3"></div>
-              <h2 className="text-2xl font-bold text-gray-800">Send Your Message</h2>
+              <h2 className="text-2xl font-bold text-gray-800">
+                Send Your Message
+              </h2>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-3">
@@ -333,7 +358,8 @@ const HomePageContactUs = () => {
           className="text-center mt-4 border-t border-white/10"
         >
           <p className="text-gray-300 text-sm">
-            We respond within <span className="text-blue-300 font-semibold">24 hours</span>
+            We respond within{" "}
+            <span className="text-blue-300 font-semibold">24 hours</span>
           </p>
         </motion.div>
       </div>

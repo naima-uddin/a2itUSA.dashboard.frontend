@@ -51,7 +51,7 @@ const ContactUs = () => {
 
     try {
       const res = await fetch(
-        "https://a2-it-backend.vercel.app/api/send-email",
+        "https://a2it-usa-dashbaord-backend.vercel.app/api/send-email",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

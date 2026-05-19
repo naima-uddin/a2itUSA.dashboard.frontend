@@ -4,7 +4,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Lottie from "lottie-react";
 import animationData from "@/public/document.json";
-import { THANK_YOU_DELAY_MS, getReturnToFromStorage } from "@/components/shared/contactSuccessRedirect";
+import {
+  THANK_YOU_DELAY_MS,
+  getReturnToFromStorage,
+} from "@/components/shared/contactSuccessRedirect";
 
 export default function ThankYouPage() {
   const router = useRouter();
@@ -20,17 +23,21 @@ export default function ThankYouPage() {
   useEffect(() => {
     // determine where to return to: sessionStorage -> document.referrer -> /
     const stored = getReturnToFromStorage();
+    let resolved = "/";
     if (typeof window !== "undefined") {
-      const fallback = document.referrer && new URL(document.referrer).pathname ? new URL(document.referrer).pathname : "/";
-      const resolved = stored && stored.startsWith("/") ? stored : fallback || "/";
+      const fallback = document.referrer
+        ? new URL(document.referrer).pathname
+        : "/";
+      resolved = stored && stored.startsWith("/") ? stored : fallback || "/";
       setReturnTo(resolved);
+    }
+
+    // Use resolved directly so we don't rely on async state updates.
+    const timeoutId = window.setTimeout(() => {
       try {
         sessionStorage.removeItem("thankYouReturnTo");
       } catch (e) {}
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      router.replace(safeRedirectTarget);
+      router.replace(resolved);
     }, THANK_YOU_DELAY_MS);
 
     const intervalId = window.setInterval(() => {
@@ -41,7 +48,7 @@ export default function ThankYouPage() {
       window.clearTimeout(timeoutId);
       window.clearInterval(intervalId);
     };
-  }, [router, safeRedirectTarget]);
+  }, [router]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-[#E8F4FA] via-white to-[#7DB9FF] px-4 py-12">

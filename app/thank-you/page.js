@@ -34,11 +34,14 @@ export default function ThankYouPage() {
   }, [router, safeRedirectTarget]);
 
   return (
-    <div className=" flex min-h-screen items-center justify-center bg-white px-4 py-12">
-      <div className="relative w-full max-w-5xl overflow-hidden rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-2xl md:p-12">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#E8F4FA] via-white to-[#7DB9FF] px-4 py-12">
+      <div className="relative w-full max-w-2xl overflow-hidden rounded-[2.5rem] border border-gray-100 bg-white/95 backdrop-blur p-8 text-center shadow-[0_20px_60px_-10px_rgba(0,0,0,0.1)] md:p-16">
+        {/* Decorative gradient circle behind animation */}
+        <div className="absolute -top-32 -right-32 h-80 w-80 rounded-full bg-gradient-to-br from-sky-100/40 to-blue-100/20 blur-3xl" />
+
         <div className="relative z-10">
-          {/* Lottie Animation */}
-          <div className="mx-auto mb-6 w-40 h-40">
+          {/* Lottie Animation - Larger Size */}
+          <div className="mx-auto mb-8 h-64 w-64 rounded-full bg-gradient-to-br from-sky-50 to-blue-50 p-4 shadow-lg">
             <Lottie
               animationData={animationData}
               loop
@@ -47,29 +50,44 @@ export default function ThankYouPage() {
             />
           </div>
 
-          <p className="mb-4 text-sm uppercase tracking-[0.35em] text-sky-600">
-            Message received
-          </p>
-          <h1
-            className="text-4xl font-bold tracking-tight text-gray-900 md:text-6xl"
-            style={{ fontFamily: "var(--font-oswald), sans-serif" }}
-          >
-            Thank you for your email
-          </h1>
-          <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-gray-600 md:text-lg">
-            We&apos;ll contact you shortly. This page will take you back to the
-            previous page automatically.
-          </p>
-
-          <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-gray-300 bg-gray-50 px-5 py-3 text-sm font-medium text-gray-900">
-            Redirecting in{" "}
-            <span className="text-sky-600 font-semibold">{secondsLeft}s</span>
+          {/* Badge */}
+          <div className="mb-4 inline-block rounded-full bg-sky-50 px-4 py-2">
+            <p className="text-xs font-semibold uppercase tracking-wider text-sky-600">
+              ✓ Message received
+            </p>
           </div>
 
+          {/* Heading */}
+          <h1
+            className="text-5xl font-bold tracking-tight text-gray-900 md:text-7xl"
+            style={{ fontFamily: "var(--font-oswald), sans-serif" }}
+          >
+            Thank you
+          </h1>
+
+          {/* Subheading */}
+          <p className="mx-auto mt-3 max-w-lg text-2xl font-semibold text-gray-700">
+            for your email
+          </p>
+
+          {/* Description */}
+          <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-gray-500">
+            We&apos;ll contact you shortly. This page will automatically take
+            you back to the previous page.
+          </p>
+
+          {/* Countdown Badge */}
+          <div className="mt-10 inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50/80 px-6 py-3 text-sm font-medium text-gray-700 shadow-sm">
+            <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+            Redirecting in{" "}
+            <span className="ml-1 font-bold text-sky-600">{secondsLeft}s</span>
+          </div>
+
+          {/* Button */}
           <button
             type="button"
             onClick={() => router.replace(safeRedirectTarget)}
-            className="mt-8 inline-flex items-center justify-center rounded-full bg-sky-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-sky-400"
+            className="mt-8 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-blue-500 px-8 py-3 text-sm font-semibold text-white shadow-lg transition duration-300 hover:shadow-xl hover:from-sky-600 hover:to-blue-600 active:scale-95"
           >
             Go back now
           </button>

@@ -1,4 +1,4 @@
-export const THANK_YOU_DELAY_MS = 15000;
+export const THANK_YOU_DELAY_MS = 5000;
 
 export const buildThankYouUrl = (returnTo = "/") => {
   return `/thank-you?redirect=${encodeURIComponent(returnTo)}`;

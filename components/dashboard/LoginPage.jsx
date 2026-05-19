@@ -68,7 +68,9 @@ const LoginPage = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword((current) => !current)}
-                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
                     aria-pressed={showPassword}
                     className="absolute inset-y-0 right-3 flex items-center text-slate-300 transition hover:text-white focus:outline-none"
                   >
@@ -120,12 +122,6 @@ const LoginPage = () => {
                   />
                   Remember me
                 </label>
-                <a
-                  href="#"
-                  className="font-medium text-cyan-300 transition hover:text-cyan-200"
-                >
-                  Forgot password?
-                </a>
               </div>
 
               <button

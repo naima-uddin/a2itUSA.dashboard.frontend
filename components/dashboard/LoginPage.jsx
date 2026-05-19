@@ -1,9 +1,22 @@
 "use client";
 
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const LoginPage = () => {
+  const router = useRouter();
+  const { user };
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+  };
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#ebf2fc] to-[#559aee] px-4 py-16 text-white sm:px-6 lg:px-8">
@@ -27,11 +40,11 @@ const LoginPage = () => {
               </p>
               <h2 className="mt-3 text-3xl font-semibold text-white">Login</h2>
               <p className="mt-2 text-sm leading-6 text-slate-300">
-                Use your admin credentials to enter the dashboard.
+                Use your admin/moderator credentials to enter the dashboard.
               </p>
             </div>
 
-            <form className="space-y-5">
+            <form className="space-y-5" onSubmit={() => handleSubmit()}>
               <div className="space-y-2">
                 <label
                   htmlFor="email"
@@ -112,16 +125,6 @@ const LoginPage = () => {
                     )}
                   </button>
                 </div>
-              </div>
-
-              <div className="flex items-center justify-between text-sm text-slate-300">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-white/20 bg-slate-950/70 text-cyan-400 focus:ring-cyan-400"
-                  />
-                  Remember me
-                </label>
               </div>
 
               <button

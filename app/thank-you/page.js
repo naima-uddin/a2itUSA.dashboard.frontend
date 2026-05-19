@@ -1,24 +1,34 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Lottie from "lottie-react";
 import animationData from "@/public/document.json";
-import { THANK_YOU_DELAY_MS } from "@/components/shared/contactSuccessRedirect";
+import { THANK_YOU_DELAY_MS, getReturnToFromStorage } from "@/components/shared/contactSuccessRedirect";
 
 export default function ThankYouPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirect") || "/";
+  const [returnTo, setReturnTo] = useState("/");
   const [secondsLeft, setSecondsLeft] = useState(
     Math.ceil(THANK_YOU_DELAY_MS / 1000),
   );
 
   const safeRedirectTarget = useMemo(() => {
-    return redirectTo.startsWith("/") ? redirectTo : "/";
-  }, [redirectTo]);
+    return returnTo && returnTo.startsWith("/") ? returnTo : "/";
+  }, [returnTo]);
 
   useEffect(() => {
+    // determine where to return to: sessionStorage -> document.referrer -> /
+    const stored = getReturnToFromStorage();
+    if (typeof window !== "undefined") {
+      const fallback = document.referrer && new URL(document.referrer).pathname ? new URL(document.referrer).pathname : "/";
+      const resolved = stored && stored.startsWith("/") ? stored : fallback || "/";
+      setReturnTo(resolved);
+      try {
+        sessionStorage.removeItem("thankYouReturnTo");
+      } catch (e) {}
+    }
+
     const timeoutId = window.setTimeout(() => {
       router.replace(safeRedirectTarget);
     }, THANK_YOU_DELAY_MS);
@@ -34,14 +44,14 @@ export default function ThankYouPage() {
   }, [router, safeRedirectTarget]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#E8F4FA] via-white to-[#7DB9FF] px-4 py-12">
+    <div className="flex min-h-screen items-center justify-center bg-linear-to-br from-[#E8F4FA] via-white to-[#7DB9FF] px-4 py-12">
       <div className="relative w-full max-w-2xl overflow-hidden rounded-[2.5rem] border border-gray-100 bg-white/95 backdrop-blur p-8 text-center shadow-[0_20px_60px_-10px_rgba(0,0,0,0.1)] md:p-16">
         {/* Decorative gradient circle behind animation */}
-        <div className="absolute -top-32 -right-32 h-80 w-80 rounded-full bg-gradient-to-br from-sky-100/40 to-blue-100/20 blur-3xl" />
+        <div className="absolute -top-32 -right-32 h-80 w-80 rounded-full bg-linear-to-br from-sky-100/40 to-blue-100/20 blur-3xl" />
 
         <div className="relative z-10">
           {/* Lottie Animation - Larger Size */}
-          <div className="mx-auto mb-8 h-64 w-64 rounded-full bg-gradient-to-br from-sky-50 to-blue-50 p-4 shadow-lg">
+          <div className="mx-auto mb-8 h-64 w-64 rounded-full bg-linear-to-br from-sky-50 to-blue-50 p-4 shadow-lg">
             <Lottie
               animationData={animationData}
               loop
@@ -87,7 +97,7 @@ export default function ThankYouPage() {
           <button
             type="button"
             onClick={() => router.replace(safeRedirectTarget)}
-            className="mt-8 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-sky-500 to-blue-500 px-8 py-3 text-sm font-semibold text-white shadow-lg transition duration-300 hover:shadow-xl hover:from-sky-600 hover:to-blue-600 active:scale-95"
+            className="mt-8 inline-flex items-center justify-center rounded-full bg-linear-to-r from-sky-500 to-blue-500 px-8 py-3 text-sm font-semibold text-white shadow-lg transition duration-300 hover:shadow-xl hover:from-sky-600 hover:to-blue-600 active:scale-95"
           >
             Go back now
           </button>

@@ -91,22 +91,36 @@ const DashboardNav = () => {
     // },
 
     {
-      id: "portfolio",
-      label: "Manage Portfolio",
-      icon: Image,
-      href: "/dashboard/portfolio",
-    },
-    // {
-    //   id: "employees",
-    //   label: "Manage Employees",
-    //   icon: Users,
-    //   href: "/dashboard/employees",
-    // },
-    {
-      id: "blog",
-      label: "Manage Blog",
+      id: "regular",
+      label: "Regular",
       icon: FileText,
-      href: "/dashboard/blog",
+      href: "#",
+      children: [
+        {
+          id: "portfolio",
+          label: "Manage Portfolio",
+          icon: Image,
+          href: "/dashboard/portfolio",
+        },
+        {
+          id: "blog",
+          label: "Manage Blog",
+          icon: FileText,
+          href: "/dashboard/blog",
+        },
+        {
+          id: "employees",
+          label: "Manage Employees",
+          icon: Users,
+          href: "/dashboard/employees",
+        },
+        {
+          id: "services",
+          label: "Manage Services",
+          icon: ShoppingCart,
+          href: "/dashboard/services",
+        },
+      ],
     },
 
     {

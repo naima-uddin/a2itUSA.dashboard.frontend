@@ -46,12 +46,12 @@ const DashboardNav = () => {
   const { logout, user } = useAuth();
 
   const menuItems = [
-    {
-      id: "services",
-      label: "Manage Services",
-      icon: ShoppingCart,
-      href: "/dashboard/services",
-    },
+    // {
+    //   id: "services",
+    //   label: "Manage Services",
+    //   icon: ShoppingCart,
+    //   href: "/dashboard/services",
+    // },
 
     {
       id: "portfolio",

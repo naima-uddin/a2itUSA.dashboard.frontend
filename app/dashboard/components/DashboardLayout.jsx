@@ -59,12 +59,12 @@ const DashboardNav = () => {
       icon: Image,
       href: "/dashboard/portfolio",
     },
-    {
-      id: "employees",
-      label: "Manage Employees",
-      icon: Users,
-      href: "/dashboard/employees",
-    },
+    // {
+    //   id: "employees",
+    //   label: "Manage Employees",
+    //   icon: Users,
+    //   href: "/dashboard/employees",
+    // },
     {
       id: "blog",
       label: "Manage Blog",

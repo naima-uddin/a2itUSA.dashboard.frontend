@@ -12,6 +12,7 @@ import {
   Users,
   ShoppingCart,
   Image,
+  ChevronDown,
   TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
@@ -36,6 +37,42 @@ const DashboardNavLink = ({ item, pathname, onClick }) => {
       <Icon className="w-5 h-5" />
       <span>{item.label}</span>
     </Link>
+  );
+};
+
+const PromotionalGroup = ({ item, pathname, onCloseMobile }) => {
+  const [open, setOpen] = useState(false);
+  const Icon = item.icon;
+
+  return (
+    <div>
+      <button
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition text-slate-700 hover:bg-slate-100`}
+      >
+        <Icon className="w-5 h-5" />
+        <span>{item.label}</span>
+        <ChevronDown
+          className={`w-4 h-4 ml-auto transition-transform ${open ? "-rotate-180" : ""}`}
+        />
+      </button>
+
+      {open && (
+        <div className="mt-2 space-y-1 pl-8">
+          {item.children.map((child) => (
+            <DashboardNavLink
+              key={child.id}
+              item={child}
+              pathname={pathname}
+              onClick={() => {
+                onCloseMobile();
+              }}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 
@@ -73,17 +110,24 @@ const DashboardNav = () => {
     },
 
     {
-      id: "projects",
-      label: "Promotional Projects",
-      icon: Image,
-      href: "/dashboard/projects",
-    },
-
-    {
-      id: "solutions",
-      label: "Promotional Packages",
+      id: "promotional",
+      label: "Promotional",
       icon: TrendingUp,
-      href: "/dashboard/solutions",
+      href: "#",
+      children: [
+        {
+          id: "projects",
+          label: "Promotional Projects",
+          icon: Image,
+          href: "/dashboard/projects",
+        },
+        {
+          id: "solutions",
+          label: "Promotional Packages",
+          icon: TrendingUp,
+          href: "/dashboard/solutions",
+        },
+      ],
     },
     {
       id: "media",
@@ -146,14 +190,27 @@ const DashboardNav = () => {
           </Link>
 
           <nav className="space-y-2">
-            {menuItems.map((item) => (
-              <DashboardNavLink
-                key={item.id}
-                item={item}
-                pathname={pathname}
-                onClick={() => setMobileMenuOpen(false)}
-              />
-            ))}
+            {menuItems.map((item) => {
+              if (item.children) {
+                return (
+                  <PromotionalGroup
+                    key={item.id}
+                    item={item}
+                    pathname={pathname}
+                    onCloseMobile={() => setMobileMenuOpen(false)}
+                  />
+                );
+              }
+
+              return (
+                <DashboardNavLink
+                  key={item.id}
+                  item={item}
+                  pathname={pathname}
+                  onClick={() => setMobileMenuOpen(false)}
+                />
+              );
+            })}
           </nav>
         </div>
 

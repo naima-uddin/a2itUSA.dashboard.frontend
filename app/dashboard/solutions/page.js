@@ -5,7 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import { Plus, Trash2, Edit2, Search } from "lucide-react";
 import DashboardLayout from "../components/DashboardLayout";
-import { promotionalPackages } from "@/components/promotion/package";
+import { promotionalPackages } from "@/components/promotion/packages";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 

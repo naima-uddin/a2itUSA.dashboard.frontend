@@ -1,92 +1,10 @@
-import BlogPage from "@/components/blog-page-component/BlogPage";
-import React from "react";
+import BlogListClient from "@/components/blog/BlogListClient";
 
-// 🔹 SEO metadata for Blog
 export const metadata = {
-  title: "Blog  | IT Insights & Updates",
-  description:
-    "Read the latest articles, insights, and updates from A2IT LLC about web development, mobile apps, eCommerce, digital marketing, SEO, and IT trends.",
-  keywords: [
-    "A2IT Blog",
-    "Web Development Articles",
-    "Mobile App Development Insights",
-    "UI/UX Design Blog",
-    "eCommerce Tips",
-    "Digital Marketing Updates",
-    "SEO & SEM Articles",
-    "IT Solutions Blog",
-  ],
-  alternates: {
-    canonical: "https://a2itllc.com/blog",
-  },
-  openGraph: {
-    title: "Blog  | IT Insights & Updates",
-    description:
-      "Stay updated with A2IT LLC’s blog covering web development, mobile apps, UI/UX, eCommerce, digital marketing, and IT industry trends.",
-    url: "https://a2itllc.com/blog",
-    siteName: "A2IT LLC",
-    images: [
-      {
-        url: "/og-blog.jpg", // 👉 add Blog OG image in /public
-        width: 1200,
-        height: 630,
-        alt: "A2IT LLC Blog",
-      },
-    ],
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Blog  | IT Insights & Updates",
-    description:
-      "Explore A2IT LLC’s blog for insights on web development, mobile apps, UI/UX, eCommerce, SEO, and IT services.",
-    images: ["/og-blog.jpg"],
-  },
+  title: "A2IT Blog",
+  description: "Read the latest A2IT articles, insights, and updates.",
 };
 
-// Fetch blog data on server side
-async function getBlogData() {
-  try {
-    const fs = require('fs');
-    const path = require('path');
-    const filePath = path.join(process.cwd(), 'public', 'blog-data.json');
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const data = JSON.parse(fileContents);
-    return data.blogs || data;
-  } catch (error) {
-    console.error('Error fetching blog data:', error);
-    return [];
-  }
-}
-
-export default async function Page() {
-  const blogs = await getBlogData();
-  
-  return (
-    <>
-      <BlogPage initialBlogs={blogs} />
-
-      {/* 🔹 Schema Markup for Blog */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Blog",
-            name: "A2IT LLC Blog",
-            url: "https://a2itllc.com/blog",
-            description:
-              "A2IT LLC Blog features articles, insights, and updates about web development, mobile apps, UI/UX, eCommerce, SEO, digital marketing, and IT trends.",
-            publisher: {
-              "@type": "Organization",
-              name: "A2IT LLC",
-              url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
-            },
-            blogPost: [],
-          }),
-        }}
-      />
-    </>
-  );
+export default function BlogPage() {
+  return <BlogListClient />;
 }

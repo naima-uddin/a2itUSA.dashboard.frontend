@@ -1,10 +1,11 @@
-import { Geist, Geist_Mono,Oswald } from "next/font/google";
+import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import NavbarSwitcher from "@/components/shared/NavbarSwitcher";
 import Footer from "@/components/shared/Footer";
 import WhatsAppFloating from "@/components/shared/WhatsAppFloating";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "@/context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,14 +24,29 @@ const oswald = Oswald({
 
 // 🔹 Global SEO metadata
 export const metadata = {
-  metadataBase: new URL('https://a2itllc.com'),
+  metadataBase: new URL("https://a2itllc.com"),
   title: {
-    default: "A2IT LLC | IT Services, Web Development, eCommerce & Digital Solutions",
-    template: "%s | A2IT LLC"
+    default:
+      "A2IT LLC | IT Services, Web Development, eCommerce & Digital Solutions",
+    template: "%s | A2IT LLC",
   },
   description:
     "A2IT LLC provides IT services including web development, mobile apps, UI/UX design, eCommerce, Shopify, Amazon, eBay, SEO, and digital marketing solutions worldwide.",
-  keywords: ["A2IT LLC", "IT Services", "Web Development", "Mobile App Development", "UI/UX Design", "eCommerce Solutions", "Shopify", "Amazon", "eBay", "SEO", "Digital Marketing", "ERP Solutions", "Cloud Hosting"],
+  keywords: [
+    "A2IT LLC",
+    "IT Services",
+    "Web Development",
+    "Mobile App Development",
+    "UI/UX Design",
+    "eCommerce Solutions",
+    "Shopify",
+    "Amazon",
+    "eBay",
+    "SEO",
+    "Digital Marketing",
+    "ERP Solutions",
+    "Cloud Hosting",
+  ],
   authors: [{ name: "A2IT LLC" }],
   creator: "A2IT LLC",
   publisher: "A2IT LLC",
@@ -46,7 +62,8 @@ export const metadata = {
   },
   manifest: "/manifest.json",
   openGraph: {
-    title: "A2IT LLC | IT Services, Web Development, eCommerce & Digital Solutions",
+    title:
+      "A2IT LLC | IT Services, Web Development, eCommerce & Digital Solutions",
     description:
       "Professional IT services, web & mobile development, eCommerce, digital marketing, and marketplace solutions from A2IT LLC.",
     url: "https://a2itllc.com",
@@ -64,7 +81,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "A2IT LLC | IT Services, Web Development, eCommerce & Digital Solutions",
+    title:
+      "A2IT LLC | IT Services, Web Development, eCommerce & Digital Solutions",
     description:
       "A2IT LLC offers IT services, web development, mobile apps, eCommerce, Shopify, Amazon, eBay, SEO, and digital marketing solutions.",
     images: ["/A2ITLogo.png"],
@@ -75,15 +93,15 @@ export const metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   verification: {
-    google: 'your-google-verification-code',
-    yandex: 'your-yandex-verification-code',
-    bing: 'your-bing-verification-code',
+    google: "your-google-verification-code",
+    yandex: "your-yandex-verification-code",
+    bing: "your-bing-verification-code",
   },
 };
 
@@ -91,7 +109,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=5"
+        />
         {/* Meta Pixel Code */}
         <Script
           id="facebook-pixel"
@@ -116,7 +137,7 @@ export default function RootLayout({ children }) {
           <img
             height="1"
             width="1"
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
             src="https://www.facebook.com/tr?id=896902410076605&ev=PageView&noscript=1"
             alt=""
           />
@@ -126,35 +147,37 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable}  antialiased`}
       >
-        <Toaster 
-          position="top-center"
-          reverseOrder={false}
-          toastOptions={{
-            duration: 4000,
-            style: {
-              background: '#363636',
-              color: '#fff',
-            },
-            success: {
-              duration: 3000,
-              iconTheme: {
-                primary: '#10b981',
-                secondary: '#fff',
-              },
-            },
-            error: {
+        <AuthProvider>
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            toastOptions={{
               duration: 4000,
-              iconTheme: {
-                primary: '#ef4444',
-                secondary: '#fff',
+              style: {
+                background: "#363636",
+                color: "#fff",
               },
-            },
-          }}
-        />
-        <NavbarSwitcher />
-        <WhatsAppFloating />
-        {children}
-        <Footer />
+              success: {
+                duration: 3000,
+                iconTheme: {
+                  primary: "#10b981",
+                  secondary: "#fff",
+                },
+              },
+              error: {
+                duration: 4000,
+                iconTheme: {
+                  primary: "#ef4444",
+                  secondary: "#fff",
+                },
+              },
+            }}
+          />
+          <NavbarSwitcher />
+          <WhatsAppFloating />
+          {children}
+          <Footer />
+        </AuthProvider>
 
         {/* 🔹 JSON-LD structured data for organization */}
         <script

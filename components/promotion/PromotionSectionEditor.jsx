@@ -585,81 +585,39 @@ export default function PromotionSectionEditor({ section, onChange }) {
               placeholder="Enter description"
             />
           </label>
-          <label className="space-y-1">
-            <span className="text-xs font-medium text-slate-500">
-              Display mode
-            </span>
-            <select
-              value={config.mode || "projects"}
-              onChange={(e) => updateConfig({ mode: e.target.value })}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 bg-white"
-            >
-              <option value="projects">Projects grid</option>
-              <option value="gallery">Gallery grid</option>
-            </select>
-          </label>
         </div>
 
-        {config.mode === "gallery" ? (
-          <RepeatableEditor
-            title="Gallery items"
-            items={config.galleryItems || []}
-            onChange={(galleryItems) => updateConfig({ galleryItems })}
-            fields={[
-              {
-                key: "title",
-                label: "Title",
-                placeholder: "Enter gallery item title",
-              },
-              {
-                key: "image",
-                label: "Image URL",
-                type: "image",
-                placeholder: "Paste a gallery image URL or upload",
-              },
-              {
-                key: "description",
-                label: "Description",
-                type: "textarea",
-                placeholder: "Enter gallery item description",
-              },
-            ]}
-            onUploadImage={uploadImage}
-            uploadingKeys={uploadingKeys}
-          />
-        ) : (
-          <RepeatableEditor
-            title="Portfolio projects"
-            items={config.projects || []}
-            onChange={(projects) => updateConfig({ projects })}
-            fields={[
-              {
-                key: "title",
-                label: "Title",
-                placeholder: "Enter project title",
-              },
-              {
-                key: "image",
-                label: "Image URL",
-                type: "image",
-                placeholder: "Paste a project image URL or upload",
-              },
-              {
-                key: "category",
-                label: "Category",
-                placeholder: "Enter category",
-              },
-              {
-                key: "description",
-                label: "Description",
-                type: "textarea",
-                placeholder: "Enter project description",
-              },
-            ]}
-            onUploadImage={uploadImage}
-            uploadingKeys={uploadingKeys}
-          />
-        )}
+        <RepeatableEditor
+          title="Portfolio projects"
+          items={config.projects || []}
+          onChange={(projects) => updateConfig({ projects })}
+          fields={[
+            {
+              key: "title",
+              label: "Title",
+              placeholder: "Enter project title",
+            },
+            {
+              key: "image",
+              label: "Image URL",
+              type: "image",
+              placeholder: "Paste a project image URL or upload",
+            },
+            {
+              key: "category",
+              label: "Category",
+              placeholder: "Enter category",
+            },
+            {
+              key: "description",
+              label: "Description",
+              type: "textarea",
+              placeholder: "Enter project description",
+            },
+          ]}
+          onUploadImage={uploadImage}
+          uploadingKeys={uploadingKeys}
+        />
       </div>
     );
   }

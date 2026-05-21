@@ -109,18 +109,19 @@ const DashboardNav = () => {
           icon: FileText,
           href: "/dashboard/blog",
         },
-        {
-          id: "employees",
-          label: "Manage Employees",
-          icon: Users,
-          href: "/dashboard/employees",
-        },
-        {
-          id: "services",
-          label: "Manage Services",
-          icon: ShoppingCart,
-          href: "/dashboard/services",
-        },
+        //a@IT LLC er jonne dorkar nei
+        // {
+        //   id: "employees",
+        //   label: "Manage Employees",
+        //   icon: Users,
+        //   href: "/dashboard/employees",
+        // },
+        // {
+        //   id: "services",
+        //   label: "Manage Services",
+        //   icon: ShoppingCart,
+        //   href: "/dashboard/services",
+        // },
         {
           id: "pricing",
           label: "Manage Pricing",

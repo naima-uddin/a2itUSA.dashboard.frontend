@@ -12,7 +12,7 @@ export default function PromotionFooter({ config = {} }) {
     config.headline || "Sign up now for the ultimate website experience!";
   const description =
     config.description ||
-    "Designs Genie is your all-in-one web design and development agency, featuring a team of skilled and imaginative developers, marketers, and designers.";
+    "A2it LTD is your all-in-one web design and development agency, featuring a team of skilled and imaginative developers, marketers, and designers.";
   const copyrightText =
     config.copyrightText || "Copyright © 2026 A2IT LLC | All rights reserved.";
   const logoImage = config.logoImage || "/A2ITLogo.png";

@@ -8,6 +8,7 @@ import DashboardLayout from "../components/DashboardLayout";
 
 export default function UsersPage() {
   const { token, isAdmin } = useAuth();
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,14 +38,11 @@ export default function UsersPage() {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/users`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await fetch(`${API_BASE}/api/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
 
       if (response.ok) {
         const data = await response.json();
@@ -62,8 +60,8 @@ export default function UsersPage() {
 
     try {
       const url = editingUser
-        ? `${process.env.NEXT_PUBLIC_API_URL}/api/users/${editingUser._id}`
-        : `${process.env.NEXT_PUBLIC_API_URL}/api/users/create`;
+        ? `${API_BASE}/api/users/${editingUser._id}`
+        : `${API_BASE}/api/users/create`;
 
       const method = editingUser ? "PUT" : "POST";
       const body = editingUser
@@ -79,12 +77,15 @@ export default function UsersPage() {
         body: JSON.stringify(body),
       });
 
-      if (response.ok) {
-        fetchUsers();
-        setShowForm(false);
-        setEditingUser(null);
-        setFormData({ name: "", email: "", password: "", role: "moderator" });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.message || "Failed to save user");
       }
+
+      fetchUsers();
+      setShowForm(false);
+      setEditingUser(null);
+      setFormData({ name: "", email: "", password: "", role: "moderator" });
     } catch (error) {
       console.error("Error saving user:", error);
     }
@@ -94,15 +95,12 @@ export default function UsersPage() {
     if (!window.confirm("Delete this user?")) return;
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/users/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await fetch(`${API_BASE}/api/users/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
 
       if (response.ok) {
         fetchUsers();

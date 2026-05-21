@@ -405,7 +405,6 @@ export const PROMOTION_SECTION_DEFAULT_CONFIGS = {
     title: "Scale faster: award‑winning web & app experiences",
     description:
       "Choose the perfect plan for your business needs. All packages come with our commitment to excellence.",
-    illustrationImage: "/promotionPortfolio/serviceSectionImg.png",
     backgroundImage: "/promotionPortfolio/shape.png",
     modalTitle: "Big Discount Going ON!!",
     modalSubtitle:

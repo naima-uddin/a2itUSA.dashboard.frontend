@@ -2,7 +2,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import PromotionModal from "@/components/shared/PromotionModal";
 
 const ServicesSection = ({ config = {} }) => {
@@ -22,8 +21,6 @@ const ServicesSection = ({ config = {} }) => {
           "E-bay",
         ];
 
-  const illustrationImage =
-    config.illustrationImage || "/promotionPortfolio/serviceSectionImg.png";
   const sectionBackground =
     config.backgroundImage || "/promotionPortfolio/shape.png";
 
@@ -206,17 +203,6 @@ const ServicesSection = ({ config = {} }) => {
                 className="absolute bottom-24 left-[55%] w-1.5 h-1.5 bg-white/40 rounded-full animate-ping"
                 style={{ animationDelay: "2.5s" }}
               />
-
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-35">
-                <Image
-                  src={illustrationImage}
-                  alt="Services illustration"
-                  width={1160}
-                  height={900}
-                  className="object-contain w-full h-full"
-                  priority
-                />
-              </div>
             </div>
           </div>
 

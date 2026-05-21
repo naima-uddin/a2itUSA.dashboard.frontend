@@ -63,7 +63,7 @@ export default function Gallery({ config = {} }) {
                 className={`relative overflow-hidden bg-slate-100 ${heights[index % heights.length]}`}
               >
                 <Image
-                  src={item.image}
+                  src={item.image || ""}
                   alt={item.title || "Gallery item"}
                   fill
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"

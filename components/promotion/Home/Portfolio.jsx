@@ -4,6 +4,27 @@ import React, { useMemo, useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
+const normalizeProject = (project) => ({
+  ...project,
+  category: Array.isArray(project.category)
+    ? project.category
+    : project.category
+      ? [project.category]
+      : [],
+  images: Array.isArray(project.images)
+    ? project.images
+    : project.image
+      ? [project.image]
+      : [],
+  performance: Array.isArray(project.performance)
+    ? project.performance
+    : Array.isArray(project.metrics)
+      ? project.metrics
+      : [],
+});
+
 export default function Portfolio({ config = {} }) {
   const [projects, setProjects] = useState([]);
   const [active, setActive] = useState("All");
@@ -34,17 +55,19 @@ export default function Portfolio({ config = {} }) {
         ? config.projects
         : null;
     if (configProjects) {
-      const items = configProjects.filter((p) => p && p.image);
+      const items = configProjects.map(normalizeProject).filter((p) => p && p.image);
       setProjects(items);
       if (items.length) setAutoScrollIndex(0);
       return () => (mounted = false);
     }
 
-    fetch("/promotionPortfolio.json")
+    fetch(`${API_BASE}/api/portfolio`, { cache: "no-store" })
       .then((r) => r.json())
       .then((data) => {
         if (!mounted) return;
-        const items = (data?.portfolio || []).filter((p) => p && p.image);
+        const items = (data?.portfolios || [])
+          .map(normalizeProject)
+          .filter((p) => p && p.image && p.isActive !== false);
         setProjects(items);
         if (items.length) setAutoScrollIndex(0);
       })
@@ -55,8 +78,7 @@ export default function Portfolio({ config = {} }) {
   const categories = useMemo(() => {
     const set = new Set();
     projects.forEach((p) => {
-      (p.category || "")
-        .split(",")
+      (Array.isArray(p.category) ? p.category : [p.category || ""])
         .map((c) => c.trim())
         .forEach((c) => {
           if (c) set.add(c);
@@ -68,7 +90,11 @@ export default function Portfolio({ config = {} }) {
   const filtered = useMemo(() => {
     if (active === "All") return projects;
     return projects.filter((p) => {
-      const cats = (p.category || "").split(",").map((c) => c.trim());
+      const cats = Array.isArray(p.category)
+        ? p.category.map((c) => c.trim())
+        : String(p.category || "")
+            .split(",")
+            .map((c) => c.trim());
       return cats.includes(active);
     });
   }, [projects, active]);

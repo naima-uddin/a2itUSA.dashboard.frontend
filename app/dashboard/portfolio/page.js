@@ -7,6 +7,32 @@ import { Plus, Trash2, Edit2, Search } from "lucide-react";
 import DashboardLayout from "../components/DashboardLayout";
 import ImageUploadFactory from "../components/forms/ImageUploadFactory";
 
+const createEmptyFormData = () => ({
+  title: "",
+  description: "",
+  type: "portfolio",
+  status: "live",
+  year: "",
+  category: [],
+  image: "",
+  link: "",
+  client: "",
+  technologies: "",
+  duration: "",
+  teamSize: "",
+  role: "",
+  detailedDescription: "",
+  challenge: "",
+  solution: "",
+  result: "",
+  features: "",
+  metrics: "",
+  testimonialText: "",
+  testimonialAuthor: "",
+  testimonialPosition: "",
+  testimonialCompany: "",
+});
+
 export default function PortfolioPage() {
   const { token, isAdmin, isModerator } = useAuth();
   const [portfolios, setPortfolios] = useState([]);
@@ -20,23 +46,7 @@ export default function PortfolioPage() {
   const [detailedMode, setDetailedMode] = useState(true);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [newCategoryDisplay, setNewCategoryDisplay] = useState("");
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    category: [],
-    image: "",
-    link: "",
-    client: "",
-    technologies: "",
-    duration: "",
-    teamSize: "",
-    role: "",
-    challenge: "",
-    solution: "",
-    result: "",
-    features: "",
-    metrics: "",
-  });
+  const [formData, setFormData] = useState(createEmptyFormData());
 
   if (!isAdmin && !isModerator) {
     return (
@@ -186,9 +196,23 @@ export default function PortfolioPage() {
         },
         body: JSON.stringify({
           ...formData,
-          technologies: formData.technologies.split(",").map((t) => t.trim()),
+          technologies: formData.technologies
+            .split(",")
+            .map((t) => t.trim())
+            .filter(Boolean),
           features,
           metrics,
+          performance: metrics,
+          challenge: formData.challenge,
+          businessChallenge: formData.challenge,
+          result: formData.result,
+          results: formData.result,
+          testimonial: {
+            text: formData.testimonialText,
+            author: formData.testimonialAuthor,
+            position: formData.testimonialPosition,
+            company: formData.testimonialCompany,
+          },
         }),
       });
 
@@ -197,23 +221,7 @@ export default function PortfolioPage() {
         setShowForm(false);
         setEditingItem(null);
         setDetailedMode(false);
-        setFormData({
-          title: "",
-          description: "",
-          category: [],
-          image: "",
-          link: "",
-          client: "",
-          technologies: "",
-          duration: "",
-          teamSize: "",
-          role: "",
-          challenge: "",
-          solution: "",
-          result: "",
-          features: "",
-          metrics: "",
-        });
+        setFormData(createEmptyFormData());
       }
     } catch (error) {
       console.error("Error saving portfolio:", error);
@@ -271,28 +279,12 @@ export default function PortfolioPage() {
               onClick={() => {
                 setEditingItem(null);
                 setDetailedMode(true);
-                setFormData({
-                  title: "",
-                  description: "",
-                  category: [],
-                  image: "",
-                  link: "",
-                  client: "",
-                  technologies: "",
-                  duration: "",
-                  teamSize: "",
-                  role: "",
-                  challenge: "",
-                  solution: "",
-                  result: "",
-                  features: "",
-                  metrics: "",
-                });
+                setFormData(createEmptyFormData());
                 // Close category manager and open the form in-place
                 setShowCategoryManager(false);
                 setShowForm(true);
               }}
-              className="bg-gradient-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12] font-semibold px-6 py-3 rounded-lg flex items-center gap-2"
+              className="bg-linear-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12] font-semibold px-6 py-3 rounded-lg flex items-center gap-2"
             >
               <Plus className="w-5 h-5" />
               Add Project
@@ -304,7 +296,7 @@ export default function PortfolioPage() {
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-xl p-8 shadow-lg"
+            className="bg-linear-to-br from-white to-slate-50 border border-slate-200 rounded-xl p-8 shadow-lg"
           >
             <div className="mb-6">
               <h2 className="text-3xl font-bold text-slate-900 mb-2">
@@ -319,7 +311,7 @@ export default function PortfolioPage() {
             {/* Add New Category Section */}
             <div className="bg-white border border-slate-200 rounded-lg p-6 mb-8 shadow-sm">
               <h3 className="text-xl font-semibold text-slate-900 mb-5 flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-r from-[#00f0ff] to-[#0066ff] rounded-full flex items-center justify-center text-white text-sm font-bold">
+                <div className="w-8 h-8 bg-linear-to-r from-[#00f0ff] to-[#0066ff] rounded-full flex items-center justify-center text-white text-sm font-bold">
                   +
                 </div>
                 Add New Category
@@ -361,7 +353,7 @@ export default function PortfolioPage() {
                     whileTap={{ scale: 0.98 }}
                     type="button"
                     onClick={handleAddCategory}
-                    className="w-full px-6 py-3 bg-gradient-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12] font-semibold rounded-lg hover:shadow-lg transition"
+                    className="w-full px-6 py-3 bg-linear-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12] font-semibold rounded-lg hover:shadow-lg transition"
                   >
                     Create Category
                   </motion.button>
@@ -417,7 +409,7 @@ export default function PortfolioPage() {
                         )}
                       </div>
                       <div className="pt-3 border-t border-slate-100 flex gap-2">
-                        <span className="inline-block px-3 py-1 bg-gradient-to-r from-[#00f0ff]/20 to-[#0066ff]/20 text-slate-700 text-xs font-semibold rounded-full">
+                          <span className="inline-block px-3 py-1 bg-linear-to-r from-[#00f0ff]/20 to-[#0066ff]/20 text-slate-700 text-xs font-semibold rounded-full">
                           Active
                         </span>
                       </div>
@@ -445,7 +437,7 @@ export default function PortfolioPage() {
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-xl p-8 shadow-lg max-h-[80vh] overflow-y-auto"
+            className="bg-linear-to-br from-white to-slate-50 border border-slate-200 rounded-xl p-8 shadow-lg max-h-[80vh] overflow-y-auto"
           >
             <div className="flex justify-between items-center mb-6">
               <div>
@@ -473,6 +465,55 @@ export default function PortfolioPage() {
                 <h3 className="text-lg font-semibold text-slate-900 mb-4">
                   Basic Information
                 </h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                      Project Type
+                    </label>
+                    <select
+                      value={formData.type}
+                      onChange={(e) =>
+                        setFormData({ ...formData, type: e.target.value })
+                      }
+                      className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+                    >
+                      <option value="portfolio">Portfolio</option>
+                      <option value="featured">Featured</option>
+                      <option value="affiliate">Affiliate</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                      Status
+                    </label>
+                    <select
+                      value={formData.status}
+                      onChange={(e) =>
+                        setFormData({ ...formData, status: e.target.value })
+                      }
+                      className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+                    >
+                      <option value="live">Live</option>
+                      <option value="draft">Draft</option>
+                      <option value="archived">Archived</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">
+                      Year
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g., 2025"
+                      value={formData.year}
+                      onChange={(e) =>
+                        setFormData({ ...formData, year: e.target.value })
+                      }
+                      className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+                    />
+                  </div>
+                </div>
 
                 {/* Title and Client - Row 1 */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -523,6 +564,24 @@ export default function PortfolioPage() {
                     className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
                   />
                 </div>
+
+                <div className="mt-4">
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">
+                    Detailed Description
+                  </label>
+                  <textarea
+                    placeholder="Long-form project overview used in case study views..."
+                    value={formData.detailedDescription}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        detailedDescription: e.target.value,
+                      })
+                    }
+                    rows="4"
+                    className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+                  />
+                </div>
               </div>
 
               {/* Category & Technologies Section */}
@@ -545,7 +604,7 @@ export default function PortfolioPage() {
                             key={idx}
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            className="flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12] rounded-full text-sm font-semibold"
+                            className="flex items-center gap-2 px-3 py-1 bg-linear-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12] rounded-full text-sm font-semibold"
                           >
                             {cat}
                             <button
@@ -607,7 +666,7 @@ export default function PortfolioPage() {
                               }}
                               className={`px-3 py-2 rounded-lg text-sm font-medium transition text-left ${
                                 isSelected
-                                  ? "bg-gradient-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12]"
+                                  ? "bg-linear-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12]"
                                   : "bg-white border border-slate-300 text-slate-700 hover:border-cyan-500"
                               }`}
                             >
@@ -859,7 +918,7 @@ export default function PortfolioPage() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   type="submit"
-                  className="px-8 py-3 bg-gradient-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12] font-semibold rounded-lg hover:shadow-lg transition"
+                  className="px-8 py-3 bg-linear-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12] font-semibold rounded-lg hover:shadow-lg transition"
                 >
                   {editingItem ? "Update Project" : "Create Project"}
                 </motion.button>

@@ -1,4 +1,5 @@
 "use client";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 // FloatingWhatsApp component to display a WhatsApp chat button
@@ -10,6 +11,11 @@ const WhatsAppFloating = ({
   position = { bottom: 30, right: 10 },
 }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const pathname = usePathname();
+
+  if (pathname === "/dashboard") {
+    return null;
+  }
 
   // accept either `phone` or `phoneNumber` as prop (backwards-compatible)
   const effectivePhone = phone || phoneNumber;

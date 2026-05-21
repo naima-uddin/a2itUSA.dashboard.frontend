@@ -13,7 +13,9 @@ const WhatsAppFloating = ({
   const [isHovered, setIsHovered] = useState(false);
   const pathname = usePathname();
 
-  if (pathname === "/dashboard") {
+  const isDashboardRoute = pathname?.startsWith("/dashboard");
+
+  if (isDashboardRoute) {
     return null;
   }
 

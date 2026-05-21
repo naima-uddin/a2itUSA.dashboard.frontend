@@ -15,6 +15,7 @@ import {
   ChevronDown,
   TrendingUp,
   FileTextIcon,
+  ArrowUp,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -295,14 +296,40 @@ const DashboardNav = () => {
 };
 
 export default function DashboardLayout({ children }) {
+  const scrollToTop = () => {
+    const dashboardScrollContainer = document.getElementById(
+      "dashboard-content-scroll",
+    );
+
+    if (dashboardScrollContainer) {
+      dashboardScrollContainer.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="flex h-screen bg-[#ffffff]">
       <DashboardNav />
 
       {/* Main Content */}
-      <div className="flex-1 lg:ml-64 overflow-y-auto">
+      <div
+        id="dashboard-content-scroll"
+        className="flex-1 lg:ml-64 overflow-y-auto"
+      >
         <div className="p-4 lg:p-8">{children}</div>
       </div>
+
+      <button
+        type="button"
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+        title="Scroll to top"
+        className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 rounded-full border border-slate-300 bg-cyan-100 px-3 py-2 text-slate-900 shadow-lg transition hover:border-cyan-400 hover:shadow-xl"
+      >
+        <ArrowUp className="h-4 w-4" />
+      </button>
     </div>
   );
 }

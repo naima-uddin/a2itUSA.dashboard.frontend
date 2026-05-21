@@ -819,17 +819,6 @@ export default function PromotionSectionEditor({ section, onChange }) {
             />
           </label>
           <ImageField
-            label="Illustration image"
-            value={config.illustrationImage || ""}
-            onChange={(illustrationImage) =>
-              updateConfig({ illustrationImage })
-            }
-            placeholder="Paste an illustration image URL or upload"
-            uploadKey="services-illustrationImage"
-            uploading={Boolean(uploadingKeys["services-illustrationImage"])}
-            onUploadImage={uploadImage}
-          />
-          <ImageField
             label="Background image"
             value={config.backgroundImage || ""}
             onChange={(backgroundImage) => updateConfig({ backgroundImage })}

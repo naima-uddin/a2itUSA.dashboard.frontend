@@ -258,7 +258,7 @@ export default function PortfolioPage() {
             <h1 className="text-4xl font-bold text-slate-900 mb-2">
               Manage Portfolio
             </h1>
-            <p className="text-slate-600">Showcase your projects and work</p>
+            <p className="text-slate-600">Showcase your projects and work </p>
           </div>
           <div className="flex gap-2">
             <button

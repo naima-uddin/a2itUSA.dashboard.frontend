@@ -119,8 +119,7 @@ export const PROMOTION_SECTION_DEFAULT_CONFIGS = {
       {
         id: 5,
         category: "Affiliate, WordPress",
-        title:
-          "Best Fitness Shop – Fitness Gear & Equipment Review Platform",
+        title: "Best Fitness Shop – Fitness Gear & Equipment Review Platform",
         description:
           "An affiliate-driven fitness product review platform helping users choose the best gym equipment, accessories, and workout gear.",
         image: "/promotionPortfolio/fitnessshop.jpeg",

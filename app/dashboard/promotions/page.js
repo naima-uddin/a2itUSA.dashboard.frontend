@@ -14,15 +14,51 @@ import {
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
-const createDefaultSectionState = () =>
-  DEFAULT_PROMOTION_PAGE.sections.map((section) => ({
-    key: section.key,
-    enabled: section.enabled,
-    order: section.order,
-    config: section.config,
-  }));
+const cloneData = (value) => JSON.parse(JSON.stringify(value || {}));
 
-const createDefaultFormData = () => ({
+const createDefaultSectionState = (page = DEFAULT_PROMOTION_PAGE) =>
+  PROMOTION_SECTION_KEYS.map((key, index) => {
+    const existingSection = (page.sections || []).find(
+      (section) => section.key === key,
+    );
+    return {
+      key,
+      enabled:
+        existingSection?.enabled !== undefined
+          ? existingSection.enabled !== false
+          : true,
+      order:
+        existingSection && Number.isFinite(Number(existingSection.order))
+          ? Number(existingSection.order)
+          : index,
+      config: cloneData(existingSection?.config || {}),
+    };
+  });
+
+const createFormDataFromPage = (
+  page = DEFAULT_PROMOTION_PAGE,
+  options = {},
+) => ({
+  slug: options.slug !== undefined ? options.slug : page.slug || "",
+  title: page.title || "",
+  description: page.description || "",
+  metaTitle: page.metaTitle || "",
+  metaDescription: page.metaDescription || "",
+  isActive: page.isActive !== false,
+  sections: createDefaultSectionState(page),
+  footer: {
+    ...(DEFAULT_PROMOTION_PAGE.footer || {}),
+    ...(page.footer || {}),
+  },
+});
+
+const createDefaultFormData = (page = DEFAULT_PROMOTION_PAGE) =>
+  createFormDataFromPage(page, { slug: "" });
+
+const findWebsitePage = (pages = []) =>
+  pages.find((page) => String(page.slug || "").toLowerCase() === "website");
+
+const createPayloadFromFormData = (formData) => ({
   slug: "",
   title: "",
   description: "",
@@ -36,6 +72,9 @@ const createDefaultFormData = () => ({
 export default function PromotionalPagesDashboard() {
   const { token, isAdmin, isModerator } = useAuth();
   const [items, setItems] = useState([]);
+  const [websiteTemplate, setWebsiteTemplate] = useState(
+    createDefaultFormData(DEFAULT_PROMOTION_PAGE),
+  );
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [showForm, setShowForm] = useState(false);
@@ -43,11 +82,12 @@ export default function PromotionalPagesDashboard() {
   const [formData, setFormData] = useState(createDefaultFormData());
   const [formError, setFormError] = useState("");
   const [uploadingFooterLogo, setUploadingFooterLogo] = useState(false);
+  const [savingSectionKey, setSavingSectionKey] = useState("");
 
   const isAllowed = isAdmin || isModerator;
 
-  const resetForm = () => {
-    setFormData(createDefaultFormData());
+  const resetForm = (template = websiteTemplate) => {
+    setFormData(createDefaultFormData(template));
     setFormError("");
   };
 
@@ -67,10 +107,15 @@ export default function PromotionalPagesDashboard() {
       }
 
       const data = await response.json();
-      setItems(data.pages || []);
+      const pages = data.pages || [];
+      setItems(pages);
+      setWebsiteTemplate(
+        createDefaultFormData(findWebsitePage(pages) || DEFAULT_PROMOTION_PAGE),
+      );
     } catch (error) {
       console.error("Error fetching promotional pages:", error);
       setItems([]);
+      setWebsiteTemplate(createDefaultFormData(DEFAULT_PROMOTION_PAGE));
     } finally {
       setLoading(false);
     }
@@ -105,6 +150,81 @@ export default function PromotionalPagesDashboard() {
       ...current,
       config: nextConfig,
     }));
+  };
+
+  const savePage = async ({ closeAfterSave = false, sectionKey = "" } = {}) => {
+    setFormError("");
+    setSavingSectionKey(sectionKey);
+
+    let normalizedSections;
+    try {
+      normalizedSections = formData.sections.map((section, index) => ({
+        key: section.key,
+        enabled: section.enabled,
+        order: Number(section.order ?? index),
+        config: cloneData(section.config || {}),
+      }));
+    } catch (error) {
+      setFormError("Section config must be valid JSON-compatible data.");
+      setSavingSectionKey("");
+      return;
+    }
+
+    const payload = {
+      slug: formData.slug,
+      title: formData.title,
+      description: formData.description,
+      metaTitle: formData.metaTitle,
+      metaDescription: formData.metaDescription,
+      isActive: formData.isActive,
+      sections: normalizedSections,
+      footer: cloneData(formData.footer || {}),
+    };
+
+    const url = editing
+      ? `${API_BASE}/api/promotional-pages/${editing._id}`
+      : `${API_BASE}/api/promotional-pages`;
+    const method = editing ? "PUT" : "POST";
+
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(result?.message || "Failed to save page");
+      }
+
+      await fetchPages();
+
+      const savedPage = result.page || payload;
+      const nextTemplate =
+        String(savedPage.slug || "").toLowerCase() === "website"
+          ? createDefaultFormData(savedPage)
+          : websiteTemplate;
+
+      if (closeAfterSave) {
+        setShowForm(false);
+        setEditing(null);
+        setFormData(nextTemplate);
+      } else {
+        setEditing(savedPage);
+        setFormData(
+          createFormDataFromPage(savedPage, { slug: savedPage.slug }),
+        );
+        setShowForm(true);
+      }
+    } catch (error) {
+      setFormError(error.message || "Failed to save page");
+    } finally {
+      setSavingSectionKey("");
+    }
   };
 
   const handleFooterLogoUpload = async (file) => {
@@ -147,86 +267,12 @@ export default function PromotionalPagesDashboard() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormError("");
-
-    let normalizedSections;
-    try {
-      normalizedSections = formData.sections.map((section, index) => ({
-        key: section.key,
-        enabled: section.enabled,
-        order: Number(section.order ?? index),
-        config: JSON.parse(JSON.stringify(section.config || {})),
-      }));
-    } catch (error) {
-      setFormError("Section config must be valid JSON-compatible data.");
-      return;
-    }
-
-    const payload = {
-      slug: formData.slug,
-      title: formData.title,
-      description: formData.description,
-      metaTitle: formData.metaTitle,
-      metaDescription: formData.metaDescription,
-      isActive: formData.isActive,
-      sections: normalizedSections,
-      footer: formData.footer,
-    };
-
-    const url = editing
-      ? `${API_BASE}/api/promotional-pages/${editing._id}`
-      : `${API_BASE}/api/promotional-pages`;
-    const method = editing ? "PUT" : "POST";
-
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(result?.message || "Failed to save page");
-      }
-
-      await fetchPages();
-      setShowForm(false);
-      setEditing(null);
-      resetForm();
-    } catch (error) {
-      setFormError(error.message || "Failed to save page");
-    }
+    await savePage({ closeAfterSave: true });
   };
 
   const handleEdit = (page) => {
     setEditing(page);
-    setFormData({
-      slug: page.slug || "",
-      title: page.title || "",
-      description: page.description || "",
-      metaTitle: page.metaTitle || "",
-      metaDescription: page.metaDescription || "",
-      isActive: page.isActive !== false,
-      sections: PROMOTION_SECTION_KEYS.map((key, index) => {
-        const match = (page.sections || []).find(
-          (section) => section.key === key,
-        );
-        return {
-          key,
-          enabled: match ? match.enabled !== false : true,
-          order:
-            match && Number.isFinite(Number(match.order))
-              ? Number(match.order)
-              : index,
-          config: match?.config || {},
-        };
-      }),
-      footer: page.footer || { ...(DEFAULT_PROMOTION_PAGE.footer || {}) },
-    });
+    setFormData(createFormDataFromPage(page, { slug: page.slug || "" }));
     setShowForm(true);
   };
 
@@ -241,6 +287,7 @@ export default function PromotionalPagesDashboard() {
 
       if (response.ok) {
         setItems((prev) => prev.filter((item) => item._id !== id));
+        await fetchPages();
       }
     } catch (error) {
       console.error("Error deleting promotional page:", error);
@@ -290,8 +337,8 @@ export default function PromotionalPagesDashboard() {
             <button
               onClick={() => {
                 setEditing(null);
-                resetForm();
-                setShowForm(!showForm);
+                resetForm(websiteTemplate);
+                setShowForm(true);
               }}
               className="bg-linear-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12] font-semibold px-4 py-2 rounded-lg flex items-center gap-2"
             >
@@ -304,15 +351,15 @@ export default function PromotionalPagesDashboard() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-6"
+            className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6"
           >
             <div>
               <h2 className="text-xl font-bold text-slate-900 mb-1">
                 {editing ? "Edit Promotion Page" : "Create Promotion Page"}
               </h2>
               <p className="text-slate-600 text-sm">
-                Every section can be toggled per slug. Structured controls are
-                shown for each component.
+                Start from the website template, then save each section on its
+                own without losing the rest of the page.
               </p>
             </div>
 
@@ -323,7 +370,7 @@ export default function PromotionalPagesDashboard() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4">
                 <input
                   required
                   value={formData.title}
@@ -387,56 +434,97 @@ export default function PromotionalPagesDashboard() {
               </label>
 
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-slate-900">
-                  Sections
-                </h3>
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <h3 className="text-lg font-semibold text-slate-900">
+                      Sections
+                    </h3>
+                    <p className="text-sm text-slate-600">
+                      Save a single section when you only change one component.
+                    </p>
+                  </div>
+                  <button
+                    type="submit"
+                    className="bg-linear-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12] font-semibold px-5 py-2 rounded-lg"
+                  >
+                    {editing ? "Save Page" : "Create Page"}
+                  </button>
+                </div>
 
                 <div className="space-y-4">
                   {formData.sections.map((section) => (
                     <div
                       key={section.key}
-                      className="rounded-xl border border-slate-200 p-4 space-y-4"
+                      className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-4"
                     >
-                      <div className="flex flex-wrap items-center justify-between gap-3">
-                        <div>
-                          <div className="font-semibold text-slate-900">
-                            {PROMOTION_SECTION_LABELS[section.key] ||
-                              section.key}
+                      <div className="flex flex-wrap items-start justify-between gap-4">
+                        <div className="space-y-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <div className="text-base font-semibold text-slate-900">
+                              {PROMOTION_SECTION_LABELS[section.key] ||
+                                section.key}
+                            </div>
+                            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500">
+                              {section.key}
+                            </span>
                           </div>
-                          <div className="text-xs text-slate-500">
-                            {section.key}
-                          </div>
+                          <p className="text-sm text-slate-500">
+                            Toggle visibility, adjust order, then save just this
+                            component.
+                          </p>
                         </div>
-                        <label className="flex items-center gap-2 text-sm text-slate-700">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <label className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700">
+                            <input
+                              type="checkbox"
+                              checked={section.enabled}
+                              onChange={(e) => {
+                                handleSectionChange(section.key, (current) => ({
+                                  ...current,
+                                  enabled: e.target.checked,
+                                }));
+                              }}
+                            />
+                            Enabled
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              savePage({
+                                closeAfterSave: false,
+                                sectionKey: section.key,
+                              })
+                            }
+                            disabled={Boolean(savingSectionKey)}
+                            className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+                          >
+                            {savingSectionKey === section.key
+                              ? "Saving..."
+                              : "Save Section"}
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-[160px_1fr] gap-4 items-start">
+                        <label className="space-y-1">
+                          <span className="text-xs font-medium text-slate-500">
+                            Order
+                          </span>
                           <input
-                            type="checkbox"
-                            checked={section.enabled}
+                            type="number"
+                            value={section.order}
                             onChange={(e) => {
                               handleSectionChange(section.key, (current) => ({
                                 ...current,
-                                enabled: e.target.checked,
+                                order: e.target.value,
                               }));
                             }}
+                            placeholder="Order"
+                            className="w-full px-4 py-2 border rounded-lg"
                           />
-                          Enabled
                         </label>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input
-                          type="number"
-                          value={section.order}
-                          onChange={(e) => {
-                            handleSectionChange(section.key, (current) => ({
-                              ...current,
-                              order: e.target.value,
-                            }));
-                          }}
-                          placeholder="Order"
-                          className="w-full px-4 py-2 border rounded-lg"
-                        />
-                        <div className="text-xs text-slate-500 flex items-center">
-                          Order controls the display position on the page.
+                        <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+                          Lower numbers appear earlier in the public page.
                         </div>
                       </div>
 
@@ -453,13 +541,32 @@ export default function PromotionalPagesDashboard() {
 
               <div className="rounded-xl border border-slate-200 p-4 space-y-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-slate-900">
-                    Footer
-                  </h3>
-                  <p className="text-sm text-slate-600">
-                    Edit the footer headline, description, logo, and copyright
-                    for this route.
-                  </p>
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <h3 className="text-lg font-semibold text-slate-900">
+                        Footer
+                      </h3>
+                      <p className="text-sm text-slate-600">
+                        Edit the footer headline, description, logo, and
+                        copyright for this route.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        savePage({
+                          closeAfterSave: false,
+                          sectionKey: "footer",
+                        })
+                      }
+                      disabled={Boolean(savingSectionKey)}
+                      className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+                    >
+                      {savingSectionKey === "footer"
+                        ? "Saving..."
+                        : "Save Footer"}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -547,18 +654,12 @@ export default function PromotionalPagesDashboard() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
-                <button
-                  type="submit"
-                  className="bg-linear-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12] font-semibold px-5 py-2 rounded-lg"
-                >
-                  {editing ? "Update Page" : "Create Page"}
-                </button>
+              <div className="flex flex-wrap items-center gap-3">
                 <button
                   type="button"
                   onClick={() => {
                     setEditing(null);
-                    resetForm();
+                    resetForm(websiteTemplate);
                     setShowForm(false);
                   }}
                   className="px-5 py-2 rounded-lg border border-slate-300 text-slate-700"

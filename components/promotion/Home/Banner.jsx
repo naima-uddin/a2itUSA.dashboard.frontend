@@ -5,17 +5,35 @@ import Image from "next/image";
 import Link from "next/link";
 import PromotionModal from "@/components/shared/PromotionModal";
 
-const Banner = () => {
+const Banner = ({ config = {} }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const heroLines = Array.isArray(config.heroLines) && config.heroLines.length
+    ? config.heroLines
+    : [
+        "Design. Develop. Dominate.",
+        "Scale Your Brand Without Limits.",
+        "Optimize, and scale for global success.",
+      ];
+  const heading = config.heading || "Big Discount Going ON!!";
+  const subheading =
+    config.subheading ||
+    "Everywhere & Every Device, Your Site Should Flow Seamlessly!";
+  const startPrice = config.startPrice || "$99";
+  const introText =
+    config.introText ||
+    "From high-performance websites to full-scale eCommerce, ERP systems, and digital marketing.";
+  const primaryLabel = config.primaryLabel || "Start Your Project";
+  const secondaryLabel = config.secondaryLabel || "Get Free Consultation";
+  const backgroundImage = config.backgroundImage || "/banner.jpeg";
 
   return (
     <>
       <PromotionModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="Big Discount Going ON!!"
-        subtitle="Everywhere & Every Device, Your Site Should Flow Seamlessly!"
-        buttonText="START YOUR PROJECT NOW"
+        title={heading}
+        subtitle={subheading}
+        buttonText={config.modalButtonText || "START YOUR PROJECT NOW"}
         selectedPackage=""
       />
       <section
@@ -25,39 +43,27 @@ const Banner = () => {
         {/* Background image */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat banner-bg h-120 md:h-auto -mt-12 -ml-2"
-          style={{ backgroundImage: "url('/banner.jpeg')" }}
+          style={{ backgroundImage: `url('${backgroundImage}')` }}
         />
 
         {/* Main content - left-aligned, matches provided image */}
         <div className="relative z-10 h-full flex flex-col items-center md:items-start md:pt-48 sm:pt-1 lg:pt-50 sm:pr-2 md:pr-0 md:px-4  banner-title text-center md:text-left">
           <div className="w-full max-w-4xl ">
-            <p className="text-slate-200/90 text-xl font-medium md:mb-3   lg:pl-10 hidden md:block">
-              {" "}
-              From high-performance websites to full-scale{" "}
-              <span className="text-blue-600">
-                {" "}
-                eCommerce, ERP systems, and digital marketing.
-              </span>{" "}
-            </p>
+              <p className="text-slate-200/90 text-xl font-medium md:mb-3 lg:pl-10 hidden md:block">
+                {introText}
+              </p>
 
             <div className="mt-20 md:mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-6 gap-3 ">
               <div className="text-white/90 font-semibold text-4xl md:pl-16 xl:pl-28">
-                Starting from <span className="text-[#66B2FF]">$99</span> Only
+                Starting from <span className="text-[#66B2FF]">{startPrice}</span> Only
               </div>
             </div>
             <div className="mt-4 text-blue-600 md:text-slate-300 lg:text-slate-300 xl:text-slate-300 space-y-1 text-md md:pl-16 xl:pl-28 pl-4">
-              <div className="flex items-center gap-3">
-                <span className="text-[#66B2FF]  font-bold">.</span> Design.
-                Develop. Dominate.
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-[#66B2FF] font-bold">.</span> Scale Your
-                Brand Without Limits.
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-[#66B2FF] font-bold">.</span> Optimize,
-                and scale for global success.
-              </div>
+              {heroLines.map((line, index) => (
+                <div key={`${line}-${index}`} className="flex items-center gap-3">
+                  <span className="text-[#66B2FF] font-bold">.</span> {line}
+                </div>
+              ))}
             </div>
 
             <div className="mt-10 flex flex-wrap gap-4 pl-4 md:pl-10">
@@ -67,7 +73,7 @@ const Banner = () => {
                 className="inline-flex items-center gap-3 bg-linear-to-r from-blue-500 to-blue-900 hover:bg-purple-700 text-white font-semibold rounded-full px-6 py-2.5 shadow-lg transition cursor-pointer"
               >
                 <span className="bg-linear-to-r from-[#ffffff] to-[#e7e7fd] bg-clip-text text-transparent">
-                  🚀 Start Your Project
+                  🚀 {primaryLabel}
                 </span>
               </button>
 
@@ -77,7 +83,7 @@ const Banner = () => {
                 className="inline-flex items-center gap-3 border border-white/20 text-white/90 font-semibold rounded-full px-5 py-2.5 hover:bg-white/5 transition"
               >
                 <span className="bg-linear-to-r from-[#ffffff] to-[#e7e7fd] bg-clip-text text-transparent">
-                  📞 Get Free Consultation
+                  📞 {secondaryLabel}
                 </span>
               </a>
             </div>

@@ -61,8 +61,8 @@ function CountUp({ end = 0, duration = 1400, suffix = '', start = 0, decimals = 
   );
 }
 
-const StatsSectionSimple = () => {
-  const stats = [
+const StatsSectionSimple = ({ config = {} }) => {
+  const stats = Array.isArray(config.stats) && config.stats.length ? config.stats : [
     { 
       end: 100, 
       suffix: '%', 
@@ -92,6 +92,8 @@ const StatsSectionSimple = () => {
     }
   ];
 
+  const title = config.title || "Choose Your Plan";
+
   return (
     <section className="w-full py-6 md:py-8 px-4 md:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -104,7 +106,7 @@ const StatsSectionSimple = () => {
             {/* Left - Heading */}
             <div className="flex-shrink-0 text-center md:text-left">
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white tracking-tight mb-2" style={{ fontFamily: "var(--font-oswald), sans-serif" }}>
-                Choose Your Plan
+                {title}
               </h2>
               <div className="w-24 h-1 bg-white/40 rounded-full mx-auto md:mx-0" />
             </div>

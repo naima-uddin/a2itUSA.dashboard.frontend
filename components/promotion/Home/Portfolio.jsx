@@ -4,7 +4,7 @@ import React, { useMemo, useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Portfolio() {
+export default function Portfolio({ config = {} }) {
   const [projects, setProjects] = useState([]);
   const [active, setActive] = useState("All");
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -82,15 +82,20 @@ export default function Portfolio() {
     prevShowAllRef.current = showAll;
   }, [showAll]);
 
+  const title = config.title || "Experience Our High-Impact Digital Projects";
+  const description =
+    config.description ||
+    "Explore our latest work across custom web development, scalable eCommerce platforms, ERP system integrations, marketplace solutions, and performance-driven marketing campaigns.";
+
   return (
     <section className="w-full pt-16 bg-[#071331]/0 -mb-20 md:-mb-10" style={{ fontFamily: "var(--font-oswald), sans-serif" }}>
       <div className="max-w-7xl mx-auto px-2 md:px-4">
         <div className="text-center mb-4 md:mb-10">
           <h2 className="text-3xl md:text-4xl font-oswald font-bold bg-linear-to-r from-[#93c9ff] to-[#0202c1] bg-clip-text text-transparent pb-2">
-            Experience Our High-Impact Digital Projects
+            {title}
           </h2>
           <p className=" text-[#989897] max-w-2xl mx-auto">
-           Explore our latest work across custom web development, scalable eCommerce platforms, ERP system integrations, marketplace solutions, and performance-driven marketing campaigns.
+           {description}
           </p>
         </div>
 
@@ -99,7 +104,7 @@ export default function Portfolio() {
             <button
               key={cat}
               onClick={() => { setActive(cat); setShowActive(true); setShowAll(false); }}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition ${showActive && active === cat ? 'bg-gradient-to-r from-blue-500 to-blue-900 text-white' : 'bg-blue-600/30 text-white/90 '}`}>
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition ${showActive && active === cat ? 'bg-linear-to-r from-blue-500 to-blue-900 text-white' : 'bg-blue-600/30 text-white/90 '}`}>
               {cat}
             </button>
           ))}
@@ -116,7 +121,7 @@ export default function Portfolio() {
             return (
               <article
                 key={p.id + '-' + idx}
-                className={`group relative mx-auto w-full max-w-[300px] md:max-w-[290px] ${isAuto || isSelected ? "auto-scrolling" : ""}`}
+                className={`group relative mx-auto w-full max-w-75 md:max-w-72.5 ${isAuto || isSelected ? "auto-scrolling" : ""}`}
                 role="button"
                 tabIndex={0}
                 onClick={() => { setSelectedIndex(idx); setAutoScrollIndex(idx); }}
@@ -218,7 +223,7 @@ export default function Portfolio() {
               {/* Close button - positioned relative to image */}
               <button
                 onClick={() => setSelectedIndex(null)}
-                className="absolute top-4 right-4 z-[60] bg-blue-600 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center transition-all shadow-2xl hover:scale-110 text-xl font-bold"
+                className="absolute top-4 right-4 z-60 bg-blue-600 hover:bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center transition-all shadow-2xl hover:scale-110 text-xl font-bold"
                 aria-label="Close"
               >
                 ✕
@@ -231,7 +236,7 @@ export default function Portfolio() {
                   const newIndex = selectedIndex > 0 ? selectedIndex - 1 : filtered.length - 1;
                   setSelectedIndex(newIndex);
                 }}
-                className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 md:top-auto md:translate-y-0 md:bottom-8 z-[60] bg-gradient-to-l from-cyan-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full w-9 h-9 md:w-10 md:h-10 flex items-center justify-center transition-all shadow-2xl hover:scale-110 text-2xl md:text-3xl font-bold backdrop-blur-sm leading-none"
+                className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 md:top-auto md:translate-y-0 md:bottom-8 z-60 bg-linear-to-l from-cyan-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full w-9 h-9 md:w-10 md:h-10 flex items-center justify-center transition-all shadow-2xl hover:scale-110 text-2xl md:text-3xl font-bold backdrop-blur-sm leading-none"
                 aria-label="Previous"
               >
                 <span className="block -mt-2">‹</span>
@@ -244,7 +249,7 @@ export default function Portfolio() {
                   const newIndex = selectedIndex < filtered.length - 1 ? selectedIndex + 1 : 0;
                   setSelectedIndex(newIndex);
                 }}
-                className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 md:top-auto md:translate-y-0 md:bottom-8 z-[60] bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full w-9 h-9 md:w-10 md:h-10 flex items-center justify-center transition-all shadow-2xl hover:scale-110 text-2xl md:text-3xl font-bold backdrop-blur-sm leading-none"
+                className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 md:top-auto md:translate-y-0 md:bottom-8 z-60 bg-linear-to-r from-cyan-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full w-9 h-9 md:w-10 md:h-10 flex items-center justify-center transition-all shadow-2xl hover:scale-110 text-2xl md:text-3xl font-bold backdrop-blur-sm leading-none"
                 aria-label="Next"
               >
                 <span className="block -mt-2">›</span>
@@ -253,7 +258,7 @@ export default function Portfolio() {
 
             {/* Content box - left on desktop, bottom bar on mobile */}
             <div 
-              className="absolute left-0 right-0 bottom-0 md:left-8 md:right-auto md:top-1/2 md:-translate-y-1/2 md:bottom-auto z-[55] md:max-w-md bg-gradient-to-t from-black via-black/90 to-transparent md:bg-none md:from-transparent backdrop-blur-none md:backdrop-blur-md md:rounded-lg p-4 pt-10 md:p-8 md:shadow-2xl"
+              className="absolute left-0 right-0 bottom-0 md:left-8 md:right-auto md:top-1/2 md:-translate-y-1/2 md:bottom-auto z-55 md:max-w-md bg-linear-to-t from-black via-black/90 to-transparent md:bg-none md:from-transparent backdrop-blur-none md:backdrop-blur-md md:rounded-lg p-4 pt-10 md:p-8 md:shadow-2xl"
               onClick={(e) => e.stopPropagation()}
               style={{
                 background: 'linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.7) 60%, transparent)'
@@ -286,7 +291,7 @@ export default function Portfolio() {
                 href={"https://wa.me/18083015039?text=" + encodeURIComponent(`Hello, I'm interested in starting a project: ${selectedItem?.title || ''}`)} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="relative inline-flex items-center gap-1 bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-700 hover:to-blue-800 text-white font-bold rounded-full px-3 py-2 md:px-4 md:py-3 transition-all shadow-2xl hover:scale-110 whitespace-nowrap animate-pulse text-sm md:text-base"
+                className="relative inline-flex items-center gap-1 bg-linear-to-r from-cyan-600 to-blue-700 hover:from-cyan-700 hover:to-blue-800 text-white font-bold rounded-full px-3 py-2 md:px-4 md:py-3 transition-all shadow-2xl hover:scale-110 whitespace-nowrap animate-pulse text-sm md:text-base"
                 style={{
                   boxShadow: '0 0 30px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.5), 0 0 90px rgba(59, 130, 246, 0.3)'
                 }}

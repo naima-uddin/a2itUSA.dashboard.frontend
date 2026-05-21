@@ -18,7 +18,10 @@ const images = [
   "/slider/wordpresss.png",
 ];
 
-export default function Slider({ autoplay = true, interval = 3000 }) {
+export default function Slider({ config = {}, autoplay = true, interval = 3000 }) {
+  const sliderImages = Array.isArray(config.images) && config.images.length ? config.images : images;
+  const autoplayEnabled = config.autoplay !== undefined ? Boolean(config.autoplay) : autoplay;
+  const slideInterval = Number(config.interval || interval) || interval;
   const [current, setCurrent] = useState(0);
   const [perView, setPerView] = useState(4); 
   const [isPaused, setIsPaused] = useState(false);
@@ -44,7 +47,7 @@ export default function Slider({ autoplay = true, interval = 3000 }) {
     };
   }, [updatePerView]);
 
-  const maxIndex = Math.max(0, images.length - perView);
+  const maxIndex = Math.max(0, sliderImages.length - perView);
 
   const goNext = useCallback(() => {
     setCurrent((c) => (c >= maxIndex ? 0 : c + 1));
@@ -55,11 +58,11 @@ export default function Slider({ autoplay = true, interval = 3000 }) {
   }, [maxIndex]);
 
   useEffect(() => {
-    if (!autoplay) return;
+    if (!autoplayEnabled) return;
     if (isPaused) return;
-    const id = setInterval(goNext, interval);
+    const id = setInterval(goNext, slideInterval);
     return () => clearInterval(id);
-  }, [autoplay, interval, goNext, isPaused]);
+  }, [autoplayEnabled, slideInterval, goNext, isPaused]);
 
   return (
     <section
@@ -76,7 +79,7 @@ export default function Slider({ autoplay = true, interval = 3000 }) {
               className="flex transition-transform duration-500 ease-out h-full"
               style={{ transform: `translateX(-${(current * 100) / perView}%)` }}
             >
-              {images.map((src, idx) => (
+              {sliderImages.map((src, idx) => (
                 <div
                   key={src + idx}
                   className="shrink-0 px-4 flex items-center justify-center h-full"
@@ -117,7 +120,7 @@ export default function Slider({ autoplay = true, interval = 3000 }) {
 
         {/* dots / pages */}
         <div className="mt-0 flex items-center justify-center gap-2">
-          {Array.from({ length: Math.max(1, Math.ceil((images.length - perView + 1))) }).map((_, page) => (
+          {Array.from({ length: Math.max(1, Math.ceil((sliderImages.length - perView + 1))) }).map((_, page) => (
             <button
               key={page}
               onClick={() => setCurrent(page)}

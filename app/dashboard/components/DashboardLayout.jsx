@@ -142,6 +142,12 @@ const DashboardNav = () => {
           icon: TrendingUp,
           href: "/dashboard/solutions",
         },
+        {
+          id: "promotion-pages",
+          label: "Promotion Pages",
+          icon: FileText,
+          href: "/dashboard/promotions",
+        },
       ],
     },
     {

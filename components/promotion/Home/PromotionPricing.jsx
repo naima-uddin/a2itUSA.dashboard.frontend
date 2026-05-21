@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ChevronRight, Sparkles } from 'lucide-react';
 import PromotionModal from "@/components/shared/PromotionModal";
 
-const PromotionPricing = () => {
+const PromotionPricing = ({ config = {} }) => {
     const [activeFaq, setActiveFaq] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedPackage, setSelectedPackage] = useState("");
@@ -17,8 +17,8 @@ const PromotionPricing = () => {
   // Inlined Design & Development data (component-local)
   const designService = {
     id: 1,
-    category: 'Design & Development',
-    packages: [
+    category: config.category || 'Design & Development',
+    packages: Array.isArray(config.packages) && config.packages.length ? config.packages : [
       {
         id: 'design-special',
         name: 'Special',
@@ -153,7 +153,10 @@ const PromotionPricing = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const currentService = designService;
+  const currentService = {
+    ...designService,
+    packages: Array.isArray(config.packages) && config.packages.length ? config.packages : designService.packages,
+  };
   
   // Determine packages per page based on screen size
   const packagesPerPage = isMobile ? currentService.packages.length : 3;
@@ -404,7 +407,7 @@ const PromotionPricing = () => {
       `}</style> 
       </section>
     
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-12">
+    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white py-12">
 
       {/* Header */}
       <div className="container mx-auto">
@@ -417,7 +420,7 @@ const PromotionPricing = () => {
               TO WORK <span className="text-blue-600">TOGETHER</span>
             </h2>
             <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto mb-6 px-4" style={{ fontFamily: "var(--font-oswald), sans-serif" ,letterSpacing: "0.02em"}}>
-              Choose the perfect plan for your business needs. All packages come with our commitment to excellence.
+              {config.description || "Choose the perfect plan for your business needs. All packages come with our commitment to excellence."}
             </p>
           </div>
 
@@ -485,7 +488,7 @@ const PromotionPricing = () => {
                     {/* Discount Ribbon - Top Right */}
                     <div className="absolute top-0 right-0 z-20">
                       <div 
-                        className={`${style.ribbonBg} text-white px-3 py-1 sm:px-5 sm:py-2 font-bold text-xs sm:text-sm shadow-lg ring-1 ring-black/10 whitespace-nowrap max-w-[140px]`}
+                        className={`${style.ribbonBg} text-white px-3 py-1 sm:px-5 sm:py-2 font-bold text-xs sm:text-sm shadow-lg ring-1 ring-black/10 whitespace-nowrap max-w-35`}
                         style={{
                           clipPath: 'polygon(0 0, 100% 0, 100% 100%, 15% 100%)',
                           minWidth: '90px',
@@ -501,7 +504,7 @@ const PromotionPricing = () => {
                     <div className={`${style.headerBg} p-4 md:p-8 text-left relative`}>
                       <div className="flex items-start gap-4">
                         {/* Building Icon */}
-                        <div className="flex-shrink-0">
+                        <div className="shrink-0">
                           <div className="h-10 w-10 md:w-16 md:h-16 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
                             <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M3 21V8l7-5 7 5v13h-4v-7H8v7H3zm2-2h2v-5h10v5h2V9.5l-5-3.575L7 9.5V19z"/>
@@ -522,7 +525,7 @@ const PromotionPricing = () => {
                     </div>
 
                     {/* Price Section - Separate Background */}
-                    <div className="bg-gradient-to-br from-gray-50 to-gray-100 px-8 py-2 md:py-6 text-center border-b border-gray-200">
+                    <div className="bg-linear-to-br from-gray-50 to-gray-100 px-8 py-2 md:py-6 text-center border-b border-gray-200">
                       <div className="flex items-center justify-center gap-3 mb-1">
                         <span className="text-2xl md:text-6xl font-black text-gray-900">{pkg.price.replace('.00', '')}</span>
                         <span className="text-sm md:text-2xl text-red-500 line-through font-semibold">{pkg.originalPrice}</span>
@@ -536,7 +539,7 @@ const PromotionPricing = () => {
                         <ul className="space-y-1 md:space-y-3">
                           {pkg.features.map((feature, idx) => (
                             <li key={idx} className="flex items-start gap-3">
-                              <div className="mt-1 flex-shrink-0 ml-3">
+                              <div className="mt-1 shrink-0 ml-3">
                                 <svg className={`w-2 h-2 ${style.headerBg.includes('teal') ? 'text-teal-500' : style.headerBg.includes('orange') ? 'text-orange-500' : style.headerBg.includes('red') ? 'text-red-500' : style.headerBg.includes('blue') ? 'text-blue-500' : style.headerBg.includes('purple') ? 'text-purple-500' : 'text-indigo-500'}`} fill="currentColor" viewBox="0 0 20 20">
                                   <circle cx="10" cy="10" r="10"/>
                                 </svg>

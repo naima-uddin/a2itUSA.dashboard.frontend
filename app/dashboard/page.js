@@ -105,7 +105,12 @@ export default function Dashboard() {
         >
           <h1 className="text-4xl font-bold text-slate-900 mb-2">
             Welcome back,{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#0066ff]">
+            <span
+              className="text-transparent bg-clip-text"
+              style={{
+                backgroundImage: "linear-gradient(90deg, #00f0ff, #0066ff)",
+              }}
+            >
               {user?.name}
             </span>
           </h1>
@@ -128,7 +133,10 @@ export default function Dashboard() {
                 <Link href={stat.href}>
                   <div className="bg-white border border-slate-200 rounded-xl p-6 hover:border-cyan-300 transition cursor-pointer group shadow-sm">
                     <div
-                      className={`w-12 h-12 rounded-lg bg-gradient-to-br ${stat.color} to-[#0066ff] flex items-center justify-center mb-4 group-hover:scale-110 transition`}
+                      className="w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition"
+                      style={{
+                        backgroundImage: `linear-gradient(135deg, var(--tw-gradient-from, #00f0ff), #0066ff)`,
+                      }}
                     >
                       <Icon className="w-6 h-6 text-white" />
                     </div>
@@ -154,28 +162,51 @@ export default function Dashboard() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             <Link href="/dashboard/blogs?action=create">
-              <button className="w-full bg-gradient-to-br from-[#00f0ff] to-[#0066ff] hover:shadow-lg hover:shadow-[#00f0ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition">
+              <button
+                className="w-full hover:shadow-lg hover:shadow-[#00f0ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition"
+                style={{ backgroundImage: "linear-gradient(135deg, #00f0ff, #0066ff)" }}
+              >
                 📝 Create Blog
               </button>
             </Link>
             <Link href="/dashboard/services?action=create">
-              <button className="w-full bg-gradient-to-br from-[#0066ff] to-[#00a0ff] hover:shadow-lg hover:shadow-[#0066ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition">
+              <button
+                className="w-full hover:shadow-lg hover:shadow-[#0066ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition"
+                style={{ backgroundImage: "linear-gradient(135deg, #0066ff, #00a0ff)" }}
+              >
                 🛍️ Create Service
               </button>
             </Link>
             <Link href="/dashboard/portfolio?action=create">
-              <button className="w-full bg-gradient-to-br from-[#00a0ff] to-[#00f0ff] hover:shadow-lg hover:shadow-[#00a0ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition">
+              <button
+                className="w-full hover:shadow-lg hover:shadow-[#00a0ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition"
+                style={{ backgroundImage: "linear-gradient(135deg, #00a0ff, #00f0ff)" }}
+              >
                 🖼️ Create Project
               </button>
             </Link>
+            <Link href="/dashboard/promotions">
+              <button
+                className="w-full hover:shadow-lg hover:shadow-[#00f0ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition"
+                style={{ backgroundImage: "linear-gradient(135deg, #00f0ff, #0066ff)" }}
+              >
+                🔗 Manage Promotion Pages
+              </button>
+            </Link>
             <Link href="/dashboard/employees">
-              <button className="w-full bg-gradient-to-br from-[#0066ff] to-[#00a0ff] hover:shadow-lg hover:shadow-[#0066ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition">
+              <button
+                className="w-full hover:shadow-lg hover:shadow-[#0066ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition"
+                style={{ backgroundImage: "linear-gradient(135deg, #0066ff, #00a0ff)" }}
+              >
                 🖼️ Manage Employees
               </button>
             </Link>
             {user?.role === "admin" && (
               <Link href="/dashboard/users?action=create">
-                <button className="w-full bg-gradient-to-br from-[#f5b342] to-[#ffb84d] hover:shadow-lg hover:shadow-[#f5b342]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition">
+                <button
+                  className="w-full hover:shadow-lg hover:shadow-[#f5b342]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition"
+                  style={{ backgroundImage: "linear-gradient(135deg, #f5b342, #ffb84d)" }}
+                >
                   👤 Add User
                 </button>
               </Link>
@@ -197,7 +228,7 @@ export default function Dashboard() {
           </div>
           <div className="space-y-4">
             <div className="flex items-start gap-3 pb-4 border-b border-slate-200">
-              <div className="w-3 h-3 bg-[#00f0ff] rounded-full mt-2 flex-shrink-0" />
+              <div className="w-3 h-3 bg-[#00f0ff] rounded-full mt-2 shrink-0" />
               <div>
                 <p className="text-slate-900 font-medium">
                   Manage Your Content
@@ -209,7 +240,7 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="flex items-start gap-3 pb-4 border-b border-slate-200">
-              <div className="w-3 h-3 bg-[#00f0ff] rounded-full mt-2 flex-shrink-0" />
+              <div className="w-3 h-3 bg-[#00f0ff] rounded-full mt-2 shrink-0" />
               <div>
                 <p className="text-slate-900 font-medium">
                   Create and Edit Content
@@ -221,7 +252,7 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="flex items-start gap-3 pb-4 border-b border-slate-200">
-              <div className="w-3 h-3 bg-[#00f0ff] rounded-full mt-2 flex-shrink-0" />
+              <div className="w-3 h-3 bg-[#00f0ff] rounded-full mt-2 shrink-0" />
               <div>
                 <p className="text-slate-900 font-medium">Admin Access</p>
                 <p className="text-slate-600 text-sm">
@@ -230,7 +261,7 @@ export default function Dashboard() {
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-3 h-3 bg-[#00f0ff] rounded-full mt-2 flex-shrink-0" />
+              <div className="w-3 h-3 bg-[#00f0ff] rounded-full mt-2 shrink-0" />
               <div>
                 <p className="text-slate-900 font-medium">Account Settings</p>
                 <p className="text-slate-600 text-sm">

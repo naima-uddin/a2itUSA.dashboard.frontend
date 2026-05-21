@@ -33,7 +33,7 @@ const PromotionNavbar = () => {
               className="w-full h-full flex items-center justify-between bg-[#0F1B32]/30 backdrop-blur-md rounded-full"
               style={{ border: "0.5px solid #124163" }}
             >
-              <Link href="/promotions/website/" className="flex items-center ml-4.5">
+              <Link href="/promotions" className="flex items-center ml-4.5">
                 <Image
                   src="/mainlogo.png"
                   height={30}

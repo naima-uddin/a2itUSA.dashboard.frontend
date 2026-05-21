@@ -11,7 +11,7 @@ const NavbarSwitcher = () => {
     return null;
   }
 
-  if (pathname?.startsWith("/promotions/website")) {
+  if (pathname?.startsWith("/promotions")) {
     return <PromotionNavbar />;
   }
 

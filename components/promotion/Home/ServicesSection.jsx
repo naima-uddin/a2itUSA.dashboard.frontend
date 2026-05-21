@@ -5,10 +5,10 @@ import Image from 'next/image';
 import { Megaphone, Users } from 'lucide-react';
 import PromotionModal from "@/components/shared/PromotionModal";
 
-const ServicesSection = () => {
+const ServicesSection = ({ config = {} }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const services = [
+  const services = Array.isArray(config.services) && config.services.length ? config.services : [
     "Design & Development",
     "E-Commerce",
     "Amazon",
@@ -24,9 +24,9 @@ const ServicesSection = () => {
       <PromotionModal 
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="Big Discount Going ON!!"
-        subtitle="Everywhere & Every Device, Your Site Should Flow Seamlessly!"
-        buttonText="START YOUR PROJECT NOW"
+        title={config.modalTitle || "Big Discount Going ON!!"}
+        subtitle={config.modalSubtitle || "Everywhere & Every Device, Your Site Should Flow Seamlessly!"}
+        buttonText={config.modalButtonText || "START YOUR PROJECT NOW"}
         selectedPackage=""
       />
       
@@ -123,14 +123,14 @@ const ServicesSection = () => {
 
         {/* Right - content (previous text restored) */}
         <div className="w-full lg:w-1/2 text-left mt-0 lg:-mt-10 relative z-10">
-          <p className="text-white/85 mb-3 md:mb-4 text-sm md:text-base">In the ever-connected, attention-challenged digital era.</p>
+          <p className="text-white/85 mb-3 md:mb-4 text-sm md:text-base">{config.kicker || "In the ever-connected, attention-challenged digital era."}</p>
           <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-3 md:mb-4" style={{ fontFamily: "var(--font-oswald), sans-serif" }}>
-            Scale faster: award‑winning web & app experiences
+            {config.title || "Scale faster: award‑winning web & app experiences"}
           </h3>
 
           <div className="w-12 md:w-16 h-1 bg-white/20 rounded-full mb-4 md:mb-6" />
 
-          <p className="text-white/85 max-w-lg mb-6 md:mb-8 text-sm md:text-base">Choose the perfect plan for your business needs. All packages come with our commitment to excellence.</p>
+          <p className="text-white/85 max-w-lg mb-6 md:mb-8 text-sm md:text-base">{config.description || "Choose the perfect plan for your business needs. All packages come with our commitment to excellence."}</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3 mb-6 md:mb-8 max-w-md">
             {services.map((svc, i) => (
@@ -149,7 +149,7 @@ const ServicesSection = () => {
             className="inline-flex items-center gap-2 md:gap-3 bg-gradient-to-r from-blue-400 to-blue-900 px-5 py-2.5 md:px-6 md:py-3 rounded-full text-sm md:text-base font-semibold shadow-2xl transition-transform transform hover:-translate-y-0.5 cursor-pointer relative"
             style={{ zIndex: 100, pointerEvents: 'auto' }}
           >
-            Let&apos;s Get Started
+            {config.ctaLabel || "Let&apos;s Get Started"}
           </button>
         </div>
       </div>

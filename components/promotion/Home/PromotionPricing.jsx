@@ -163,6 +163,11 @@ const PromotionPricing = ({ config = {} }) => {
         ? config.packages
         : designService.packages,
   };
+  const pricingHeading = config.heading || "WE ARE OPTIMISTS WHO LOVE";
+  const pricingHighlight = config.highlight || "TO WORK TOGETHER";
+  const pricingDescription =
+    config.description ||
+    "Choose the perfect plan for your business needs. All packages come with our commitment to excellence.";
 
   // Determine packages per page based on screen size
   const packagesPerPage = isMobile ? currentService.packages.length : 3;
@@ -427,10 +432,8 @@ const PromotionPricing = ({ config = {} }) => {
                   className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 leading-tight"
                   style={{ fontFamily: "var(--font-oswald), sans-serif" }}
                 >
-                  WE ARE <span className="text-blue-600">OPTIMISTS</span> WHO
-                  LOVE
-                  <br className="block" />
-                  TO WORK <span className="text-blue-600">TOGETHER</span>
+                  {pricingHeading}{" "}
+                  <span className="text-blue-600">{pricingHighlight}</span>
                 </h2>
                 <p
                   className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto mb-6 px-4"
@@ -439,8 +442,7 @@ const PromotionPricing = ({ config = {} }) => {
                     letterSpacing: "0.02em",
                   }}
                 >
-                  {config.description ||
-                    "Choose the perfect plan for your business needs. All packages come with our commitment to excellence."}
+                  {pricingDescription}
                 </p>
               </div>
 

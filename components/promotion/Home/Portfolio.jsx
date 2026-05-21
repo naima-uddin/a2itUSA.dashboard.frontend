@@ -29,6 +29,17 @@ export default function Portfolio({ config = {} }) {
 
   useEffect(() => {
     let mounted = true;
+    const configProjects =
+      Array.isArray(config.projects) && config.projects.length
+        ? config.projects
+        : null;
+    if (configProjects) {
+      const items = configProjects.filter((p) => p && p.image);
+      setProjects(items);
+      if (items.length) setAutoScrollIndex(0);
+      return () => (mounted = false);
+    }
+
     fetch("/promotionPortfolio.json")
       .then((r) => r.json())
       .then((data) => {
@@ -39,7 +50,7 @@ export default function Portfolio({ config = {} }) {
       })
       .catch(() => {});
     return () => (mounted = false);
-  }, []);
+  }, [config.projects]);
 
   const categories = useMemo(() => {
     const set = new Set();
@@ -93,6 +104,53 @@ export default function Portfolio({ config = {} }) {
   const description =
     config.description ||
     "Explore our latest work across custom web development, scalable eCommerce platforms, ERP system integrations, marketplace solutions, and performance-driven marketing campaigns.";
+
+  if (
+    (config.mode === "gallery" || config.galleryMode) &&
+    Array.isArray(config.galleryItems) &&
+    config.galleryItems.length
+  ) {
+    return (
+      <section
+        className="w-full pt-16 bg-[#071331]/0 -mb-20 md:-mb-10"
+        style={{ fontFamily: "var(--font-oswald), sans-serif" }}
+      >
+        <div className="max-w-7xl mx-auto px-2 md:px-4">
+          <div className="text-center mb-4 md:mb-10">
+            <h2 className="text-3xl md:text-4xl font-oswald font-bold bg-linear-to-r from-[#93c9ff] to-[#0202c1] bg-clip-text text-transparent pb-2">
+              {title}
+            </h2>
+            <p className="text-[#989897] max-w-2xl mx-auto">{description}</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {config.galleryItems.map((item, index) => (
+              <article
+                key={`${item.title || "gallery"}-${index}`}
+                className="rounded-3xl overflow-hidden bg-white shadow-[0_24px_70px_-40px_rgba(15,23,42,0.45)] border border-slate-200"
+              >
+                <div className="relative bg-slate-100 h-56 md:h-64 lg:h-72 overflow-hidden">
+                  <Image
+                    src={item.image}
+                    alt={item.title || "Gallery item"}
+                    width={1200}
+                    height={900}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div className="p-4 md:p-5">
+                  <h3 className="text-lg font-bold text-slate-900 mb-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-slate-600">{item.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section

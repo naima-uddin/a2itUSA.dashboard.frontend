@@ -1,8 +1,8 @@
 // components/ServicesSection.jsx
 "use client";
+
 import React, { useState } from "react";
 import Image from "next/image";
-import { Megaphone, Users } from "lucide-react";
 import PromotionModal from "@/components/shared/PromotionModal";
 
 const ServicesSection = ({ config = {} }) => {
@@ -22,6 +22,11 @@ const ServicesSection = ({ config = {} }) => {
           "E-bay",
         ];
 
+  const illustrationImage =
+    config.illustrationImage || "/promotionPortfolio/serviceSectionImg.png";
+  const sectionBackground =
+    config.backgroundImage || "/promotionPortfolio/shape.png";
+
   return (
     <>
       <PromotionModal
@@ -38,33 +43,28 @@ const ServicesSection = ({ config = {} }) => {
 
       <section
         className="relative w-full overflow-hidden bg-center bg-cover bg-no-repeat text-white py-10 md:py-20"
-        style={{ backgroundImage: "url('/promotionPortfolio/shape.png')" }}
+        style={{ backgroundImage: `url('${sectionBackground}')` }}
       >
-        {/* subtle overlay to keep text readable */}
         <div className="absolute inset-0 bg-black/25 pointer-events-none" />
-        {/* decorative faint circles */}
         <div className="absolute -left-20 -top-8 w-96 h-96 bg-white/6 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute right-0 top-10 w-72 h-72 bg-white/4 rounded-full blur-2xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex flex-col lg:flex-row items-center gap-6 md:gap-12">
-          {/* Left - Decorative Design */}
           <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-start py-4 md:py-8">
-            <div className="relative w-full max-w-[550px] h-[300px] md:h-[400px] lg:h-[500px]">
-              {/* Multiple gradient orbs */}
-              <div className="absolute top-1/4 left-1/4 w-48 h-48 md:w-72 md:h-72 bg-gradient-to-br from-cyan-400/40 via-blue-500/40 to-indigo-600/40 rounded-full blur-3xl animate-pulse" />
+            <div className="relative w-full max-w-137.5 h-75 md:h-100 lg:h-125">
+              <div className="absolute top-1/4 left-1/4 w-48 h-48 md:w-72 md:h-72 bg-linear-to-br from-cyan-400/40 via-blue-500/40 to-indigo-600/40 rounded-full blur-3xl animate-pulse" />
               <div
-                className="absolute bottom-1/4 right-1/4 w-40 h-40 md:w-64 md:h-64 bg-gradient-to-tl from-purple-400/40 via-pink-500/40 to-rose-600/40 rounded-full blur-3xl animate-pulse"
+                className="absolute bottom-1/4 right-1/4 w-40 h-40 md:w-64 md:h-64 bg-linear-to-tl from-purple-400/40 via-pink-500/40 to-rose-600/40 rounded-full blur-3xl animate-pulse"
                 style={{ animationDelay: "1s" }}
               />
               <div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 md:w-56 md:h-56 bg-gradient-to-r from-amber-400/30 to-orange-500/30 rounded-full blur-2xl animate-pulse"
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 md:w-56 md:h-56 bg-linear-to-r from-amber-400/30 to-orange-500/30 rounded-full blur-2xl animate-pulse"
                 style={{ animationDelay: "2s" }}
               />
 
-              {/* Floating cards with stats */}
-              <div className="absolute top-4 left-2 md:top-8 md:left-4 bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-xl border border-white/30 rounded-2xl md:rounded-3xl p-3 md:p-5 shadow-2xl transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-500 group">
+              <div className="absolute top-4 left-2 md:top-8 md:left-4 bg-linear-to-br from-white/15 to-white/5 backdrop-blur-xl border border-white/30 rounded-2xl md:rounded-3xl p-3 md:p-5 shadow-2xl transform -rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-500 group">
                 <div className="flex items-start gap-2 md:gap-4">
-                  <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
+                  <div className="w-10 h-10 md:w-14 md:h-14 bg-linear-to-br from-cyan-400 via-blue-500 to-indigo-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
                     <svg
                       className="w-5 h-5 md:w-7 md:h-7 text-white"
                       fill="none"
@@ -86,16 +86,16 @@ const ServicesSection = ({ config = {} }) => {
                     <div className="text-white font-semibold text-xs md:text-sm mb-1">
                       Faster Launch
                     </div>
-                    <div className="text-white/60 text-[10px] md:text-xs max-w-[100px] md:max-w-[140px]">
+                    <div className="text-white/60 text-[10px] md:text-xs max-w-25 md:max-w-35">
                       Deploy in days not months
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="absolute top-16 right-2 md:top-24 md:right-6 bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-xl border border-white/30 rounded-2xl md:rounded-3xl p-3 md:p-5 shadow-2xl transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-500 group">
+              <div className="absolute top-16 right-2 md:top-24 md:right-6 bg-linear-to-br from-white/15 to-white/5 backdrop-blur-xl border border-white/30 rounded-2xl md:rounded-3xl p-3 md:p-5 shadow-2xl transform rotate-6 hover:rotate-0 hover:scale-105 transition-all duration-500 group">
                 <div className="flex items-start gap-2 md:gap-4">
-                  <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-purple-400 via-pink-500 to-rose-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
+                  <div className="w-10 h-10 md:w-14 md:h-14 bg-linear-to-br from-purple-400 via-pink-500 to-rose-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
                     <svg
                       className="w-5 h-5 md:w-7 md:h-7 text-white"
                       fill="none"
@@ -117,16 +117,16 @@ const ServicesSection = ({ config = {} }) => {
                     <div className="text-white font-semibold text-xs md:text-sm mb-1">
                       Satisfaction
                     </div>
-                    <div className="text-white/60 text-[10px] md:text-xs max-w-[100px] md:max-w-[140px]">
+                    <div className="text-white/60 text-[10px] md:text-xs max-w-25 md:max-w-35">
                       Guaranteed results
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="absolute bottom-12 left-2 md:bottom-16 md:left-8 bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-xl border border-white/30 rounded-2xl md:rounded-3xl p-3 md:p-5 shadow-2xl transform rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-500 group">
+              <div className="absolute bottom-12 left-2 md:bottom-16 md:left-8 bg-linear-to-br from-white/15 to-white/5 backdrop-blur-xl border border-white/30 rounded-2xl md:rounded-3xl p-3 md:p-5 shadow-2xl transform rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-500 group">
                 <div className="flex items-start gap-2 md:gap-4">
-                  <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-amber-400 via-orange-500 to-red-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
+                  <div className="w-10 h-10 md:w-14 md:h-14 bg-linear-to-br from-amber-400 via-orange-500 to-red-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
                     <svg
                       className="w-5 h-5 md:w-7 md:h-7 text-white"
                       fill="none"
@@ -148,16 +148,16 @@ const ServicesSection = ({ config = {} }) => {
                     <div className="text-white font-semibold text-xs md:text-sm mb-1">
                       Quality Work
                     </div>
-                    <div className="text-white/60 text-[10px] md:text-xs max-w-[100px] md:max-w-[140px]">
+                    <div className="text-white/60 text-[10px] md:text-xs max-w-25 md:max-w-35">
                       Premium excellence
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="absolute bottom-2 right-4 md:bottom-8 md:right-12 bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-xl border border-white/30 rounded-2xl md:rounded-3xl p-3 md:p-5 shadow-2xl transform -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-500 group">
+              <div className="absolute bottom-2 right-4 md:bottom-8 md:right-12 bg-linear-to-br from-white/15 to-white/5 backdrop-blur-xl border border-white/30 rounded-2xl md:rounded-3xl p-3 md:p-5 shadow-2xl transform -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-500 group">
                 <div className="flex items-start gap-2 md:gap-4">
-                  <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
+                  <div className="w-10 h-10 md:w-14 md:h-14 bg-linear-to-br from-emerald-400 via-teal-500 to-cyan-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:rotate-12 transition-transform">
                     <svg
                       className="w-5 h-5 md:w-7 md:h-7 text-white"
                       fill="none"
@@ -179,24 +179,21 @@ const ServicesSection = ({ config = {} }) => {
                     <div className="text-white font-semibold text-xs md:text-sm mb-1">
                       Revenue
                     </div>
-                    <div className="text-white/60 text-[10px] md:text-xs max-w-[100px] md:max-w-[140px]">
+                    <div className="text-white/60 text-[10px] md:text-xs max-w-25 md:max-w-35">
                       Generated for clients
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Enhanced decorative elements */}
               <div
                 className="absolute top-6 right-[45%] w-12 h-12 md:w-20 md:h-20 border-2 md:border-[3px] border-white/25 rounded-full animate-spin"
                 style={{ animationDuration: "15s" }}
               />
-              <div className="absolute bottom-4 left-[40%] w-10 h-10 md:w-16 md:h-16 border-2 md:border-[3px] border-gradient-to-r from-blue-400/30 to-purple-400/30 rounded-lg transform rotate-45 animate-pulse" />
+              <div className="absolute bottom-4 left-[40%] w-10 h-10 md:w-16 md:h-16 border-2 md:border-[3px] border-linear-to-r from-blue-400/30 to-purple-400/30 rounded-lg transform rotate-45 animate-pulse" />
               <div className="absolute top-1/3 right-8 w-3 h-3 bg-yellow-300 rounded-full animate-ping" />
               <div className="absolute top-[60%] left-2 w-2.5 h-2.5 bg-cyan-300 rounded-full animate-pulse" />
               <div className="absolute bottom-[40%] right-4 w-2 h-2 bg-pink-300 rounded-full animate-bounce" />
-
-              {/* Floating particles */}
               <div
                 className="absolute top-16 left-[30%] w-1.5 h-1.5 bg-white/40 rounded-full animate-ping"
                 style={{ animationDelay: "0.5s" }}
@@ -209,10 +206,20 @@ const ServicesSection = ({ config = {} }) => {
                 className="absolute bottom-24 left-[55%] w-1.5 h-1.5 bg-white/40 rounded-full animate-ping"
                 style={{ animationDelay: "2.5s" }}
               />
+
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-35">
+                <Image
+                  src={illustrationImage}
+                  alt="Services illustration"
+                  width={1160}
+                  height={900}
+                  className="object-contain w-full h-full"
+                  priority
+                />
+              </div>
             </div>
           </div>
 
-          {/* Right - content (previous text restored) */}
           <div className="w-full lg:w-1/2 text-left mt-0 lg:-mt-10 relative z-10">
             <p className="text-white/85 mb-3 md:mb-4 text-sm md:text-base">
               {config.kicker ||
@@ -236,7 +243,7 @@ const ServicesSection = ({ config = {} }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3 mb-6 md:mb-8 max-w-md">
               {services.map((svc, i) => (
                 <div key={i} className="flex items-start gap-2 md:gap-3">
-                  <div className="mt-1 flex-shrink-0">
+                  <div className="mt-1 shrink-0">
                     <svg
                       className="w-2 h-2 md:w-2.5 md:h-2.5 text-white/90"
                       fill="currentColor"
@@ -253,7 +260,7 @@ const ServicesSection = ({ config = {} }) => {
             <button
               type="button"
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center gap-2 md:gap-3 bg-gradient-to-r from-blue-400 to-blue-900 px-5 py-2.5 md:px-6 md:py-3 rounded-full text-sm md:text-base font-semibold shadow-2xl transition-transform transform hover:-translate-y-0.5 cursor-pointer relative"
+              className="inline-flex items-center gap-2 md:gap-3 bg-linear-to-r from-blue-400 to-blue-900 px-5 py-2.5 md:px-6 md:py-3 rounded-full text-sm md:text-base font-semibold shadow-2xl transition-transform transform hover:-translate-y-0.5 cursor-pointer relative"
               style={{ zIndex: 100, pointerEvents: "auto" }}
             >
               {config.ctaLabel || "Let&apos;s Get Started"}
@@ -261,7 +268,6 @@ const ServicesSection = ({ config = {} }) => {
           </div>
         </div>
 
-        {/* white wave at bottom */}
         <div className="absolute inset-x-0 bottom-0 -mb-1 pointer-events-none">
           <svg
             viewBox="0 0 1440 320"

@@ -5,6 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import { Plus, Search, Trash2, Edit2 } from "lucide-react";
 import DashboardLayout from "../components/DashboardLayout";
+import PromotionSectionEditor from "@/components/promotion/PromotionSectionEditor";
 import {
   DEFAULT_PROMOTION_PAGE,
   PROMOTION_SECTION_KEYS,
@@ -13,22 +14,24 @@ import {
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
-const defaultSectionState = DEFAULT_PROMOTION_PAGE.sections.map((section) => ({
-  key: section.key,
-  enabled: section.enabled,
-  order: section.order,
-  config: section.config,
-}));
+const createDefaultSectionState = () =>
+  DEFAULT_PROMOTION_PAGE.sections.map((section) => ({
+    key: section.key,
+    enabled: section.enabled,
+    order: section.order,
+    config: section.config,
+  }));
 
-const defaultFormData = {
+const createDefaultFormData = () => ({
   slug: "",
   title: "",
   description: "",
   metaTitle: "",
   metaDescription: "",
   isActive: true,
-  sections: defaultSectionState,
-};
+  sections: createDefaultSectionState(),
+  footer: { ...(DEFAULT_PROMOTION_PAGE.footer || {}) },
+});
 
 export default function PromotionalPagesDashboard() {
   const { token, isAdmin, isModerator } = useAuth();
@@ -37,13 +40,14 @@ export default function PromotionalPagesDashboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState(null);
-  const [formData, setFormData] = useState(defaultFormData);
+  const [formData, setFormData] = useState(createDefaultFormData());
   const [formError, setFormError] = useState("");
+  const [uploadingFooterLogo, setUploadingFooterLogo] = useState(false);
 
   const isAllowed = isAdmin || isModerator;
 
   const resetForm = () => {
-    setFormData(defaultFormData);
+    setFormData(createDefaultFormData());
     setFormError("");
   };
 
@@ -96,6 +100,51 @@ export default function PromotionalPagesDashboard() {
     }));
   };
 
+  const updateSectionConfig = (sectionKey, nextConfig) => {
+    handleSectionChange(sectionKey, (current) => ({
+      ...current,
+      config: nextConfig,
+    }));
+  };
+
+  const handleFooterLogoUpload = async (file) => {
+    if (!file || !token) return;
+
+    setUploadingFooterLogo(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const response = await fetch(`${API_BASE}/api/upload/image/general`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data?.success || !data?.url) {
+        throw new Error(data?.error || "Upload failed");
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        footer: {
+          ...(prev.footer || {}),
+          logoImage: data.url,
+        },
+      }));
+    } catch (error) {
+      console.error("Footer logo upload failed:", error);
+      alert(error?.message || "Footer logo upload failed");
+    } finally {
+      setUploadingFooterLogo(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError("");
@@ -121,6 +170,7 @@ export default function PromotionalPagesDashboard() {
       metaDescription: formData.metaDescription,
       isActive: formData.isActive,
       sections: normalizedSections,
+      footer: formData.footer,
     };
 
     const url = editing
@@ -175,6 +225,7 @@ export default function PromotionalPagesDashboard() {
           config: match?.config || {},
         };
       }),
+      footer: page.footer || { ...(DEFAULT_PROMOTION_PAGE.footer || {}) },
     });
     setShowForm(true);
   };
@@ -260,8 +311,8 @@ export default function PromotionalPagesDashboard() {
                 {editing ? "Edit Promotion Page" : "Create Promotion Page"}
               </h2>
               <p className="text-slate-600 text-sm">
-                Every section can be toggled per slug. Component content is
-                stored as JSON config.
+                Every section can be toggled per slug. Structured controls are
+                shown for each component.
               </p>
             </div>
 
@@ -271,7 +322,7 @@ export default function PromotionalPagesDashboard() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input
                   required
@@ -344,7 +395,7 @@ export default function PromotionalPagesDashboard() {
                   {formData.sections.map((section) => (
                     <div
                       key={section.key}
-                      className="rounded-xl border border-slate-200 p-4 space-y-3"
+                      className="rounded-xl border border-slate-200 p-4 space-y-4"
                     >
                       <div className="flex flex-wrap items-center justify-between gap-3">
                         <div>
@@ -389,27 +440,110 @@ export default function PromotionalPagesDashboard() {
                         </div>
                       </div>
 
-                      <textarea
-                        value={JSON.stringify(section.config || {}, null, 2)}
-                        onChange={(e) => {
-                          try {
-                            const parsed = JSON.parse(e.target.value || "{}");
-                            handleSectionChange(section.key, (current) => ({
-                              ...current,
-                              config: parsed,
-                            }));
-                          } catch (error) {
-                            handleSectionChange(section.key, (current) => ({
-                              ...current,
-                              config: current.config,
-                            }));
-                          }
-                        }}
-                        className="w-full px-4 py-3 border rounded-lg min-h-32 font-mono text-sm"
-                        placeholder="Section config JSON"
+                      <PromotionSectionEditor
+                        section={section}
+                        onChange={(nextConfig) =>
+                          updateSectionConfig(section.key, nextConfig)
+                        }
                       />
                     </div>
                   ))}
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-slate-200 p-4 space-y-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900">
+                    Footer
+                  </h3>
+                  <p className="text-sm text-slate-600">
+                    Edit the footer headline, description, logo, and copyright
+                    for this route.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input
+                    value={formData.footer?.headline || ""}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        footer: {
+                          ...(prev.footer || {}),
+                          headline: e.target.value,
+                        },
+                      }))
+                    }
+                    placeholder="Footer headline"
+                    className="w-full px-4 py-2 border rounded-lg"
+                  />
+                  <input
+                    value={formData.footer?.logoImage || ""}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        footer: {
+                          ...(prev.footer || {}),
+                          logoImage: e.target.value,
+                        },
+                      }))
+                    }
+                    placeholder="Paste a footer logo URL"
+                    className="w-full px-4 py-2 border rounded-lg"
+                  />
+                  <div className="md:col-span-2 flex flex-wrap items-center gap-2">
+                    <label className="inline-flex cursor-pointer items-center rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">
+                      {uploadingFooterLogo
+                        ? "Uploading..."
+                        : "Upload footer logo"}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+
+                          try {
+                            await handleFooterLogoUpload(file);
+                          } finally {
+                            e.target.value = "";
+                          }
+                        }}
+                      />
+                    </label>
+                    <span className="text-xs text-slate-500">
+                      Paste a URL or upload directly to Cloudinary.
+                    </span>
+                  </div>
+                  <textarea
+                    value={formData.footer?.description || ""}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        footer: {
+                          ...(prev.footer || {}),
+                          description: e.target.value,
+                        },
+                      }))
+                    }
+                    placeholder="Footer description"
+                    className="w-full px-4 py-2 border rounded-lg min-h-24 md:col-span-2"
+                  />
+                  <input
+                    value={formData.footer?.copyrightText || ""}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        footer: {
+                          ...(prev.footer || {}),
+                          copyrightText: e.target.value,
+                        },
+                      }))
+                    }
+                    placeholder="Copyright text"
+                    className="w-full px-4 py-2 border rounded-lg md:col-span-2"
+                  />
                 </div>
               </div>
 

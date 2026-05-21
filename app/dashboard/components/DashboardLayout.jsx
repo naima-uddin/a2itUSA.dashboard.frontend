@@ -30,7 +30,7 @@ const DashboardNavLink = ({ item, pathname, onClick }) => {
       aria-current={isActive ? "page" : undefined}
       className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
         isActive
-          ? "bg-gradient-to-r from-cyan-500 to-blue-500 text-white"
+          ? "bg-linear-to-r from-cyan-500 to-blue-500 text-white"
           : "text-slate-700 hover:bg-slate-100"
       }`}
     >
@@ -131,18 +131,6 @@ const DashboardNav = () => {
       href: "#",
       children: [
         {
-          id: "projects",
-          label: "Promotional Projects",
-          icon: Image,
-          href: "/dashboard/projects",
-        },
-        {
-          id: "solutions",
-          label: "Promotional Packages",
-          icon: TrendingUp,
-          href: "/dashboard/solutions",
-        },
-        {
           id: "promotion-pages",
           label: "Promotion Pages",
           icon: FileText,
@@ -233,7 +221,7 @@ const DashboardNav = () => {
         <div className="p-6 flex-1 overflow-y-auto">
           <Link
             href="/dashboard"
-            className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#0066ff] mb-26 text-center"
+            className="text-2xl font-bold text-transparent bg-clip-text bg-linear-to-r from-[#00f0ff] to-[#0066ff] mb-26 text-center"
           >
             A2IT Dashbaord
           </Link>

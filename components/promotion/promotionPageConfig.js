@@ -125,7 +125,9 @@ export const normalizePromotionPage = (page) => {
     sections,
     footer: {
       ...createDefaultPromotionPage(page.slug || "website").footer,
-      ...(typeof page.footer === "object" && page.footer !== null ? page.footer : {}),
+      ...(typeof page.footer === "object" && page.footer !== null
+        ? page.footer
+        : {}),
     },
   };
 };

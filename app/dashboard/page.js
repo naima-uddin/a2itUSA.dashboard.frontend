@@ -1,50 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
-import {
-  Users,
-  FileText,
-  ShoppingCart,
-  Image,
-  TrendingUp,
-  Calendar,
-} from "lucide-react";
+import { Users, FileText, ShoppingCart, Image, Calendar } from "lucide-react";
 import Link from "next/link";
 import DashboardLayout from "./components/DashboardLayout";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL;
-
 export default function Dashboard() {
   const { user, token } = useAuth();
-  const [projectHighlights, setProjectHighlights] = useState([]);
-  const [packageHighlights, setPackageHighlights] = useState([]);
-
-  useEffect(() => {
-    const loadDashboardPromotions = async () => {
-      try {
-        const [projectsResponse, packagesResponse] = await Promise.all([
-          fetch(`${API_BASE}/api/promotional-projects/admin/all`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          fetch(`${API_BASE}/api/promotional-packages/admin/all`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-        ]);
-
-        const projectsData = await projectsResponse.json();
-        const packagesData = await packagesResponse.json();
-
-        setProjectHighlights((projectsData.projects || []).slice(0, 3));
-        setPackageHighlights((packagesData.packages || []).slice(0, 3));
-      } catch (error) {
-        console.error("Failed to load dashboard promotions:", error);
-      }
-    };
-
-    if (token) loadDashboardPromotions();
-  }, [token]);
 
   const stats = [
     {
@@ -67,20 +31,6 @@ export default function Dashboard() {
       icon: Image,
       color: "from-[#00a0ff]",
       href: "/dashboard/portfolio",
-    },
-    {
-      label: "Promotional Projects",
-      value: String(projectHighlights.length),
-      icon: TrendingUp,
-      color: "from-[#00f0ff]",
-      href: "/dashboard/projects",
-    },
-    {
-      label: "Promotional Packages",
-      value: String(packageHighlights.length),
-      icon: ShoppingCart,
-      color: "from-[#0066ff]",
-      href: "/dashboard/solutions",
     },
     ...(user?.role === "admin"
       ? [
@@ -248,7 +198,7 @@ export default function Dashboard() {
                 </p>
                 <p className="text-slate-600 text-sm">
                   Use the sidebar to navigate to Blogs, Services, Portfolio,
-                  Projects, and Packages.
+                  Promotion Pages, Employees, and Settings.
                 </p>
               </div>
             </div>

@@ -65,7 +65,7 @@ export default async function PromotionSlugPage({ params }) {
   return (
     <>
       <Home pageConfig={page} />
-      <PromotionFooter />
+      <PromotionFooter config={page.footer} />
     </>
   );
 }

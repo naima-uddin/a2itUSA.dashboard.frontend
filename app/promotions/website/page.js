@@ -33,7 +33,7 @@ export default async function Page() {
   return (
     <>
       <Home pageConfig={page} />
-      <PromotionFooter />
+      <PromotionFooter config={page.footer} />
     </>
   );
 }

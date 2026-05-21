@@ -2,6 +2,9 @@ import React from "react";
 import Image from "next/image";
 
 const Enhancement = ({ config = {} }) => {
+  const heroImage =
+    config.heroImage || "/promotionPortfolio/serviceSectionImg.png";
+
   const cards =
     Array.isArray(config.cards) && config.cards.length
       ? config.cards
@@ -84,16 +87,14 @@ const Enhancement = ({ config = {} }) => {
               }}
             />
             <Image
-              src="/promotionPortfolio/serviceSectionImg.png"
+              src={heroImage}
               alt="Service mockups"
               width={1160}
-              height={900}
-              className="object-contain drop-shadow-xl md:drop-shadow-2xl rounded-lg md:rounded-xl scale-110 md:scale-125 lg:scale-150 transition-transform duration-700 w-full h-auto relative z-10"
-              priority
+              height={800}
+              className="w-full h-auto object-contain relative z-10"
             />
           </div>
         </div>
-
         {/* Right - content + feature cards */}
         <div className="flex flex-col space-y-3 md:space-y-4 lg:pl-8 lg:col-span-3 lg:self-end ml-4 md:ml-0">
           <h2

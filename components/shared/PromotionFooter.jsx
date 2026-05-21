@@ -5,9 +5,17 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { redirectToThankYou } from "@/components/shared/contactSuccessRedirect";
 
-export default function PromotionFooter() {
+export default function PromotionFooter({ config = {} }) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const headline =
+    config.headline || "Sign up now for the ultimate website experience!";
+  const description =
+    config.description ||
+    "Designs Genie is your all-in-one web design and development agency, featuring a team of skilled and imaginative developers, marketers, and designers.";
+  const copyrightText =
+    config.copyrightText || "Copyright © 2026 A2IT LLC | All rights reserved.";
+  const logoImage = config.logoImage || "/A2ITLogo.png";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,19 +71,17 @@ export default function PromotionFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
           <div className="text-white max-w-xl mt-0 md:mt-10">
             <Image
-              src="/A2ITLogo.png"
+              src={logoImage}
               alt="A2it Logo"
               width={150}
               height={50}
               className="mb-4 md:mb-6 w-32 md:w-36 h-auto"
             />
             <h2 className="text-xl md:text-2xl lg:text-4xl font-bold leading-tight mb-4 md:mb-6">
-              Sign up now for the ultimate website experience!
+              {headline}
             </h2>
             <p className="text-sm md:text-base text-white/90 mb-6 md:mb-8">
-              Designs Genie is your all-in-one web design and development
-              agency, featuring a team of skilled and imaginative developers,
-              marketers, and designers.
+              {description}
             </p>
 
             <div className="space-y-2 md:space-y-3 mt-4 md:mt-6">
@@ -86,7 +92,8 @@ export default function PromotionFooter() {
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="shrink-0 md:w-[18px] md:h-[18px]"
+                  className="shrink-0"
+                  style={{ width: "18px", height: "18px" }}
                 >
                   <path
                     d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
@@ -106,7 +113,8 @@ export default function PromotionFooter() {
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="shrink-0 md:w-[18px] md:h-[18px]"
+                  className="shrink-0"
+                  style={{ width: "18px", height: "18px" }}
                 >
                   <path
                     d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
@@ -172,7 +180,7 @@ export default function PromotionFooter() {
 
         <div className="mt-6 md:mt-10 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6 ">
           <div className="flex items-center gap-4">
-            <div className="w-48 md:w-64 lg:w-96 -mt-0 md:-mt-10">
+            <div className="w-48 md:w-64 lg:w-96" style={{ marginTop: 0 }}>
               <Image
                 src="/promotionPortfolio/cards.png"
                 alt="Payment methods"
@@ -183,7 +191,7 @@ export default function PromotionFooter() {
             </div>
           </div>
           <div className="text-white/60 text-xs md:text-sm text-center md:text-left">
-            Copyright © 2026 A2IT LLC | All rights reserved.
+            {copyrightText}
           </div>
         </div>
       </div>

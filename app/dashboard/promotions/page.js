@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import { Plus, Search, Trash2, Edit2 } from "lucide-react";
@@ -8,6 +8,7 @@ import DashboardLayout from "../components/DashboardLayout";
 import PromotionSectionEditor from "@/components/promotion/PromotionSectionEditor";
 import {
   DEFAULT_PROMOTION_PAGE,
+  createDefaultPromotionPage,
   PROMOTION_SECTION_KEYS,
   PROMOTION_SECTION_LABELS,
 } from "@/components/promotion/promotionPageConfig";
@@ -15,6 +16,30 @@ import {
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
 
 const cloneData = (value) => JSON.parse(JSON.stringify(value || {}));
+
+const mergeSectionData = (
+  templateSection = {},
+  pageSection = {},
+  index = 0,
+) => ({
+  key: templateSection.key || pageSection.key || "",
+  enabled:
+    pageSection.enabled !== undefined
+      ? pageSection.enabled !== false
+      : templateSection.enabled !== false,
+  order:
+    pageSection.order !== undefined &&
+    Number.isFinite(Number(pageSection.order))
+      ? Number(pageSection.order)
+      : templateSection.order !== undefined &&
+          Number.isFinite(Number(templateSection.order))
+        ? Number(templateSection.order)
+        : index,
+  config: {
+    ...cloneData(templateSection.config || {}),
+    ...cloneData(pageSection.config || {}),
+  },
+});
 
 const createDefaultSectionState = (page = DEFAULT_PROMOTION_PAGE) =>
   PROMOTION_SECTION_KEYS.map((key, index) => {
@@ -55,25 +80,35 @@ const createFormDataFromPage = (
 const createDefaultFormData = (page = DEFAULT_PROMOTION_PAGE) =>
   createFormDataFromPage(page, { slug: "" });
 
-const findWebsitePage = (pages = []) =>
-  pages.find((page) => String(page.slug || "").toLowerCase() === "website");
+const mergePageWithTemplate = (templatePage, page) => ({
+  slug: page?.slug || templatePage?.slug || "",
+  title: page?.title || templatePage?.title || "",
+  description: page?.description || templatePage?.description || "",
+  metaTitle: page?.metaTitle || templatePage?.metaTitle || "",
+  metaDescription: page?.metaDescription || templatePage?.metaDescription || "",
+  isActive: page?.isActive !== false,
+  sections: PROMOTION_SECTION_KEYS.map((key, index) => {
+    const templateSection = (templatePage?.sections || []).find(
+      (section) => section.key === key,
+    );
+    const pageSection = (page?.sections || []).find(
+      (section) => section.key === key,
+    );
 
-const createPayloadFromFormData = (formData) => ({
-  slug: "",
-  title: "",
-  description: "",
-  metaTitle: "",
-  metaDescription: "",
-  isActive: true,
-  sections: createDefaultSectionState(),
-  footer: { ...(DEFAULT_PROMOTION_PAGE.footer || {}) },
+    return mergeSectionData(templateSection || {}, pageSection || {}, index);
+  }),
+  footer: {
+    ...(DEFAULT_PROMOTION_PAGE.footer || {}),
+    ...(templatePage?.footer || {}),
+    ...(page?.footer || {}),
+  },
 });
 
 export default function PromotionalPagesDashboard() {
   const { token, isAdmin, isModerator } = useAuth();
   const [items, setItems] = useState([]);
   const [websiteTemplate, setWebsiteTemplate] = useState(
-    createDefaultFormData(DEFAULT_PROMOTION_PAGE),
+    DEFAULT_PROMOTION_PAGE,
   );
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -91,39 +126,58 @@ export default function PromotionalPagesDashboard() {
     setFormError("");
   };
 
-  const fetchPages = async () => {
+  const fetchWebsiteTemplate = useCallback(async () => {
     try {
-      setLoading(true);
-      const url = isAdmin
-        ? `${API_BASE}/api/promotional-pages/admin/all`
-        : `${API_BASE}/api/promotional-pages`;
-      const opts = isAdmin
-        ? { headers: { Authorization: `Bearer ${token}` } }
-        : {};
+      const response = await fetch(`${API_BASE}/api/promotional-pages/website`);
 
-      const response = await fetch(url, opts);
       if (!response.ok) {
-        throw new Error("Failed to fetch promotional pages");
+        return createDefaultPromotionPage("website");
       }
 
       const data = await response.json();
+      return mergePageWithTemplate(
+        createDefaultPromotionPage("website"),
+        data.page || {},
+      );
+    } catch (error) {
+      console.error("Error fetching website template:", error);
+      return createDefaultPromotionPage("website");
+    }
+  }, []);
+
+  const fetchPages = useCallback(async () => {
+    try {
+      setLoading(true);
+      const [pagesResponse, websitePage] = await Promise.all([
+        fetch(
+          isAdmin
+            ? `${API_BASE}/api/promotional-pages/admin/all`
+            : `${API_BASE}/api/promotional-pages`,
+          isAdmin ? { headers: { Authorization: `Bearer ${token}` } } : {},
+        ),
+        fetchWebsiteTemplate(),
+      ]);
+
+      if (!pagesResponse.ok) {
+        throw new Error("Failed to fetch promotional pages");
+      }
+
+      const data = await pagesResponse.json();
       const pages = data.pages || [];
       setItems(pages);
-      setWebsiteTemplate(
-        createDefaultFormData(findWebsitePage(pages) || DEFAULT_PROMOTION_PAGE),
-      );
+      setWebsiteTemplate(websitePage || DEFAULT_PROMOTION_PAGE);
     } catch (error) {
       console.error("Error fetching promotional pages:", error);
       setItems([]);
-      setWebsiteTemplate(createDefaultFormData(DEFAULT_PROMOTION_PAGE));
+      setWebsiteTemplate(DEFAULT_PROMOTION_PAGE);
     } finally {
       setLoading(false);
     }
-  };
+  }, [fetchWebsiteTemplate, isAdmin, token]);
 
   useEffect(() => {
     if (token) fetchPages();
-  }, [token, isAdmin, isModerator]);
+  }, [token, isAdmin, isModerator, fetchPages]);
 
   const filteredItems = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -206,18 +260,16 @@ export default function PromotionalPagesDashboard() {
       const savedPage = result.page || payload;
       const nextTemplate =
         String(savedPage.slug || "").toLowerCase() === "website"
-          ? createDefaultFormData(savedPage)
+          ? savedPage
           : websiteTemplate;
 
       if (closeAfterSave) {
         setShowForm(false);
         setEditing(null);
-        setFormData(nextTemplate);
+        setFormData(createDefaultFormData(nextTemplate));
       } else {
         setEditing(savedPage);
-        setFormData(
-          createFormDataFromPage(savedPage, { slug: savedPage.slug }),
-        );
+        setFormData(mergePageWithTemplate(websiteTemplate, savedPage));
         setShowForm(true);
       }
     } catch (error) {
@@ -272,7 +324,7 @@ export default function PromotionalPagesDashboard() {
 
   const handleEdit = (page) => {
     setEditing(page);
-    setFormData(createFormDataFromPage(page, { slug: page.slug || "" }));
+    setFormData(mergePageWithTemplate(websiteTemplate, page));
     setShowForm(true);
   };
 

@@ -35,7 +35,8 @@ async function loadPromotionPage(slug) {
 }
 
 export async function generateMetadata({ params }) {
-  const slug = params?.slug || "website";
+  const resolvedParams = await Promise.resolve(params || {});
+  const slug = String(resolvedParams.slug || "website");
   const page = await loadPromotionPage(slug);
 
   if (!page) {
@@ -55,7 +56,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function PromotionSlugPage({ params }) {
-  const slug = params?.slug || "website";
+  const resolvedParams = await Promise.resolve(params || {});
+  const slug = String(resolvedParams.slug || "website");
   const page = await loadPromotionPage(slug);
 
   if (!page) {

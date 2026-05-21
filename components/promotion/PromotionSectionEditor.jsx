@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { authFetch } from "@/lib/api/authFetch";
+import Gallery from "./Home/Gallery";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
@@ -667,6 +668,32 @@ export default function PromotionSectionEditor({ section, onChange }) {
           onUploadImage={uploadImage}
           uploadingKeys={uploadingKeys}
         />
+
+        <div className="space-y-3 rounded-xl border border-slate-200 bg-slate-50 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h4 className="font-semibold text-slate-900">Live preview</h4>
+              <p className="text-xs text-slate-500">
+                Upload or edit images above. The layout below updates instantly.
+              </p>
+            </div>
+            <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-slate-600 border border-slate-200">
+              {(config.items || []).length} items
+            </span>
+          </div>
+
+          <div className="rounded-lg border border-slate-200 bg-white overflow-hidden">
+            <div className="max-h-220 overflow-auto">
+              <Gallery
+                config={{
+                  title: config.title,
+                  description: config.description,
+                  items: config.items,
+                }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

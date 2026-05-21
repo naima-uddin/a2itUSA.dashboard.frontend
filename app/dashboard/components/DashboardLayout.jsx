@@ -121,6 +121,12 @@ const DashboardNav = () => {
           icon: ShoppingCart,
           href: "/dashboard/services",
         },
+        {
+          id: "pricing",
+          label: "Manage Pricing",
+          icon: ShoppingCart,
+          href: "/dashboard/pricing",
+        },
       ],
     },
 

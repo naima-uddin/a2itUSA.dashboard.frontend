@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import {
@@ -81,6 +81,7 @@ const DashboardNav = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { logout, user } = useAuth();
+  const sidebarRef = useRef(null);
 
   const menuItems = [
     // {
@@ -173,12 +174,35 @@ const DashboardNav = () => {
     router.push("/login");
   };
 
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  // Close mobile menu on Escape key
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "Escape" && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [mobileMenuOpen]);
+
+  // Focus sidebar when opened on mobile
+  useEffect(() => {
+    if (mobileMenuOpen && sidebarRef.current) sidebarRef.current.focus();
+  }, [mobileMenuOpen]);
+
   return (
     <>
       {/* Mobile Menu Button */}
       <div className="lg:hidden fixed top-4 left-4 z-50">
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-controls="dashboard-sidebar"
+          aria-expanded={mobileMenuOpen}
           className="p-2 bg-cyan-500 text-white rounded-lg"
         >
           {mobileMenuOpen ? (
@@ -191,11 +215,16 @@ const DashboardNav = () => {
 
       {/* Sidebar */}
       <div
+        id="dashboard-sidebar"
+        ref={sidebarRef}
+        tabIndex={-1}
+        role="navigation"
+        aria-label="Dashboard sidebar"
         className={`fixed left-0 top-0 h-screen w-64 bg-white border-r border-slate-200 transition-transform duration-300 lg:translate-x-0 ${
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } z-40`}
+        } z-40 flex flex-col`}
       >
-        <div className="p-6">
+        <div className="p-6 flex-1 overflow-y-auto">
           <Link
             href="/dashboard"
             className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] to-[#0066ff] mb-26 text-center"
@@ -203,7 +232,7 @@ const DashboardNav = () => {
             A2IT Dashbaord
           </Link>
 
-          <nav className="space-y-2">
+          <nav className="space-y-2 mt-4">
             {menuItems.map((item) => {
               if (item.children) {
                 return (
@@ -228,8 +257,8 @@ const DashboardNav = () => {
           </nav>
         </div>
 
-        {/* User Info & Logout */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-slate-200">
+        {/* User Info & Logout (now in normal flow so nav expansion won't overlap) */}
+        <div className="p-6 border-t border-slate-200">
           <div className="mb-4 pb-4 border-b border-slate-200">
             <p className="text-sm text-slate-500">Logged in as</p>
             <p className="text-slate-900 font-semibold">{user?.name}</p>
@@ -250,6 +279,7 @@ const DashboardNav = () => {
         <div
           className="fixed inset-0 bg-slate-900/30 z-30 lg:hidden"
           onClick={() => setMobileMenuOpen(false)}
+          aria-hidden="true"
         ></div>
       )}
     </>

@@ -1,14 +1,22 @@
 "use client";
-// Add this useState import at the top
 import { useCallback, useEffect, useState, useRef } from "react";
-import PricingPage from "../home-page-components/PricingCard";
 import Link from "next/link";
 import { ChevronRight, Sparkles } from "lucide-react";
-const Pricing = () => {
+import {
+  createDefaultPricingPageContent,
+  normalizePricingPageContent,
+} from "./pricingPageData";
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
+const Pricing = ({ content = null }) => {
   const [activeFaq, setActiveFaq] = useState(null);
-  const [hoveredCompany, setHoveredCompany] = useState(null);
   const [showLeftIndicator, setShowLeftIndicator] = useState(false);
   const [showRightIndicator, setShowRightIndicator] = useState(true);
+  const [pageContent, setPageContent] = useState(() =>
+    normalizePricingPageContent(content || createDefaultPricingPageContent()),
+  );
+  const [loading, setLoading] = useState(!content);
   const tabsContainerRef = useRef(null);
   const handleScroll = () => {
     if (tabsContainerRef.current) {
@@ -36,62 +44,42 @@ const Pricing = () => {
     return () => window.removeEventListener("resize", handleScroll);
   }, []);
 
-  const faqs = [
-    {
-      question: "Can I change plans anytime?",
-      answer:
-        "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.",
-      icon: "🔄",
-    },
-    {
-      question: "Is there a free trial?",
-      answer:
-        "Yes, all plans come with a 14-day free trial. No credit card required.",
-      icon: "🎯",
-    },
-    {
-      question: "What payment methods do you accept?",
-      answer:
-        "We accept all major credit cards, PayPal, and bank transfers for annual plans.",
-      icon: "💳",
-    },
-    {
-      question: "Do you offer discounts for nonprofits?",
-      answer:
-        "Yes, we offer a 25% discount for registered nonprofit organizations.",
-      icon: "🏛️",
-    },
-    {
-      question: "Can I cancel anytime?",
-      answer: "Absolutely. Cancel anytime with no hidden fees or penalties.",
-      icon: "🚫",
-    },
-    {
-      question: "Is there a setup fee?",
-      answer:
-        "No setup fees for any of our plans. What you see is what you pay.",
-      icon: "🎁",
-    },
-  ];
   const [activeService, setActiveService] = useState("Design & Development");
   const [currentPage, setCurrentPage] = useState(0);
-  const [pricingData, setPricingData] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [hoveredCard, setHoveredCard] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    fetch("/pricing-data.json")
+    if (content) {
+      setPageContent(normalizePricingPageContent(content));
+      setLoading(false);
+      return;
+    }
+
+    let isMounted = true;
+
+    fetch(`${API_BASE}/api/pricing-page`)
       .then((res) => res.json())
       .then((data) => {
-        setPricingData(data);
-        setLoading(false);
+        if (!isMounted) return;
+
+        setPageContent(
+          normalizePricingPageContent(
+            data?.page?.content || data?.content || {},
+          ),
+        );
       })
       .catch((error) => {
-        console.error("Error loading pricing data:", error);
-        setLoading(false);
+        console.error("Error loading pricing page content:", error);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
       });
-  }, []);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [content]);
 
   // Check if device is mobile
   useEffect(() => {
@@ -104,7 +92,7 @@ const Pricing = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const services = pricingData?.services || [];
+  const services = pageContent.services || [];
   const currentService = services.find(
     (service) => service.category === activeService,
   );
@@ -173,12 +161,12 @@ const Pricing = () => {
     );
   }
 
-  if (!pricingData) {
+  if (!services.length) {
     return (
       <main className="pt-20 bg-white min-h-screen">
         <div className="flex justify-center items-center h-64">
           <div className="text-xl text-red-600">
-            Failed to load pricing data
+            Failed to load pricing content
           </div>
         </div>
       </main>
@@ -260,7 +248,12 @@ const Pricing = () => {
       <section className="relative py-20 flex items-center justify-center overflow-hidden">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[url('/pricing-img.avif')] bg-cover bg-center"></div>
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: `url('${pageContent.hero.backgroundImage || "/pricing-img.avif"}')`,
+            }}
+          ></div>
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-30"></div>
         </div>
@@ -278,37 +271,35 @@ const Pricing = () => {
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full mb-8 border border-white/20">
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-medium">
-                Since 2015 • Redefining Technology
+                {pageContent.hero.badge}
               </span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-none">
-              <span className="text-white">Flexible Plans</span>
+              <span className="text-white">{pageContent.hero.titleLine1}</span>
               <div className="relative inline-block ml-2 sm:ml-4">
                 <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-800">
-                  For Everyone
+                  {pageContent.hero.highlight}
                 </span>
                 <div className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-1 sm:h-2 bg-gradient-to-r from-blue-500 to-orange-500"></div>
               </div>
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-white/90 mb-10 max-w-xl leading-relaxed">
-              Choose the perfect package that fits your needs and budget.
-              Quality services at competitive prices with transparent pricing
-              and no hidden fees.
+              {pageContent.hero.description}
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <Link href="/contact">
+              <Link href={pageContent.hero.primaryButtonHref || "/contact"}>
                 <button className="btn-3d flex items-center gap-2 group">
-                  Contact With Us
+                  {pageContent.hero.primaryButtonLabel}
                   <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
 
-              <Link href="/portfolio">
+              <Link href={pageContent.hero.secondaryButtonHref || "/portfolio"}>
                 <button className="btn-neon flex items-center gap-2 group">
-                  Watch Our Success Story
+                  {pageContent.hero.secondaryButtonLabel}
                   <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </Link>
@@ -447,14 +438,13 @@ const Pricing = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
               <div className="text-center mb-3">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 md:mb-6 leading-tight">
-                  WE ARE <span className="text-blue-600">OPTIMISTS</span> WHO
-                  LOVE
-                  <br className="hidden md:block" />
-                  TO WORK <span className="text-blue-600">TOGETHER</span>
+                  {pageContent.pricingSection.titleLine1}{" "}
+                  <span className="text-blue-600">
+                    {pageContent.pricingSection.highlight}
+                  </span>
                 </h2>
                 <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto mb-4 px-4">
-                  Choose the perfect plan for your business needs. All packages
-                  come with our commitment to excellence.
+                  {pageContent.pricingSection.description}
                 </p>
 
                 {/* Enhanced Service Tabs - Responsive for mobile and desktop */}
@@ -773,15 +763,16 @@ const Pricing = () => {
           <div className="max-w-7xl mx-auto mb-20 mt-20">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                Questions? We've got answers.
+                {pageContent.cta?.faqHeading || "Questions? We've got answers."}
               </h2>
               <p className="text-gray-600 text-lg">
-                Everything you need to know about our pricing and plans
+                {pageContent.cta?.faqDescription ||
+                  "Everything you need to know about our pricing and plans"}
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6">
-              {faqs.map((faq, index) => (
+              {(pageContent.faqs || []).map((faq, index) => (
                 <div
                   key={index}
                   className={`relative overflow-hidden rounded-2xl border transition-all duration-500 cursor-pointer ${
@@ -847,7 +838,8 @@ const Pricing = () => {
             {/* FAQ CTA */}
             <div className="text-center mt-12">
               <p className="text-gray-600 mb-6">
-                Still have questions? We're here to help!
+                {pageContent.cta?.faqCtaText ||
+                  "Still have questions? We're here to help!"}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Link href="/contact">
@@ -882,18 +874,17 @@ const Pricing = () => {
 
               <div className="relative z-10 text-center">
                 <h3 className="text-3xl font-bold mb-4">
-                  Ready to transform your business?
+                  {pageContent.cta.title}
                 </h3>
                 <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-                  Join thousands of successful companies using our platform.
-                  Start your free trial today.
+                  {pageContent.cta.description}
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                   <button className="px-8 py-4 bg-white text-blue-600 font-bold rounded-xl hover:bg-gray-100 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                    Start Free 14-Day Trial
+                    {pageContent.cta.primaryLabel}
                     <span className="block text-sm font-normal mt-1 text-blue-500">
-                      No credit card required
+                      {pageContent.cta.primaryNote}
                     </span>
                   </button>
 
@@ -903,7 +894,7 @@ const Pricing = () => {
                     <div className="w-24 h-px bg-white/30"></div>
                   </div>
 
-                  <Link href="/contact">
+                  <Link href={pageContent.cta.secondaryHref || "/contact"}>
                     <button className="px-8 py-4 bg-transparent border-2 border-white/30 text-white font-semibold rounded-xl hover:bg-white/10 hover:border-white/50 transition-all duration-300 group">
                       <div className="flex items-center">
                         <svg
@@ -919,7 +910,7 @@ const Pricing = () => {
                             d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
                           />
                         </svg>
-                        Schedule Personalized Demo
+                        {pageContent.cta.secondaryLabel}
                       </div>
                     </button>
                   </Link>
@@ -927,48 +918,22 @@ const Pricing = () => {
 
                 <div className="mt-8 text-blue-100/80 text-sm">
                   <div className="flex items-center justify-center space-x-6">
-                    <div className="flex items-center">
-                      <svg
-                        className="w-4 h-4 mr-2"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      No setup fees
-                    </div>
-                    <div className="flex items-center">
-                      <svg
-                        className="w-4 h-4 mr-2"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      Cancel anytime
-                    </div>
-                    <div className="flex items-center">
-                      <svg
-                        className="w-4 h-4 mr-2"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      24/7 support
-                    </div>
+                    {(pageContent.cta.features || []).map((feature) => (
+                      <div key={feature} className="flex items-center">
+                        <svg
+                          className="w-4 h-4 mr-2"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        {feature}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

@@ -14,6 +14,7 @@ import {
   Image,
   ChevronDown,
   TrendingUp,
+  FileTextIcon,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -121,6 +122,12 @@ const DashboardNav = () => {
         //   label: "Manage Services",
         //   icon: ShoppingCart,
         //   href: "/dashboard/services",
+        // },
+        // {
+        //   id: "categories",
+        //   label: "Manage or Update the catgoriers",
+        //   icon: FileTextIcon,
+        //   href: "/dashboard/categories",
         // },
         {
           id: "pricing",

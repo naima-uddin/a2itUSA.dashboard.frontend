@@ -7,13 +7,14 @@ import PromotionModal from "@/components/shared/PromotionModal";
 
 const Banner = ({ config = {} }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const heroLines = Array.isArray(config.heroLines) && config.heroLines.length
-    ? config.heroLines
-    : [
-        "Design. Develop. Dominate.",
-        "Scale Your Brand Without Limits.",
-        "Optimize, and scale for global success.",
-      ];
+  const heroLines =
+    Array.isArray(config.heroLines) && config.heroLines.length
+      ? config.heroLines
+      : [
+          "Design. Develop. Dominate.",
+          "Scale Your Brand Without Limits.",
+          "Optimize, and scale for global success.",
+        ];
   const heading = config.heading || "Big Discount Going ON!!";
   const subheading =
     config.subheading ||
@@ -49,18 +50,22 @@ const Banner = ({ config = {} }) => {
         {/* Main content - left-aligned, matches provided image */}
         <div className="relative z-10 h-full flex flex-col items-center md:items-start md:pt-48 sm:pt-1 lg:pt-50 sm:pr-2 md:pr-0 md:px-4  banner-title text-center md:text-left">
           <div className="w-full max-w-4xl ">
-              <p className="text-slate-200/90 text-xl font-medium md:mb-3 lg:pl-10 hidden md:block">
-                {introText}
-              </p>
+            <p className="text-slate-200/90 text-xl font-medium md:mb-3 lg:pl-10 hidden md:block">
+              {introText}
+            </p>
 
             <div className="mt-20 md:mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-6 gap-3 ">
               <div className="text-white/90 font-semibold text-4xl md:pl-16 xl:pl-28">
-                Starting from <span className="text-[#66B2FF]">{startPrice}</span> Only
+                Starting from{" "}
+                <span className="text-[#66B2FF]">{startPrice}</span> Only
               </div>
             </div>
             <div className="mt-4 text-blue-600 md:text-slate-300 lg:text-slate-300 xl:text-slate-300 space-y-1 text-md md:pl-16 xl:pl-28 pl-4">
               {heroLines.map((line, index) => (
-                <div key={`${line}-${index}`} className="flex items-center gap-3">
+                <div
+                  key={`${line}-${index}`}
+                  className="flex items-center gap-3"
+                >
                   <span className="text-[#66B2FF] font-bold">.</span> {line}
                 </div>
               ))}

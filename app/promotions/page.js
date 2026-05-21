@@ -38,7 +38,8 @@ export default async function PromotionsIndexPage() {
             Choose the promotional page you want to publish.
           </h1>
           <p className="text-slate-300 text-base md:text-lg">
-            Each active slug below is managed from the dashboard and can render a different set of sections.
+            Each active slug below is managed from the dashboard and can render
+            a different set of sections.
           </p>
         </div>
 
@@ -65,11 +66,15 @@ export default async function PromotionsIndexPage() {
                 {page.title}
               </h2>
               <p className="text-slate-300 mb-6">
-                {page.description || page.metaDescription || "No description provided."}
+                {page.description ||
+                  page.metaDescription ||
+                  "No description provided."}
               </p>
               <span className="inline-flex items-center gap-2 text-sm font-medium text-white/80 group-hover:text-white">
                 Open page
-                <span className="transition-transform group-hover:translate-x-1">→</span>
+                <span className="transition-transform group-hover:translate-x-1">
+                  →
+                </span>
               </span>
             </Link>
           ))}

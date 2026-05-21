@@ -19,7 +19,9 @@ async function loadPromotionPage(slug) {
     }
 
     const data = await response.json();
-    return normalizePromotionPage(data.page) || createDefaultPromotionPage(slug);
+    return (
+      normalizePromotionPage(data.page) || createDefaultPromotionPage(slug)
+    );
   } catch (error) {
     return createDefaultPromotionPage(slug);
   }

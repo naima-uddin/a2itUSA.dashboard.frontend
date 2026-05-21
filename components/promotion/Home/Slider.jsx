@@ -18,12 +18,20 @@ const images = [
   "/slider/wordpresss.png",
 ];
 
-export default function Slider({ config = {}, autoplay = true, interval = 3000 }) {
-  const sliderImages = Array.isArray(config.images) && config.images.length ? config.images : images;
-  const autoplayEnabled = config.autoplay !== undefined ? Boolean(config.autoplay) : autoplay;
+export default function Slider({
+  config = {},
+  autoplay = true,
+  interval = 3000,
+}) {
+  const sliderImages =
+    Array.isArray(config.images) && config.images.length
+      ? config.images
+      : images;
+  const autoplayEnabled =
+    config.autoplay !== undefined ? Boolean(config.autoplay) : autoplay;
   const slideInterval = Number(config.interval || interval) || interval;
   const [current, setCurrent] = useState(0);
-  const [perView, setPerView] = useState(4); 
+  const [perView, setPerView] = useState(4);
   const [isPaused, setIsPaused] = useState(false);
   const trackRef = useRef(null);
 
@@ -77,7 +85,9 @@ export default function Slider({ config = {}, autoplay = true, interval = 3000 }
             <div
               ref={trackRef}
               className="flex transition-transform duration-500 ease-out h-full"
-              style={{ transform: `translateX(-${(current * 100) / perView}%)` }}
+              style={{
+                transform: `translateX(-${(current * 100) / perView}%)`,
+              }}
             >
               {sliderImages.map((src, idx) => (
                 <div
@@ -120,7 +130,9 @@ export default function Slider({ config = {}, autoplay = true, interval = 3000 }
 
         {/* dots / pages */}
         <div className="mt-0 flex items-center justify-center gap-2">
-          {Array.from({ length: Math.max(1, Math.ceil((sliderImages.length - perView + 1))) }).map((_, page) => (
+          {Array.from({
+            length: Math.max(1, Math.ceil(sliderImages.length - perView + 1)),
+          }).map((_, page) => (
             <button
               key={page}
               onClick={() => setCurrent(page)}
@@ -133,4 +145,3 @@ export default function Slider({ config = {}, autoplay = true, interval = 3000 }
     </section>
   );
 }
-

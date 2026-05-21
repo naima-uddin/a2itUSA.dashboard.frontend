@@ -17,14 +17,14 @@ export default function Portfolio({ config = {} }) {
   const [visibleCount, setVisibleCount] = useState(4);
   useEffect(() => {
     const update = () => {
-      if (typeof window === 'undefined') return;
+      if (typeof window === "undefined") return;
       const w = window.innerWidth;
       // treat <768px as mobile
       setVisibleCount(w < 768 ? 2 : 4);
     };
     update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   useEffect(() => {
@@ -41,11 +41,15 @@ export default function Portfolio({ config = {} }) {
     return () => (mounted = false);
   }, []);
 
-
   const categories = useMemo(() => {
     const set = new Set();
     projects.forEach((p) => {
-      (p.category || "").split(",").map((c) => c.trim()).forEach((c) => { if (c) set.add(c); });
+      (p.category || "")
+        .split(",")
+        .map((c) => c.trim())
+        .forEach((c) => {
+          if (c) set.add(c);
+        });
     });
     return ["All", ...Array.from(set)];
   }, [projects]);
@@ -76,7 +80,10 @@ export default function Portfolio({ config = {} }) {
     if (prevShowAllRef.current && !showAll) {
       // small delay to allow DOM collapse before scrolling
       setTimeout(() => {
-        viewMoreRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+        viewMoreRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
       }, 80);
     }
     prevShowAllRef.current = showAll;
@@ -88,23 +95,29 @@ export default function Portfolio({ config = {} }) {
     "Explore our latest work across custom web development, scalable eCommerce platforms, ERP system integrations, marketplace solutions, and performance-driven marketing campaigns.";
 
   return (
-    <section className="w-full pt-16 bg-[#071331]/0 -mb-20 md:-mb-10" style={{ fontFamily: "var(--font-oswald), sans-serif" }}>
+    <section
+      className="w-full pt-16 bg-[#071331]/0 -mb-20 md:-mb-10"
+      style={{ fontFamily: "var(--font-oswald), sans-serif" }}
+    >
       <div className="max-w-7xl mx-auto px-2 md:px-4">
         <div className="text-center mb-4 md:mb-10">
           <h2 className="text-3xl md:text-4xl font-oswald font-bold bg-linear-to-r from-[#93c9ff] to-[#0202c1] bg-clip-text text-transparent pb-2">
             {title}
           </h2>
-          <p className=" text-[#989897] max-w-2xl mx-auto">
-           {description}
-          </p>
+          <p className=" text-[#989897] max-w-2xl mx-auto">{description}</p>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-3 mb-4 md:mb-8">
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => { setActive(cat); setShowActive(true); setShowAll(false); }}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition ${showActive && active === cat ? 'bg-linear-to-r from-blue-500 to-blue-900 text-white' : 'bg-blue-600/30 text-white/90 '}`}>
+              onClick={() => {
+                setActive(cat);
+                setShowActive(true);
+                setShowAll(false);
+              }}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition ${showActive && active === cat ? "bg-linear-to-r from-blue-500 to-blue-900 text-white" : "bg-blue-600/30 text-white/90 "}`}
+            >
               {cat}
             </button>
           ))}
@@ -120,18 +133,26 @@ export default function Portfolio({ config = {} }) {
             const isSelected = selectedIndex === idx;
             return (
               <article
-                key={p.id + '-' + idx}
+                key={p.id + "-" + idx}
                 className={`group relative mx-auto w-full max-w-75 md:max-w-72.5 ${isAuto || isSelected ? "auto-scrolling" : ""}`}
                 role="button"
                 tabIndex={0}
-                onClick={() => { setSelectedIndex(idx); setAutoScrollIndex(idx); }}
-                onKeyDown={(e) => e.key === "Enter" && (setSelectedIndex(idx), setAutoScrollIndex(idx))}
+                onClick={() => {
+                  setSelectedIndex(idx);
+                  setAutoScrollIndex(idx);
+                }}
+                onKeyDown={(e) =>
+                  e.key === "Enter" &&
+                  (setSelectedIndex(idx), setAutoScrollIndex(idx))
+                }
                 onMouseEnter={() => setAutoScrollIndex(idx)}
                 onMouseLeave={() => setAutoScrollIndex(0)}
               >
                 {/* Phone device frame - realistic modern phone */}
-                <div className="relative bg-gray-900 rounded-[2.5rem] p-1 shadow-xl hover:shadow-2xl transition-all hover:scale-[1.02]" style={{ aspectRatio: '9/13' }}>
-                  
+                <div
+                  className="relative bg-gray-900 rounded-[2.5rem] p-1 shadow-xl hover:shadow-2xl transition-all hover:scale-[1.02]"
+                  style={{ aspectRatio: "9/13" }}
+                >
                   {/* Top bezel/notch area (inset to match inner screen) */}
                   <div className="absolute left-1 right-1 top-0 h-7 bg-gray-900 rounded-t-[2.3rem] flex items-center justify-center z-20">
                     {/* Notch */}
@@ -144,21 +165,37 @@ export default function Portfolio({ config = {} }) {
 
                   {/* Phone screen (inner content area) */}
                   <div className="relative overflow-hidden rounded-[2.3rem] bg-black h-full">
-                    <div className={`absolute inset-0 image-wrapper ${isAuto || isSelected ? "is-scrolling" : ""}`}>
+                    <div
+                      className={`absolute inset-0 image-wrapper ${isAuto || isSelected ? "is-scrolling" : ""}`}
+                    >
                       <div className="image-scroll">
                         <div className="scroll-item">
-                          <Image src={p.image} alt={p.title} fill className="object-cover" sizes="290px" priority={idx < 4} />
+                          <Image
+                            src={p.image}
+                            alt={p.title}
+                            fill
+                            className="object-cover"
+                            sizes="290px"
+                            priority={idx < 4}
+                          />
                         </div>
                         <div className="scroll-item">
-                          <Image src={p.image} alt={p.title} fill className="object-cover" sizes="290px" />
+                          <Image
+                            src={p.image}
+                            alt={p.title}
+                            fill
+                            className="object-cover"
+                            sizes="290px"
+                          />
                         </div>
                       </div>
                     </div>
 
                     <div className="absolute bottom-6 left-4 right-4 z-20">
                       <div className="text-blue-600">
-                        <h3 className="text-sm font-bold leading-tight line-clamp-2 drop-shadow-lg mb-1">{p.title}</h3>
-                       
+                        <h3 className="text-sm font-bold leading-tight line-clamp-2 drop-shadow-lg mb-1">
+                          {p.title}
+                        </h3>
                       </div>
                     </div>
                   </div>
@@ -176,27 +213,33 @@ export default function Portfolio({ config = {} }) {
         {/* View more / View less button */}
         {filtered.length > visibleCount && (
           <div className="flex justify-center mt-6" ref={viewMoreRef}>
-            <button 
+            <button
               type="button"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log('Button clicked! showAll before:', showAll, 'filtered.length:', filtered.length, 'visibleCount:', visibleCount);
-                setShowAll(prev => {
+                console.log(
+                  "Button clicked! showAll before:",
+                  showAll,
+                  "filtered.length:",
+                  filtered.length,
+                  "visibleCount:",
+                  visibleCount,
+                );
+                setShowAll((prev) => {
                   const newValue = !prev;
-                  console.log('Setting showAll to:', newValue);
+                  console.log("Setting showAll to:", newValue);
                   return newValue;
                 });
-              }} 
+              }}
               className="inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full px-6 py-2.5 shadow-lg transition cursor-pointer z-10 relative"
             >
               <span className="text-white font-bold">
-                {showAll ? 'View Less' : 'View More'} 
+                {showAll ? "View Less" : "View More"}
               </span>
             </button>
           </div>
         )}
-
       </div>
 
       {/* Modal / Lightbox */}
@@ -210,16 +253,16 @@ export default function Portfolio({ config = {} }) {
           {/* Image - centered full viewport */}
           <div className="relative w-full h-screen flex items-center justify-center">
             <div className="relative w-full h-full max-w-6xl">
-              <Image 
-                src={selectedItem.image} 
-                alt={selectedItem.title} 
+              <Image
+                src={selectedItem.image}
+                alt={selectedItem.title}
                 fill
                 className="object-contain"
                 quality={95}
                 priority
                 onClick={(e) => e.stopPropagation()}
               />
-              
+
               {/* Close button - positioned relative to image */}
               <button
                 onClick={() => setSelectedIndex(null)}
@@ -233,7 +276,8 @@ export default function Portfolio({ config = {} }) {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  const newIndex = selectedIndex > 0 ? selectedIndex - 1 : filtered.length - 1;
+                  const newIndex =
+                    selectedIndex > 0 ? selectedIndex - 1 : filtered.length - 1;
                   setSelectedIndex(newIndex);
                 }}
                 className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 md:top-auto md:translate-y-0 md:bottom-8 z-60 bg-linear-to-l from-cyan-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full w-9 h-9 md:w-10 md:h-10 flex items-center justify-center transition-all shadow-2xl hover:scale-110 text-2xl md:text-3xl font-bold backdrop-blur-sm leading-none"
@@ -246,7 +290,8 @@ export default function Portfolio({ config = {} }) {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  const newIndex = selectedIndex < filtered.length - 1 ? selectedIndex + 1 : 0;
+                  const newIndex =
+                    selectedIndex < filtered.length - 1 ? selectedIndex + 1 : 0;
                   setSelectedIndex(newIndex);
                 }}
                 className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 md:top-auto md:translate-y-0 md:bottom-8 z-60 bg-linear-to-r from-cyan-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full w-9 h-9 md:w-10 md:h-10 flex items-center justify-center transition-all shadow-2xl hover:scale-110 text-2xl md:text-3xl font-bold backdrop-blur-sm leading-none"
@@ -257,25 +302,26 @@ export default function Portfolio({ config = {} }) {
             </div>
 
             {/* Content box - left on desktop, bottom bar on mobile */}
-            <div 
+            <div
               className="absolute left-0 right-0 bottom-0 md:left-8 md:right-auto md:top-1/2 md:-translate-y-1/2 md:bottom-auto z-55 md:max-w-md bg-linear-to-t from-black via-black/90 to-transparent md:bg-none md:from-transparent backdrop-blur-none md:backdrop-blur-md md:rounded-lg p-4 pt-10 md:p-8 md:shadow-2xl"
               onClick={(e) => e.stopPropagation()}
               style={{
-                background: 'linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.7) 60%, transparent)'
+                background:
+                  "linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.7) 60%, transparent)",
               }}
             >
               {/* Desktop background overlay */}
               <div className="hidden md:block absolute inset-0 bg-black/60 rounded-lg -z-10" />
-              
+
               {/* Chat bubble tail - only visible on desktop */}
-              <div 
+              <div
                 className="hidden md:block absolute -right-3 bottom-1/16 -translate-y-1/2"
                 style={{
                   width: 0,
                   height: 0,
-                  borderTop: '12px solid transparent',
-                  borderBottom: '12px solid transparent',
-                  borderLeft: '12px solid rgba(0, 0, 0, 0.6)',
+                  borderTop: "12px solid transparent",
+                  borderBottom: "12px solid transparent",
+                  borderLeft: "12px solid rgba(0, 0, 0, 0.6)",
                 }}
               />
               <h3 className="text-base md:text-2xl lg:text-3xl font-oswald font-bold text-white mb-2 md:mb-3 leading-tight">
@@ -285,15 +331,21 @@ export default function Portfolio({ config = {} }) {
               <p className="hidden md:block text-sm lg:text-base text-slate-200 leading-relaxed mb-6">
                 {selectedItem.description}
               </p>
-              
+
               {/* Start project button */}
-              <a 
-                href={"https://wa.me/18083015039?text=" + encodeURIComponent(`Hello, I'm interested in starting a project: ${selectedItem?.title || ''}`)} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <a
+                href={
+                  "https://wa.me/18083015039?text=" +
+                  encodeURIComponent(
+                    `Hello, I'm interested in starting a project: ${selectedItem?.title || ""}`,
+                  )
+                }
+                target="_blank"
+                rel="noopener noreferrer"
                 className="relative inline-flex items-center gap-1 bg-linear-to-r from-cyan-600 to-blue-700 hover:from-cyan-700 hover:to-blue-800 text-white font-bold rounded-full px-3 py-2 md:px-4 md:py-3 transition-all shadow-2xl hover:scale-110 whitespace-nowrap animate-pulse text-sm md:text-base"
                 style={{
-                  boxShadow: '0 0 30px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.5), 0 0 90px rgba(59, 130, 246, 0.3)'
+                  boxShadow:
+                    "0 0 30px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.5), 0 0 90px rgba(59, 130, 246, 0.3)",
                 }}
               >
                 <span className="text-lg md:text-2xl">🚀</span>
@@ -306,4 +358,3 @@ export default function Portfolio({ config = {} }) {
     </section>
   );
 }
-

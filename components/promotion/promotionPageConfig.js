@@ -1,6 +1,7 @@
 import Banner from "./Home/Banner";
 import Slider from "./Home/Slider";
 import Portfolio from "./Home/Portfolio";
+import Gallery from "./Home/Gallery";
 import PromotionPricing from "./Home/PromotionPricing";
 import StatsSectionSimple from "./Home/StatsSectionSimple";
 import ServicesSection from "./Home/ServicesSection";
@@ -10,6 +11,7 @@ export const PROMOTION_SECTION_KEYS = [
   "banner",
   "slider",
   "portfolio",
+  "gallery",
   "pricing",
   "stats",
   "services",
@@ -20,6 +22,7 @@ export const PROMOTION_SECTION_COMPONENTS = {
   banner: Banner,
   slider: Slider,
   portfolio: Portfolio,
+  gallery: Gallery,
   pricing: PromotionPricing,
   stats: StatsSectionSimple,
   services: ServicesSection,
@@ -30,6 +33,7 @@ export const PROMOTION_SECTION_LABELS = {
   banner: "Hero Banner",
   slider: "Logo Slider",
   portfolio: "Portfolio Preview",
+  gallery: "Gallery Showcase",
   pricing: "Pricing Plans",
   stats: "Stats Strip",
   services: "Services Showcase",
@@ -47,10 +51,17 @@ export const DEFAULT_PROMOTION_PAGE = {
   isActive: true,
   sections: PROMOTION_SECTION_KEYS.map((key, index) => ({
     key,
-    enabled: true,
+    enabled: key === "gallery" ? false : true,
     order: index,
     config: {},
   })),
+  footer: {
+    headline: "Sign up now for the ultimate website experience!",
+    description:
+      "Designs Genie is your all-in-one web design and development agency, featuring a team of skilled and imaginative developers, marketers, and designers.",
+    copyrightText: "Copyright © 2026 A2IT LLC | All rights reserved.",
+    logoImage: "/A2ITLogo.png",
+  },
 };
 
 export const createDefaultPromotionPage = (slug = "website") => ({
@@ -87,7 +98,9 @@ export const normalizePromotionPage = (page) => {
       {
         key: section?.key,
         enabled: section?.enabled !== false,
-        order: Number.isFinite(Number(section?.order)) ? Number(section.order) : index,
+        order: Number.isFinite(Number(section?.order))
+          ? Number(section.order)
+          : index,
         config:
           typeof section?.config === "object" && section?.config !== null
             ? section.config
@@ -110,5 +123,9 @@ export const normalizePromotionPage = (page) => {
     ...createDefaultPromotionPage(page.slug || "website"),
     ...page,
     sections,
+    footer: {
+      ...createDefaultPromotionPage(page.slug || "website").footer,
+      ...(typeof page.footer === "object" && page.footer !== null ? page.footer : {}),
+    },
   };
 };

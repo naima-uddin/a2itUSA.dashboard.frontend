@@ -164,7 +164,9 @@ export default function Dashboard() {
             <Link href="/dashboard/blogs?action=create">
               <button
                 className="w-full hover:shadow-lg hover:shadow-[#00f0ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition"
-                style={{ backgroundImage: "linear-gradient(135deg, #00f0ff, #0066ff)" }}
+                style={{
+                  backgroundImage: "linear-gradient(135deg, #00f0ff, #0066ff)",
+                }}
               >
                 📝 Create Blog
               </button>
@@ -172,7 +174,9 @@ export default function Dashboard() {
             <Link href="/dashboard/services?action=create">
               <button
                 className="w-full hover:shadow-lg hover:shadow-[#0066ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition"
-                style={{ backgroundImage: "linear-gradient(135deg, #0066ff, #00a0ff)" }}
+                style={{
+                  backgroundImage: "linear-gradient(135deg, #0066ff, #00a0ff)",
+                }}
               >
                 🛍️ Create Service
               </button>
@@ -180,7 +184,9 @@ export default function Dashboard() {
             <Link href="/dashboard/portfolio?action=create">
               <button
                 className="w-full hover:shadow-lg hover:shadow-[#00a0ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition"
-                style={{ backgroundImage: "linear-gradient(135deg, #00a0ff, #00f0ff)" }}
+                style={{
+                  backgroundImage: "linear-gradient(135deg, #00a0ff, #00f0ff)",
+                }}
               >
                 🖼️ Create Project
               </button>
@@ -188,7 +194,9 @@ export default function Dashboard() {
             <Link href="/dashboard/promotions">
               <button
                 className="w-full hover:shadow-lg hover:shadow-[#00f0ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition"
-                style={{ backgroundImage: "linear-gradient(135deg, #00f0ff, #0066ff)" }}
+                style={{
+                  backgroundImage: "linear-gradient(135deg, #00f0ff, #0066ff)",
+                }}
               >
                 🔗 Manage Promotion Pages
               </button>
@@ -196,7 +204,9 @@ export default function Dashboard() {
             <Link href="/dashboard/employees">
               <button
                 className="w-full hover:shadow-lg hover:shadow-[#0066ff]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition"
-                style={{ backgroundImage: "linear-gradient(135deg, #0066ff, #00a0ff)" }}
+                style={{
+                  backgroundImage: "linear-gradient(135deg, #0066ff, #00a0ff)",
+                }}
               >
                 🖼️ Manage Employees
               </button>
@@ -205,7 +215,10 @@ export default function Dashboard() {
               <Link href="/dashboard/users?action=create">
                 <button
                   className="w-full hover:shadow-lg hover:shadow-[#f5b342]/20 text-[#0a0a12] font-semibold py-3 rounded-lg transition"
-                  style={{ backgroundImage: "linear-gradient(135deg, #f5b342, #ffb84d)" }}
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(135deg, #f5b342, #ffb84d)",
+                  }}
                 >
                   👤 Add User
                 </button>

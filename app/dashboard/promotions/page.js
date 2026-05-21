@@ -162,11 +162,16 @@ export default function PromotionalPagesDashboard() {
       metaDescription: page.metaDescription || "",
       isActive: page.isActive !== false,
       sections: PROMOTION_SECTION_KEYS.map((key, index) => {
-        const match = (page.sections || []).find((section) => section.key === key);
+        const match = (page.sections || []).find(
+          (section) => section.key === key,
+        );
         return {
           key,
           enabled: match ? match.enabled !== false : true,
-          order: match && Number.isFinite(Number(match.order)) ? Number(match.order) : index,
+          order:
+            match && Number.isFinite(Number(match.order))
+              ? Number(match.order)
+              : index,
           config: match?.config || {},
         };
       }),
@@ -216,7 +221,8 @@ export default function PromotionalPagesDashboard() {
               Manage Promotion Pages
             </h1>
             <p className="text-slate-600">
-              Add slugs like /promotions/seo or /promotions/erp and choose the sections for each page.
+              Add slugs like /promotions/seo or /promotions/erp and choose the
+              sections for each page.
             </p>
           </div>
 
@@ -254,7 +260,8 @@ export default function PromotionalPagesDashboard() {
                 {editing ? "Edit Promotion Page" : "Create Promotion Page"}
               </h2>
               <p className="text-slate-600 text-sm">
-                Every section can be toggled per slug. Component content is stored as JSON config.
+                Every section can be toggled per slug. Component content is
+                stored as JSON config.
               </p>
             </div>
 
@@ -298,7 +305,10 @@ export default function PromotionalPagesDashboard() {
                 <input
                   value={formData.metaDescription}
                   onChange={(e) =>
-                    setFormData({ ...formData, metaDescription: e.target.value })
+                    setFormData({
+                      ...formData,
+                      metaDescription: e.target.value,
+                    })
                   }
                   placeholder="Meta Description"
                   className="w-full px-4 py-2 border rounded-lg"
@@ -339,7 +349,8 @@ export default function PromotionalPagesDashboard() {
                       <div className="flex flex-wrap items-center justify-between gap-3">
                         <div>
                           <div className="font-semibold text-slate-900">
-                            {PROMOTION_SECTION_LABELS[section.key] || section.key}
+                            {PROMOTION_SECTION_LABELS[section.key] ||
+                              section.key}
                           </div>
                           <div className="text-xs text-slate-500">
                             {section.key}
@@ -451,7 +462,9 @@ export default function PromotionalPagesDashboard() {
                 </div>
 
                 <p className="text-slate-600 text-sm mb-4">
-                  {page.description || page.metaDescription || "No description provided."}
+                  {page.description ||
+                    page.metaDescription ||
+                    "No description provided."}
                 </p>
 
                 <div className="flex flex-wrap gap-2 mb-4">

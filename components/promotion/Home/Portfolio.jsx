@@ -55,7 +55,9 @@ export default function Portfolio({ config = {} }) {
         ? config.projects
         : null;
     if (configProjects) {
-      const items = configProjects.map(normalizeProject).filter((p) => p && p.image);
+      const items = configProjects
+        .map(normalizeProject)
+        .filter((p) => p && p.image);
       setProjects(items);
       if (items.length) setAutoScrollIndex(0);
       return () => (mounted = false);

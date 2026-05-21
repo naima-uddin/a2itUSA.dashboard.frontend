@@ -7,6 +7,8 @@ import { Plus, Trash2, Edit2, Search } from "lucide-react";
 import DashboardLayout from "../components/DashboardLayout";
 import ImageUploadFactory from "../components/forms/ImageUploadFactory";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
 const createEmptyFormData = () => ({
   title: "",
   description: "",
@@ -69,8 +71,8 @@ export default function PortfolioPage() {
     try {
       setLoading(true);
       const url = isAdmin
-        ? `${process.env.NEXT_PUBLIC_API_URL}/api/portfolio/admin/all`
-        : `${process.env.NEXT_PUBLIC_API_URL}/api/portfolio`;
+        ? `${API_BASE}/api/portfolio/admin/all`
+        : `${API_BASE}/api/portfolio`;
       const opts = isAdmin
         ? { headers: { Authorization: `Bearer ${token}` } }
         : {};
@@ -113,7 +115,7 @@ export default function PortfolioPage() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/portfolio-categories`,
+        `${API_BASE}/api/portfolio-categories`,
         {
           method: "POST",
           headers: {
@@ -142,7 +144,7 @@ export default function PortfolioPage() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/portfolio-categories/${name}`,
+        `${API_BASE}/api/portfolio-categories/${name}`,
         {
           method: "DELETE",
           headers: {
@@ -164,8 +166,8 @@ export default function PortfolioPage() {
 
     try {
       const url = editingItem
-        ? `${process.env.NEXT_PUBLIC_API_URL}/api/portfolio/${editingItem._id}`
-        : `${process.env.NEXT_PUBLIC_API_URL}/api/portfolio`;
+        ? `${API_BASE}/api/portfolio/${editingItem._id}`
+        : `${API_BASE}/api/portfolio`;
 
       const method = editingItem ? "PUT" : "POST";
 
@@ -233,7 +235,7 @@ export default function PortfolioPage() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/portfolio/${id}`,
+        `${API_BASE}/api/portfolio/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -409,7 +411,7 @@ export default function PortfolioPage() {
                         )}
                       </div>
                       <div className="pt-3 border-t border-slate-100 flex gap-2">
-                          <span className="inline-block px-3 py-1 bg-linear-to-r from-[#00f0ff]/20 to-[#0066ff]/20 text-slate-700 text-xs font-semibold rounded-full">
+                        <span className="inline-block px-3 py-1 bg-linear-to-r from-[#00f0ff]/20 to-[#0066ff]/20 text-slate-700 text-xs font-semibold rounded-full">
                           Active
                         </span>
                       </div>
@@ -805,10 +807,10 @@ export default function PortfolioPage() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div>
                         <label className="block text-sm font-semibold text-slate-700 mb-2">
-                          Challenge
+                          Business Challenge
                         </label>
                         <textarea
-                          placeholder="What was the main challenge?"
+                          placeholder="What business problem did the project solve?"
                           value={formData.challenge}
                           onChange={(e) =>
                             setFormData({
@@ -851,6 +853,80 @@ export default function PortfolioPage() {
                             })
                           }
                           rows="4"
+                          className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-lg p-6 border border-slate-200">
+                    <h3 className="text-lg font-semibold text-slate-900 mb-4">
+                      Testimonial
+                    </h3>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-semibold text-slate-700 mb-2">
+                          Testimonial Text
+                        </label>
+                        <textarea
+                          placeholder="Optional customer feedback used on the website..."
+                          value={formData.testimonialText}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              testimonialText: e.target.value,
+                            })
+                          }
+                          rows="3"
+                          className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-slate-700 mb-2">
+                          Author
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.testimonialAuthor}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              testimonialAuthor: e.target.value,
+                            })
+                          }
+                          className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-slate-700 mb-2">
+                          Position
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.testimonialPosition}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              testimonialPosition: e.target.value,
+                            })
+                          }
+                          className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-semibold text-slate-700 mb-2">
+                          Company
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.testimonialCompany}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              testimonialCompany: e.target.value,
+                            })
+                          }
                           className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
                         />
                       </div>
@@ -969,6 +1045,9 @@ export default function PortfolioPage() {
                         setFormData({
                           title: item.title,
                           description: item.description,
+                          type: item.type || "portfolio",
+                          status: item.status || "live",
+                          year: item.year || "",
                           category: item.category || [],
                           image: item.image,
                           link: item.link || "",
@@ -977,14 +1056,20 @@ export default function PortfolioPage() {
                           duration: item.duration || "",
                           teamSize: item.teamSize || "",
                           role: item.role || "",
-                          challenge: item.challenge || "",
+                          detailedDescription: item.detailedDescription || "",
+                          challenge:
+                            item.businessChallenge || item.challenge || "",
                           solution: item.solution || "",
-                          result: item.result || "",
+                          result: item.results || item.result || "",
                           features: item.features?.join("\n") || "",
                           metrics:
                             item.metrics
                               ?.map((m) => `${m.value}|${m.label}`)
                               .join("\n") || "",
+                          testimonialText: item.testimonial?.text || "",
+                          testimonialAuthor: item.testimonial?.author || "",
+                          testimonialPosition: item.testimonial?.position || "",
+                          testimonialCompany: item.testimonial?.company || "",
                         });
                         // Close category manager and open form in-place
                         setShowCategoryManager(false);

@@ -326,7 +326,7 @@ export default function DashboardLayout({ children }) {
         onClick={scrollToTop}
         aria-label="Scroll to top"
         title="Scroll to top"
-        className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 rounded-full border border-slate-300 bg-cyan-100 px-3 py-2 text-slate-900 shadow-lg transition hover:border-cyan-400 hover:shadow-xl"
+        className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 rounded-full border border-cyan-300 bg-cyan-100 px-3 py-1.5 text-cyan-900 shadow-lg transition hover:border-cyan-400 hover:shadow-xl"
       >
         <ArrowUp className="h-4 w-4" />
       </button>

@@ -40,7 +40,11 @@ const normalizePortfolioBuckets = (items = []) => {
         : item.image
           ? [item.image]
           : [],
-      performance: Array.isArray(item.performance) ? item.performance : [],
+      performance: Array.isArray(item.performance)
+        ? item.performance
+        : Array.isArray(item.metrics)
+          ? item.metrics
+          : [],
       technologies: Array.isArray(item.technologies) ? item.technologies : [],
       features: Array.isArray(item.features) ? item.features : [],
     };

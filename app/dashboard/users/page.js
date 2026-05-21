@@ -13,10 +13,21 @@ export default function UsersPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
-  const [formData, setFormData] = useState({ name: "", email: "", password: "", role: "moderator" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "moderator",
+  });
 
   if (!isAdmin) {
-    return <DashboardLayout><div className="text-center py-12"><p className="text-slate-600">Access Denied. Admin only.</p></div></DashboardLayout>;
+    return (
+      <DashboardLayout>
+        <div className="text-center py-12">
+          <p className="text-slate-600">Access Denied. Admin only.</p>
+        </div>
+      </DashboardLayout>
+    );
   }
 
   useEffect(() => {
@@ -32,7 +43,7 @@ export default function UsersPage() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (response.ok) {
@@ -90,7 +101,7 @@ export default function UsersPage() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (response.ok) {
@@ -101,9 +112,10 @@ export default function UsersPage() {
     }
   };
 
-  const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -115,13 +127,22 @@ export default function UsersPage() {
           className="flex justify-between items-center"
         >
           <div>
-            <h1 className="text-4xl font-bold text-slate-900 mb-2">Manage Users</h1>
-            <p className="text-slate-600">Create and manage admin and moderator accounts</p>
+            <h1 className="text-4xl font-bold text-slate-900 mb-2">
+              Manage Users
+            </h1>
+            <p className="text-slate-600">
+              Create and manage admin and moderator accounts
+            </p>
           </div>
           <button
             onClick={() => {
               setEditingUser(null);
-              setFormData({ name: "", email: "", password: "", role: "moderator" });
+              setFormData({
+                name: "",
+                email: "",
+                password: "",
+                role: "moderator",
+              });
               setShowForm(!showForm);
             }}
             className="bg-gradient-to-r from-[#00f0ff] to-[#0066ff] text-[#0a0a12] font-semibold px-6 py-3 rounded-lg flex items-center gap-2"
@@ -137,13 +158,17 @@ export default function UsersPage() {
             animate={{ opacity: 1 }}
             className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm"
           >
-            <h2 className="text-xl font-bold text-slate-900 mb-4">{editingUser ? "Edit User" : "Create New User"}</h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-4">
+              {editingUser ? "Edit User" : "Create New User"}
+            </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
                 type="text"
                 placeholder="Full Name"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 required
                 className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900"
               />
@@ -151,7 +176,9 @@ export default function UsersPage() {
                 type="email"
                 placeholder="Email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 required
                 className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900"
               />
@@ -160,14 +187,18 @@ export default function UsersPage() {
                   type="password"
                   placeholder="Password"
                   value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                   required
                   className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900"
                 />
               )}
               <select
                 value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, role: e.target.value })
+                }
                 className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900"
               >
                 <option value="moderator">Moderator</option>
@@ -213,10 +244,18 @@ export default function UsersPage() {
               <table className="w-full">
                 <thead className="bg-slate-100">
                   <tr>
-                    <th className="px-6 py-3 text-left text-slate-600 text-sm font-semibold">Name</th>
-                    <th className="px-6 py-3 text-left text-slate-600 text-sm font-semibold">Email</th>
-                    <th className="px-6 py-3 text-left text-slate-600 text-sm font-semibold">Role</th>
-                    <th className="px-6 py-3 text-left text-slate-600 text-sm font-semibold">Actions</th>
+                    <th className="px-6 py-3 text-left text-slate-600 text-sm font-semibold">
+                      Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-slate-600 text-sm font-semibold">
+                      Email
+                    </th>
+                    <th className="px-6 py-3 text-left text-slate-600 text-sm font-semibold">
+                      Role
+                    </th>
+                    <th className="px-6 py-3 text-left text-slate-600 text-sm font-semibold">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200">
@@ -225,7 +264,9 @@ export default function UsersPage() {
                       <td className="px-6 py-4 text-slate-900">{user.name}</td>
                       <td className="px-6 py-4 text-slate-600">{user.email}</td>
                       <td className="px-6 py-4">
-                        <span className={`px-2 py-1 rounded text-xs font-semibold ${user.role === "admin" ? "bg-red-500/20 text-red-400" : "bg-blue-500/20 text-blue-400"}`}>
+                        <span
+                          className={`px-2 py-1 rounded text-xs font-semibold ${user.role === "admin" ? "bg-red-500/20 text-red-400" : "bg-blue-500/20 text-blue-400"}`}
+                        >
                           {user.role}
                         </span>
                       </td>
@@ -233,7 +274,12 @@ export default function UsersPage() {
                         <button
                           onClick={() => {
                             setEditingUser(user);
-                            setFormData({ name: user.name, email: user.email, password: "", role: user.role });
+                            setFormData({
+                              name: user.name,
+                              email: user.email,
+                              password: "",
+                              role: user.role,
+                            });
                             setShowForm(true);
                           }}
                           className="p-2 bg-[#00f0ff]/10 hover:bg-[#00f0ff]/20 text-[#00f0ff] rounded"

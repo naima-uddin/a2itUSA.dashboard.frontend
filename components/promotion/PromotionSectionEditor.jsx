@@ -377,9 +377,7 @@ const RepeatableEditor = ({
         ))}
       </div>
 
-      <p className="text-xs text-slate-500">
-        Add or remove cards, features, or gallery items for this section.
-      </p>
+      <p className="text-xs text-slate-500"></p>
     </div>
   );
 };

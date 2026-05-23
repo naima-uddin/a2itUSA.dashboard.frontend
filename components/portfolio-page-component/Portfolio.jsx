@@ -529,7 +529,7 @@ const Portfolio = () => {
                       exit={{ opacity: 0, x: -20 }}
                       className="relative"
                     >
-                      <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                      <div className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-md hover:-translate-y-1 hover:shadow-xl transition transform duration-300">
                         {/* Image */}
                         <div className="relative h-48 sm:h-56 overflow-hidden">
                           <Image
@@ -600,10 +600,10 @@ const Portfolio = () => {
                                   affiliateProjects[affiliateSliderIndex],
                                 )
                               }
-                              className="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1"
+                              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-sm"
                             >
                               View Case
-                              <FiExternalLink className="w-3 h-3" />
+                              <FiExternalLink className="w-4 h-4" />
                             </button>
                           </div>
                         </div>
@@ -680,7 +680,7 @@ const Portfolio = () => {
                             transition={{ duration: 0.3 }}
                             className="group relative"
                           >
-                            <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+                            <div className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-md hover:-translate-y-1 hover:shadow-xl transition transform duration-300">
                               <div className="relative h-64 overflow-hidden">
                                 <Image
                                   src={project.images[0]}
@@ -742,7 +742,7 @@ const Portfolio = () => {
                                   </div>
                                   <button
                                     onClick={() => openProjectModal(project)}
-                                    className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                                    className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-sm"
                                   >
                                     View Case
                                     <FiExternalLink className="w-4 h-4" />
@@ -834,13 +834,13 @@ const Portfolio = () => {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
-                      className="group relative cursor-pointer transform transition-transform duration-500 hover:scale-105"
+                      className="group relative cursor-pointer transform transition duration-300 hover:-translate-y-1 hover:shadow-lg"
                       onClick={() =>
                         openProjectModal(filteredProjects[portfolioSliderIndex])
                       }
                     >
                       {/* Image Container */}
-                      <div className="relative aspect-square overflow-hidden rounded-xl sm:rounded-2xl bg-gray-100">
+                      <div className="relative aspect-square overflow-hidden rounded-3xl sm:rounded-3xl bg-gray-100">
                         {/* Base Image */}
                         <Image
                           src={filteredProjects[portfolioSliderIndex].image}
@@ -851,7 +851,7 @@ const Portfolio = () => {
                         />
 
                         {/* Overlay Content - Shows on hover */}
-                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-4 text-center">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-4 text-center">
                           <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">
                             {filteredProjects[portfolioSliderIndex].title}
                           </h3>
@@ -1036,11 +1036,11 @@ const Portfolio = () => {
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: index * 0.05 }}
-                          className="group relative cursor-pointer transform transition-transform duration-500 hover:scale-105"
+                          className="group relative cursor-pointer transform transition duration-300 hover:-translate-y-1 hover:shadow-lg"
                           onClick={() => openProjectModal(project)}
                         >
                           {/* Image Container */}
-                          <div className="relative aspect-square overflow-hidden rounded-2xl bg-gray-100">
+                          <div className="relative aspect-square overflow-hidden rounded-3xl bg-gray-100">
                             {/* Base Image */}
                             <Image
                               src={project.image}
@@ -1051,7 +1051,7 @@ const Portfolio = () => {
                             />
 
                             {/* Overlay Content - Shows on hover */}
-                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-6 text-center">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-6 text-center">
                               <h3 className="text-xl font-bold text-white mb-3 line-clamp-2">
                                 {project.title}
                               </h3>

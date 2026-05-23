@@ -209,11 +209,11 @@ export default function BlogListClient() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="relative text-white py-8 sm:py-12 md:py-24 lg:py-48 overflow-hidden">
+      <div className="relative text-white py-8  md:py-14 lg:py-28 overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="/assets/blogBg-Bqvv8GaU.jpg"
+            src="/A2IT Blog.jpg"
             alt="Electronics Blog Hero Background"
             fill
             className="object-cover"
@@ -234,8 +234,9 @@ export default function BlogListClient() {
               Grow.
             </h1>
             <p className="text-sm sm:text-base md:text-lg opacity-90 mb-4 sm:mb-6 leading-relaxed">
-              Discover the latest electronics, gadget reviews, tech guides, and
-              digital trends
+              Dive into our blog for the latest insights, tips, and trends in
+              technology, innovation, and digital transformation. Stay informed
+              and inspired with A2IT's expert perspectives and industry updates.
             </p>
 
             <form onSubmit={handleSearchSubmit} className="max-w-xl mx-auto">
@@ -244,7 +245,7 @@ export default function BlogListClient() {
                   type="text"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
-                  placeholder="Search blogs by title, excerpt, or content"
+                  placeholder="Search blogs by title, excerpt, or content "
                   className="flex-1 bg-transparent text-gray-900 placeholder:text-gray-500 px-3 py-2 text-sm sm:text-base focus:outline-none"
                 />
                 {searchQuery && (

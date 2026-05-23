@@ -426,6 +426,31 @@ const BlogPage = () => {
               Business Blogs
             </motion.p>
             <motion.div
+              className="mt-8 max-w-4xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.7 }}
+            >
+              <div className="relative overflow-hidden rounded-3xl border border-white/15 bg-white/10 shadow-2xl backdrop-blur-sm">
+                <img
+                  src="/A2IT Blog.jpg"
+                  alt="Blog banner"
+                  className="h-56 sm:h-72 md:h-80 w-full object-cover"
+                  loading="eager"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 text-left">
+                  <p className="text-xs sm:text-sm uppercase tracking-[0.3em] text-[#00f0ff] mb-2">
+                    Featured banner
+                  </p>
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-white max-w-2xl">
+                    Ideas, insights, and practical guides for your next digital
+                    move.
+                  </h2>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.7 }}

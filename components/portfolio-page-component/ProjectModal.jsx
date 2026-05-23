@@ -428,7 +428,11 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
               )}
 
               {/* Testimonial */}
-              {project.testimonial && (
+              {project.testimonial &&
+                (project.testimonial.text ||
+                  project.testimonial.author ||
+                  project.testimonial.position ||
+                  project.testimonial.company) && (
                 <div className="mt-6 sm:mt-8 p-4 sm:p-5 lg:p-6 bg-linear-to-r from-blue-50 to-indigo-50 rounded-xl lg:rounded-2xl">
                   <div className="flex items-start gap-3 sm:gap-4">
                     <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-blue-100 rounded-full flex items-center justify-center shrink-0">

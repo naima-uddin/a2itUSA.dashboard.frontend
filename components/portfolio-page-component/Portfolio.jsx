@@ -87,7 +87,6 @@ const Portfolio = () => {
   const [portfolioData, setPortfolioData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState("all");
-  const [hoveredAffiliate, setHoveredAffiliate] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [sliderIndex, setSliderIndex] = useState(0);
@@ -356,6 +355,12 @@ const Portfolio = () => {
     }
   };
 
+  const affiliateProjects = getAffiliateProjects();
+  const visibleAffiliateProjects = affiliateProjects.slice(
+    affiliateSliderIndex,
+    affiliateSliderIndex + 3,
+  );
+
   // Portfolio slider navigation
   const nextPortfolioSlide = () => {
     const projects = getFilteredProjects();
@@ -385,7 +390,6 @@ const Portfolio = () => {
   }
 
   const categories = getCategoryCounts();
-  const affiliateProjects = getAffiliateProjects();
   const filteredProjects = getFilteredProjects();
 
   return (
@@ -516,50 +520,17 @@ const Portfolio = () => {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
                       className="relative"
-                      onMouseEnter={() =>
-                        setHoveredAffiliate(
-                          affiliateProjects[affiliateSliderIndex]?.id,
-                        )
-                      }
-                      onMouseLeave={() => setHoveredAffiliate(null)}
                     >
                       <div className="bg-white border border-teal-100 rounded-2xl overflow-hidden shadow-lg">
-                        {/* Image with hover effect */}
+                        {/* Image */}
                         <div className="relative h-48 sm:h-56 overflow-hidden">
-                          <div className="relative w-full h-full">
-                            {/* Base image */}
-                            <img
-                              src={
-                                affiliateProjects[affiliateSliderIndex]
-                                  .images[0]
-                              }
-                              alt={
-                                affiliateProjects[affiliateSliderIndex].title
-                              }
-                              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-                                hoveredAffiliate ===
-                                affiliateProjects[affiliateSliderIndex]?.id
-                                  ? "opacity-0"
-                                  : "opacity-100"
-                              }`}
-                            />
-                            {/* Hover image */}
-                            <img
-                              src={
-                                affiliateProjects[affiliateSliderIndex]
-                                  .images[1] ||
-                                affiliateProjects[affiliateSliderIndex]
-                                  .images[0]
-                              }
-                              alt={`${affiliateProjects[affiliateSliderIndex].title} - Alternative view`}
-                              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-                                hoveredAffiliate ===
-                                affiliateProjects[affiliateSliderIndex]?.id
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              }`}
-                            />
-                          </div>
+                          <img
+                            src={
+                              affiliateProjects[affiliateSliderIndex].images[0]
+                            }
+                            alt={affiliateProjects[affiliateSliderIndex].title}
+                            className="w-full h-full object-cover"
+                          />
 
                           {/* Category badge */}
                           <div className="absolute top-3 left-3">
@@ -672,102 +643,114 @@ const Portfolio = () => {
                 )}
               </div>
 
-              {/* Desktop View - Grid */}
-              <div className="hidden md:grid md:grid-cols-3 gap-6 lg:gap-8">
-                {affiliateProjects.map((project, index) => (
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.2 }}
-                    className="group relative"
-                    onMouseEnter={() => setHoveredAffiliate(project.id)}
-                    onMouseLeave={() => setHoveredAffiliate(null)}
-                  >
-                    <div className="bg-white border border-teal-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500">
-                      {/* Image with hover effect */}
-                      <div className="relative h-64 overflow-hidden">
-                        <div className="relative w-full h-full">
-                          {/* Base image */}
-                          <img
-                            src={project.images[0]}
-                            alt={project.title}
-                            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-                              hoveredAffiliate === project.id
-                                ? "opacity-0"
-                                : "opacity-100"
-                            }`}
-                          />
-                          {/* Hover image */}
-                          <img
-                            src={project.images[1] || project.images[0]}
-                            alt={`${project.title} - Alternative view`}
-                            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-                              hoveredAffiliate === project.id
-                                ? "opacity-100"
-                                : "opacity-0"
-                            }`}
-                          />
-                        </div>
-
-                        {/* Category badge */}
-                        <div className="absolute top-4 left-4">
-                          <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-bold rounded-full">
-                            {project.category}
-                          </span>
-                        </div>
-
-                        {/* Partnership badge */}
-                        <div className="absolute top-4 right-4">
-                          <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full">
-                            Partnership
-                          </span>
-                        </div>
+              {/* Desktop View - Row Slider */}
+              <div className="hidden md:block">
+                {affiliateProjects.length > 0 && (
+                  <div className="relative">
+                    <div className="flex items-center justify-between mb-4">
+                      <button
+                        onClick={prevAffiliateSlide}
+                        className="p-2 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-slate-50 transition-colors"
+                        aria-label="Previous affiliate project"
+                      >
+                        <FiChevronLeft className="w-5 h-5 text-slate-700" />
+                      </button>
+                      <div className="text-sm text-slate-500">
+                        {affiliateSliderIndex + 1} / {affiliateProjects.length}
                       </div>
+                      <button
+                        onClick={nextAffiliateSlide}
+                        className="p-2 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-slate-50 transition-colors"
+                        aria-label="Next affiliate project"
+                      >
+                        <FiChevronRight className="w-5 h-5 text-slate-700" />
+                      </button>
+                    </div>
 
-                      {/* Content */}
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-1">
-                          {project.title}
-                        </h3>
-                        <p className="text-gray-600 mb-6 text-sm line-clamp-2">
-                          {project.description}
-                        </p>
-
-                        <div className="flex items-center justify-between">
-                          <div className="space-y-2">
-                            {project.performance &&
-                              project.performance
-                                .slice(0, 2)
-                                .map((metric, idx) => (
-                                  <div
-                                    key={idx}
-                                    className="flex items-center gap-2"
-                                  >
-                                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                    <span className="text-sm">
-                                      <span className="font-bold text-gray-900">
-                                        {metric.value}
-                                      </span>
-                                      <span className="text-gray-500 ml-2">
-                                        {metric.label}
-                                      </span>
-                                    </span>
-                                  </div>
-                                ))}
-                          </div>
-                          <button
-                            onClick={() => openProjectModal(project)}
-                            className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                    <div className="overflow-hidden">
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+                        {visibleAffiliateProjects.map((project, index) => (
+                          <motion.div
+                            key={`${project.id}-${affiliateSliderIndex}-${index}`}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="group relative"
                           >
-                            View Case
-                            <FiExternalLink className="w-4 h-4" />
-                          </button>
-                        </div>
+                            <div className="bg-white border border-teal-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500">
+                              <div className="relative h-64 overflow-hidden">
+                                <img
+                                  src={project.images[0]}
+                                  alt={project.title}
+                                  className="absolute inset-0 w-full h-full object-cover opacity-100 transition-all duration-500 group-hover:opacity-0 group-hover:scale-110"
+                                />
+                                <img
+                                  src={project.images[1] || project.images[0]}
+                                  alt={`${project.title} - hover view`}
+                                  className="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:scale-110"
+                                />
+
+                                <div className="absolute top-4 left-4">
+                                  <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-bold rounded-full">
+                                    {Array.isArray(project.category)
+                                      ? project.category[0]
+                                      : project.category}
+                                  </span>
+                                </div>
+
+                                <div className="absolute top-4 right-4">
+                                  <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full">
+                                    Partnership
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div className="p-6">
+                                <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-1">
+                                  {project.title}
+                                </h3>
+                                <p className="text-gray-600 mb-6 text-sm line-clamp-2">
+                                  {project.description}
+                                </p>
+
+                                <div className="flex items-center justify-between">
+                                  <div className="space-y-2">
+                                    {project.performance &&
+                                      project.performance
+                                        .slice(0, 2)
+                                        .map((metric, metricIndex) => (
+                                          <div
+                                            key={metricIndex}
+                                            className="flex items-center gap-2"
+                                          >
+                                            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                            <span className="text-sm">
+                                              <span className="font-bold text-gray-900">
+                                                {metric.value}
+                                              </span>
+                                              <span className="text-gray-500 ml-2">
+                                                {metric.label}
+                                              </span>
+                                            </span>
+                                          </div>
+                                        ))}
+                                  </div>
+                                  <button
+                                    onClick={() => openProjectModal(project)}
+                                    className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                                  >
+                                    View Case
+                                    <FiExternalLink className="w-4 h-4" />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
                       </div>
                     </div>
-                  </motion.div>
-                ))}
+                  </div>
+                )}
               </div>
             </div>
           </section>

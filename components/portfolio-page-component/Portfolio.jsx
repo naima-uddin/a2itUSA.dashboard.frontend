@@ -430,16 +430,19 @@ const Portfolio = () => {
               </div>
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-none">
-                <span className="text-white">Our Creative</span>
-                <div className="relative inline-block ml-2 sm:ml-4">
-                  <span className="relative z-10 text-transparent bg-clip-text bg-linear-to-r from-blue-300 to-purple-300">
+                <span className="text-white">
+                  Our Creative <span className="ml-2">😊</span>
+                </span>
+                <div className="relative inline-block ml-2 sm:ml-4 items-center flex">
+                  <span className="relative z-10 text-transparent bg-clip-text bg-linear-to-r from-blue-300 to-purple-300 text-6xl">
                     Portfolio
                   </span>
+                  <Sparkles className="ml-3 text-white/90 w-6 h-6 animate-pulse" />
                   <div className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-1 sm:h-2 bg-linear-to-r from-blue-400 to-purple-400"></div>
                 </div>
               </h1>
 
-              <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 sm:mb-8 md:mb-10 max-w-2xl leading-relaxed">
+              <p className="text-lg sm:text-xl md:text-2xl text-white/95 mb-6 sm:mb-8 md:mb-10 max-w-2xl leading-relaxed tracking-tight">
                 Explore our diverse collection of web development, mobile apps,
                 e-commerce platforms, and digital marketing solutions. Each
                 project represents our commitment to excellence and innovation.
@@ -531,12 +534,14 @@ const Portfolio = () => {
                       <div className="bg-white border border-teal-100 rounded-2xl overflow-hidden shadow-lg">
                         {/* Image */}
                         <div className="relative h-48 sm:h-56 overflow-hidden">
-                          <img
+                          <Image
                             src={
                               affiliateProjects[affiliateSliderIndex].images[0]
                             }
                             alt={affiliateProjects[affiliateSliderIndex].title}
-                            className="w-full h-full object-cover"
+                            fill
+                            className="absolute inset-0 w-full h-full object-cover"
+                            sizes="(max-width:768px) 100vw, 33vw"
                           />
 
                           {/* Category badge */}
@@ -679,14 +684,16 @@ const Portfolio = () => {
                           >
                             <div className="bg-white border border-teal-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500">
                               <div className="relative h-64 overflow-hidden">
-                                <img
+                                <Image
                                   src={project.images[0]}
                                   alt={project.title}
+                                  fill
                                   className="absolute inset-0 w-full h-full object-cover opacity-100 transition-all duration-500 group-hover:opacity-0 group-hover:scale-110"
                                 />
-                                <img
+                                <Image
                                   src={project.images[1] || project.images[0]}
                                   alt={`${project.title} - hover view`}
+                                  fill
                                   className="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:scale-110"
                                 />
 
@@ -829,7 +836,7 @@ const Portfolio = () => {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
-                      className="group relative cursor-pointer"
+                      className="group relative cursor-pointer transform transition-transform duration-500 hover:scale-105"
                       onClick={() =>
                         openProjectModal(filteredProjects[portfolioSliderIndex])
                       }
@@ -837,10 +844,12 @@ const Portfolio = () => {
                       {/* Image Container */}
                       <div className="relative aspect-square overflow-hidden rounded-xl sm:rounded-2xl bg-gray-100">
                         {/* Base Image */}
-                        <img
+                        <Image
                           src={filteredProjects[portfolioSliderIndex].image}
                           alt={filteredProjects[portfolioSliderIndex].title}
+                          fill
                           className="absolute inset-0 w-full h-full object-cover group-hover:blur-sm group-hover:scale-110 transition-all duration-500"
+                          sizes="(max-width:768px) 100vw, 50vw"
                         />
 
                         {/* Overlay Content - Shows on hover */}
@@ -1029,16 +1038,18 @@ const Portfolio = () => {
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: index * 0.05 }}
-                          className="group relative cursor-pointer"
+                          className="group relative cursor-pointer transform transition-transform duration-500 hover:scale-105"
                           onClick={() => openProjectModal(project)}
                         >
                           {/* Image Container */}
                           <div className="relative aspect-square overflow-hidden rounded-2xl bg-gray-100">
                             {/* Base Image */}
-                            <img
+                            <Image
                               src={project.image}
                               alt={project.title}
+                              fill
                               className="absolute inset-0 w-full h-full object-cover group-hover:blur-sm group-hover:scale-110 transition-all duration-500"
+                              sizes="(max-width:768px) 100vw, 25vw"
                             />
 
                             {/* Overlay Content - Shows on hover */}
@@ -1184,8 +1195,9 @@ const Portfolio = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <button className="px-6 py-2.5 sm:px-8 sm:py-3 bg-white text-blue-600 font-bold rounded-full hover:bg-gray-100 transition-colors text-sm sm:text-base">
-                      Start a Project
+                    <button className="px-6 py-2.5 sm:px-8 sm:py-3 bg-gradient-to-r from-white to-blue-50 text-blue-700 font-bold rounded-full shadow-xl transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-200 text-sm sm:text-base flex items-center gap-2 justify-center">
+                      <Sparkles className="w-4 h-4 text-yellow-400" /> Start a
+                      Project
                     </button>
                   </a>
                 </div>

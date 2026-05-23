@@ -531,7 +531,7 @@ const Portfolio = () => {
 
         <div className="min-h-screen bg-white">
           {/* Hero Section */}
-          <section className="pt-20">
+          <section className="pt-10">
             <div className="container mx-auto px-4">
               <div className="max-w-7xl text-center mx-auto">
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-1 leading-tight text-center">
@@ -1150,7 +1150,10 @@ const Portfolio = () => {
                                           project.performance
                                             .slice(0, 2)
                                             .map((metric, idx) => (
-                                              <div key={idx} className="text-center">
+                                              <div
+                                                key={idx}
+                                                className="text-center"
+                                              >
                                                 <div className="text-base font-bold text-white">
                                                   {metric.value}
                                                 </div>

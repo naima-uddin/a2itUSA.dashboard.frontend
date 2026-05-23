@@ -77,19 +77,19 @@ const BlogPage = () => {
     { name: "SEO / SEM / PPC / Social Media Marketing", icon: "🔍" },
     { name: "Server and Hosting Services", icon: "🖥️" },
   ];
-// Helper function to shorten category names
-const getShortCategoryName = (fullName) => {
-  const shortNames = {
-    "All": "All",
-    "Web & Mobile App Designing & Development": "Web & Mobile Dev",
-    "eCommerce Development Solutions": "eCommerce Solutions",
-    "ERP System Development": "ERP Systems",
-    "SEO / SEM / PPC / Social Media Marketing": "Digital Marketing",
-    "Server and Hosting Services": "Hosting Services"
+  // Helper function to shorten category names
+  const getShortCategoryName = (fullName) => {
+    const shortNames = {
+      All: "All",
+      "Web & Mobile App Designing & Development": "Web & Mobile Dev",
+      "eCommerce Development Solutions": "eCommerce Solutions",
+      "ERP System Development": "ERP Systems",
+      "SEO / SEM / PPC / Social Media Marketing": "Digital Marketing",
+      "Server and Hosting Services": "Hosting Services",
+    };
+
+    return shortNames[fullName] || fullName.substring(0, 12) + "...";
   };
-  
-  return shortNames[fullName] || fullName.substring(0, 12) + "...";
-};
   useEffect(() => {
     const fetchPosts = async () => {
       setIsLoading(true);
@@ -112,11 +112,11 @@ const getShortCategoryName = (fullName) => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Filter posts based on search and category
@@ -216,9 +216,7 @@ const getShortCategoryName = (fullName) => {
         >
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[#00f0ff] text-[#0a0a12]">
             {categories.find((c) => c.name === post.category)?.icon}
-            <span className="ml-2">
-              {post.category.split(" ")[0]}
-            </span>
+            <span className="ml-2">{post.category.split(" ")[0]}</span>
           </span>
         </motion.div>
 
@@ -325,14 +323,12 @@ const getShortCategoryName = (fullName) => {
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-        
+
         {/* Category Badge - Always Visible */}
         <div className="absolute top-4 left-4">
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[#00f0ff] text-[#0a0a12]">
             {categories.find((c) => c.name === post.category)?.icon}
-            <span className="ml-2">
-              {post.category.split(" ")[0]}
-            </span>
+            <span className="ml-2">{post.category.split(" ")[0]}</span>
           </span>
         </div>
       </div>
@@ -476,7 +472,7 @@ const getShortCategoryName = (fullName) => {
                       <span className="text-2xl mr-3">
                         {
                           categories.find(
-                            (c) => c.name === featuredPost.category
+                            (c) => c.name === featuredPost.category,
                           )?.icon
                         }
                       </span>
@@ -536,7 +532,10 @@ const getShortCategoryName = (fullName) => {
       )}
 
       {/* Blog Content Section */}
-      <div id="blog-content" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+      <div
+        id="blog-content"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative"
+      >
         {/* Animated grid background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute inset-0 bg-grid-pattern opacity-10" />
@@ -558,30 +557,30 @@ const getShortCategoryName = (fullName) => {
             </div>
 
             {/* Category Filter */}
-<div className="w-full md:w-auto">
-  <div className="flex flex-wrap gap-2 justify-center">
-    {categories.map((category) => {
-      // Shortened category names for display
-      const displayName = getShortCategoryName(category.name);
-      
-      return (
-        <button
-          key={category.name}
-          onClick={() => setActiveCategory(category.name)}
-          className={`px-3 py-2 rounded-lg text-xs font-medium transition-all border border-[#00f0ff]/20 hover:border-[#00f0ff]/40 whitespace-nowrap ${
-            activeCategory === category.name
-              ? "bg-gradient-to-r from-[#00f0ff] to-[#0066ff] text-white"
-              : "bg-[#0066ff] text-white hover:bg-[#00f0ff] hover:text-black"
-          }`}
-          title={category.name} // Show full name on hover
-        >
-          <span className="mr-1">{category.icon}</span>
-          {displayName}
-        </button>
-      );
-    })}
-  </div>
-</div>
+            <div className="w-full md:w-auto">
+              <div className="flex flex-wrap gap-2 justify-center">
+                {categories.map((category) => {
+                  // Shortened category names for display
+                  const displayName = getShortCategoryName(category.name);
+
+                  return (
+                    <button
+                      key={category.name}
+                      onClick={() => setActiveCategory(category.name)}
+                      className={`px-3 py-2 rounded-lg text-xs font-medium transition-all border border-[#00f0ff]/20 hover:border-[#00f0ff]/40 whitespace-nowrap ${
+                        activeCategory === category.name
+                          ? "bg-gradient-to-r from-[#00f0ff] to-[#0066ff] text-white"
+                          : "bg-[#0066ff] text-white hover:bg-[#00f0ff] hover:text-black"
+                      }`}
+                      title={category.name} // Show full name on hover
+                    >
+                      <span className="mr-1">{category.icon}</span>
+                      {displayName}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -589,12 +588,12 @@ const getShortCategoryName = (fullName) => {
         {!isLoading && displayedPosts.length > 0 && (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative mb-6 border border-[#00f0ff]/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00f0ff]">
-              {displayedPosts.map((post, index) => 
+              {displayedPosts.map((post, index) =>
                 isMobile ? (
                   <MobileBlogCard key={post.id} post={post} index={index} />
                 ) : (
                   <DesktopBlogCard key={post.id} post={post} index={index} />
-                )
+                ),
               )}
             </div>
 
@@ -615,7 +614,8 @@ const getShortCategoryName = (fullName) => {
                   <FiChevronDown className="animate-bounce" />
                 </motion.button>
                 <p className="text-[#b0b0ff] text-sm mt-4">
-                  Showing {displayedPosts.length} of {filteredPosts.length} posts
+                  Showing {displayedPosts.length} of {filteredPosts.length}{" "}
+                  posts
                 </p>
               </motion.div>
             )}

@@ -163,7 +163,7 @@ const PromotionPricing = ({ config = {} }) => {
         ? config.packages
         : designService.packages,
   };
-  const pricingHeading = config.heading || "WE ARE OPTIMISTS WHO LOVE";
+  const pricingHeading = config.heading || "WE ARE OPTIMISTS WHO LOVE ";
   const pricingHighlight = config.highlight || "TO WORK TOGETHER";
   const pricingDescription =
     config.description ||
@@ -429,7 +429,7 @@ const PromotionPricing = ({ config = {} }) => {
             <div className="max-w-7xl mx-auto px-4">
               <div className="text-center mb-3">
                 <h2
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 leading-tight"
+                  className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-4 leading-tight"
                   style={{ fontFamily: "var(--font-oswald), sans-serif" }}
                 >
                   {pricingHeading}{" "}

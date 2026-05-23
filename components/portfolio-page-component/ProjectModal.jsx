@@ -20,8 +20,6 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0);
 
-  if (!project) return null;
-
   // Get all images based on project type
   const getProjectImages = () => {
     if (project.images) return project.images;
@@ -111,6 +109,8 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   };
 
   const projectTypes = getProjectTypes();
+
+  if (!project) return null;
 
   return (
     <AnimatePresence>

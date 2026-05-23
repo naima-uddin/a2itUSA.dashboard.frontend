@@ -275,7 +275,7 @@ const Pricing = ({ content = null }) => {
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-none">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl  xl:text-6xl font-bold mb-6 leading-none ">
               <span className="text-white">{pageContent.hero.titleLine1}</span>
               <div className="relative inline-block ml-2 sm:ml-4">
                 <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-800">

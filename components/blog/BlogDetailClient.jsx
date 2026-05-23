@@ -179,6 +179,10 @@ export default function BlogDetailClient({ slug }) {
     );
   }
 
+  const bannerImageUrl =
+    getImageUrl(blog.featuredImage, blog.thumbnail) ||
+    "/assets/BlogImg/blogBg.jpg";
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* Enhanced Breadcrumb */}
@@ -243,8 +247,38 @@ export default function BlogDetailClient({ slug }) {
         </div>
       </div>
 
+      {/* Blog Banner */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8">
+        <div className="relative overflow-hidden rounded-3xl bg-gray-900 shadow-2xl aspect-21/8 sm:aspect-21/7">
+          <Image
+            src={bannerImageUrl}
+            alt={blog.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 1024px"
+            priority
+          />
+          <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-black/10" />
+          <div className="absolute inset-0 flex items-end">
+            <div className="w-full p-4 sm:p-6 md:p-8 lg:p-10">
+              <div className="max-w-3xl">
+                <p className="inline-flex items-center rounded-full bg-cyan-400/90 px-3 py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.25em] text-gray-950">
+                  Blog banner
+                </p>
+                <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-white">
+                  {blog.title}
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm sm:text-base text-white/85">
+                  {truncateText(blog.excerpt || blog.description, 180)}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Article */}
-      <article className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-4 md:py-8">
+      <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-4 md:py-8">
         {/* Enhanced Header */}
         <header className="mb-1">
           <div className="text-center mb-2">
@@ -312,21 +346,6 @@ export default function BlogDetailClient({ slug }) {
             </div>
           </div>
         </header>
-
-        {/* Featured Image */}
-        {getImageUrl(blog.featuredImage, blog.thumbnail) && (
-          <div className="relative aspect-[5/2] mb-8 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-600 shadow-xl">
-            <Image
-              src={getImageUrl(blog.featuredImage, blog.thumbnail)}
-              alt={blog.title}
-              fill
-              className="object-cover hover:scale-105 transition-transform duration-500"
-              sizes="(max-width: 768px) 100vw, 800px"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-          </div>
-        )}
 
         {/* Enhanced Content */}
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 py-2 sm:py-4 px-4 sm:px-8 md:px-10 mb-4 md:mb-6">
@@ -854,7 +873,7 @@ export default function BlogDetailClient({ slug }) {
             <h3 className="text-xl font-bold text-gray-900 mb-2">
               Share this article
             </h3>
-            <p className="text-gray-600">Help others discover this content</p>
+            <p className="text-gray-600">Help others discover this content </p>
           </div>
           <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 md:gap-4">
             <button

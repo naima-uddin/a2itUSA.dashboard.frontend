@@ -58,7 +58,10 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   };
 
   const getProjectTypes = () => {
-    if (Array.isArray(project.projectTypes) && project.projectTypes.length > 0) {
+    if (
+      Array.isArray(project.projectTypes) &&
+      project.projectTypes.length > 0
+    ) {
       return project.projectTypes;
     }
 

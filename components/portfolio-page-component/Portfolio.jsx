@@ -77,8 +77,7 @@ const normalizePortfolioBuckets = (items = []) => {
     );
     const types = projectTypes(item);
     const hasAffiliate =
-      sections.includes("affiliateprojects") ||
-      types.includes("affiliate");
+      sections.includes("affiliateprojects") || types.includes("affiliate");
     const hasFeatured =
       sections.includes("featuredprojects") || types.includes("featured");
     const hasPortfolio =
@@ -214,7 +213,8 @@ const Portfolio = () => {
 
     const seen = new Set();
     return allProjects.filter((project) => {
-      const key = project?._id || project?.id || `${project?.title}-${project?.image}`;
+      const key =
+        project?._id || project?.id || `${project?.title}-${project?.image}`;
       if (!key || seen.has(key)) return false;
       seen.add(key);
       return true;

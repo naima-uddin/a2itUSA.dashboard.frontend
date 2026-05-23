@@ -449,26 +449,26 @@ const Portfolio = () => {
     <>
       <div className="bg-white text-gray-900">
         {/* Hero Section with Image */}
-        <section className="relative min-h-[50vh] sm:min-h-[60vh] md:min-h-[70vh] py-12 sm:py-16 md:py-20 flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[50vh] sm:min-h-[60vh] md:min-h-[70vh] py-12 sm:py-16 md:py-20 flex items-center justify-center overflow-hidden border-b border-white/10">
           {/* Background Image with Overlay */}
           <div className="absolute inset-0">
             <div className="absolute inset-0 bg-[url('/portfolio.png')] bg-cover bg-center"></div>
-            <div className="absolute inset-0 bg-linear-to-r from-blue-900/90 via-blue-900/80 to-transparent"></div>
-            <div className="absolute inset-0 bg-linear-to-t from-white via-transparent to-transparent opacity-30"></div>
+            <div className="absolute inset-0 bg-linear-to-r from-slate-950/92 via-blue-950/80 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-white via-transparent to-transparent opacity-20"></div>
           </div>
 
           {/* Geometric Overlay */}
           <div className="absolute inset-0">
-            <div className="absolute top-20 right-20 w-64 h-64 border-2 border-blue-400/20 rotate-45"></div>
-            <div className="absolute bottom-40 left-32 w-40 h-40 border border-purple-400/20 rotate-12"></div>
-            <div className="absolute top-1/3 left-1/4 w-32 h-32 border border-blue-500/10 -rotate-12"></div>
-            <div className="absolute top-1/2 right-1/3 w-48 h-48 border border-purple-500/10 rotate-45"></div>
+            <div className="absolute top-20 right-20 w-64 h-64 border border-white/10 rotate-45 rounded-4xl"></div>
+            <div className="absolute bottom-40 left-32 w-40 h-40 border border-white/10 rotate-12 rounded-3xl"></div>
+            <div className="absolute top-1/3 left-1/4 w-32 h-32 border border-white/10 -rotate-12 rounded-2xl"></div>
+            <div className="absolute top-1/2 right-1/3 w-48 h-48 border border-white/10 rotate-45 rounded-3xl"></div>
           </div>
 
           {/* Hero Content */}
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6 md:mb-8 border border-white/20 text-xs sm:text-sm">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6 md:mb-8 border border-white/20 text-xs sm:text-sm shadow-sm">
                 <FiStar className="w-4 h-4" />
                 <span className="text-sm font-medium">
                   {getAllProjects().length}+ Successful Projects
@@ -486,7 +486,7 @@ const Portfolio = () => {
                 </div>
               </h1>
 
-              <p className="text-lg sm:text-xl md:text-2xl text-white/95 mb-6 sm:mb-8 md:mb-10 max-w-2xl leading-relaxed tracking-tight">
+              <p className="text-lg sm:text-xl md:text-2xl text-white/90 mb-6 sm:mb-8 md:mb-10 max-w-2xl leading-relaxed tracking-tight">
                 Explore our diverse collection of web development, mobile apps,
                 e-commerce platforms, and digital marketing solutions. Each
                 project represents our commitment to excellence and innovation.
@@ -530,34 +530,18 @@ const Portfolio = () => {
         </section>
 
         <div className="min-h-screen bg-white">
-          {/* Hero Section */}
-          <section className="pt-10">
-            <div className="container mx-auto px-4">
-              <div className="max-w-7xl text-center mx-auto">
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-1 leading-tight text-center">
-                  <span className="text-blue-600">Portfolio Showcase</span>
-                </h1>
-                <p className="text-lg sm:text-xl text-gray-600 mb-8 sm:mb-12 max-w-7xl leading-relaxed text-center mx-auto">
-                  A curated selection of {getAllProjects().length} projects that
-                  demonstrate our approach to digital innovation and
-                  user-centered design.
-                </p>
-              </div>
-            </div>
-          </section>
-
           {/* Affiliate & Partnership Projects */}
-          <section className="py-4 bg-linear-to-b from-white to-blue-50">
+          <section className="py-6 bg-linear-to-b from-white via-slate-50 to-white border-y border-slate-100">
             <div className="container mx-auto px-4">
-              <div className="text-center  -mb-6">
-                <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-600 text-white rounded-full text-xs sm:text-sm font-medium mb-2 sm:mb-3 -mt-6">
+              <div className="text-center mb-6">
+                <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-slate-900 text-white rounded-full text-xs sm:text-sm font-medium mb-2 sm:mb-3 shadow-sm">
                   <FiTarget className="w-3 h-3 sm:w-4 sm:h-4" />
                   Partnership Projects
                 </div>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900  tracking-tight">
                   Affiliate & Collaboration Works
                 </h2>
-                <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto mb-6">
+                <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto mb-6 leading-relaxed">
                   Special projects developed in partnership with industry
                   leaders
                 </p>
@@ -695,7 +679,7 @@ const Portfolio = () => {
               </div>
 
               {/* Desktop View - Row Slider */}
-              <div className="hidden md:block">
+              <div className="hidden md:block -mt-8">
                 {affiliateProjects.length > 0 && (
                   <div className="relative">
                     <div className="flex items-center justify-between mb-4">
@@ -807,13 +791,13 @@ const Portfolio = () => {
           </section>
 
           {/* Featured Work Slider */}
-          <section className="py-8 sm:py-10 bg-white">
+          <section className="py-10 sm:py-12 bg-white border-y border-slate-100">
             <div className="container mx-auto px-4">
               <div className="text-center mb-6 sm:mb-8">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-2 tracking-tight">
                   Featured Work
                 </h2>
-                <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
+                <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
                   Our most impactful projects that showcase excellence in
                   digital innovation
                 </p>
@@ -841,11 +825,11 @@ const Portfolio = () => {
           {/* Portfolio Projects Grid */}
           <section
             id="portfolio-projects"
-            className="py-12 sm:py-20 bg-gray-50"
+            className="py-12 sm:py-20 bg-slate-50"
           >
             <div className="container mx-auto px-4">
               <div className="mb-8 sm:mb-12">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600 mb-4 sm:mb-6">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-4 sm:mb-6 tracking-tight">
                   Portfolio Projects
                 </h2>
 
@@ -860,8 +844,8 @@ const Portfolio = () => {
                       }}
                       className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-colors ${
                         activeFilter === category.id
-                          ? "bg-blue-600 text-white shadow-md"
-                          : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                          ? "bg-slate-900 text-white shadow-md"
+                          : "bg-white text-slate-700 hover:bg-slate-100 border border-gray-200"
                       }`}
                     >
                       {category.name}

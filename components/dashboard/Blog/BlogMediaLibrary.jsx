@@ -8,7 +8,7 @@ import { authFetch } from "@/lib/api/authFetch";
 export default function BlogMediaLibrary({
   onSelect = null,
   showSelection = true,
-  defaultFolder = "a2it/blog",
+  defaultFolder = "a2it-usa/blog",
 }) {
   const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
@@ -24,10 +24,10 @@ export default function BlogMediaLibrary({
 
   const qTimer = useRef(null);
   const folderOptions = [
-    { value: "a2it/blog", label: "A2IT Blog Media" },
-    { value: "a2it/blog/images", label: "A2IT Blog Images" },
-    { value: "a2it/blog/videos", label: "A2IT Blog Videos" },
-    { value: "a2it/", label: "All A2IT Media" },
+    { value: "a2it-usa/blog", label: "A2IT USA Blog Media" },
+    { value: "a2it-usa/blog/images", label: "A2IT USA Blog Images" },
+    { value: "a2it-usa/blog/videos", label: "A2IT USA Blog Videos" },
+    { value: "a2it-usa/", label: "All A2IT USA Media" },
   ];
 
   const loadImages = useCallback(

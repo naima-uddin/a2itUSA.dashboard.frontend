@@ -6,7 +6,7 @@ import BlogMediaLibrary from "./BlogMediaLibrary";
 
 export default function MediaUploader({
   onUploadComplete,
-  folder = "a2it/blog/images",
+  folder = "a2it-usa/blog/images",
   accept = "image/*,video/*",
   multiple = true,
   label = "Upload Media",
@@ -197,7 +197,7 @@ export default function MediaUploader({
                 onSelect={handleLibrarySelect}
                 showSelection={false}
                 defaultFolder={
-                  folder.startsWith("a2it/blog") ? folder : "a2it/blog"
+                  folder.startsWith("a2it-usa/blog") ? folder : "a2it-usa/blog"
                 }
               />
             </div>

@@ -431,7 +431,7 @@ const Portfolio = () => {
 
               <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-5xl font-bold mb-6 leading-none">
                 <span className="text-white">Our Creative</span>
-                <div className="relative inline-block ml-2 sm:ml-4 flex items-center">
+                <div className="relative inline-flex ml-2 sm:ml-4 items-center">
                   <span className="relative z-10 text-transparent bg-clip-text bg-linear-to-r from-blue-300 to-purple-300 text-3xl sm:text-4xl">
                     Portfolio
                   </span>
@@ -529,7 +529,7 @@ const Portfolio = () => {
                       exit={{ opacity: 0, x: -20 }}
                       className="relative"
                     >
-                      <div className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-md hover:-translate-y-1 hover:shadow-xl transition transform duration-300">
+                      <div className="bg-white/80 backdrop-blur-xl border border-white/70 rounded-3xl overflow-hidden shadow-[0_18px_50px_rgba(15,23,42,0.10)] hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(15,23,42,0.14)] transition transform duration-300 ring-1 ring-white/60">
                         {/* Image */}
                         <div className="relative h-48 sm:h-56 overflow-hidden">
                           <Image
@@ -544,14 +544,14 @@ const Portfolio = () => {
 
                           {/* Category badge */}
                           <div className="absolute top-3 left-3">
-                            <span className="px-2 py-1 bg-white/80 backdrop-blur-sm text-gray-800 text-xs font-semibold rounded-full shadow-sm">
+                            <span className="px-2 py-1 bg-white/70 backdrop-blur-md text-slate-700 text-xs font-semibold rounded-full shadow-sm border border-white/60">
                               {affiliateProjects[affiliateSliderIndex].category}
                             </span>
                           </div>
 
                           {/* Partnership badge */}
                           <div className="absolute top-3 right-3">
-                            <span className="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs font-medium rounded-full shadow-sm">
+                            <span className="px-2 py-1 bg-amber-50/90 text-amber-700 text-xs font-medium rounded-full shadow-sm border border-amber-100">
                               Partnership
                             </span>
                           </div>
@@ -680,7 +680,7 @@ const Portfolio = () => {
                             transition={{ duration: 0.3 }}
                             className="group relative"
                           >
-                            <div className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-md hover:-translate-y-1 hover:shadow-xl transition transform duration-300">
+                            <div className="bg-white/80 backdrop-blur-xl border border-white/70 rounded-3xl overflow-hidden shadow-[0_18px_50px_rgba(15,23,42,0.10)] hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(15,23,42,0.14)] transition transform duration-300 ring-1 ring-white/60">
                               <div className="relative h-64 overflow-hidden">
                                 <Image
                                   src={project.images[0]}
@@ -696,7 +696,7 @@ const Portfolio = () => {
                                 />
 
                                 <div className="absolute top-4 left-4">
-                                  <span className="px-3 py-1 bg-white/80 backdrop-blur-sm text-gray-800 text-xs font-semibold rounded-full shadow-sm">
+                                  <span className="px-3 py-1 bg-white/70 backdrop-blur-md text-slate-700 text-xs font-semibold rounded-full shadow-sm border border-white/60">
                                     {Array.isArray(project.category)
                                       ? project.category[0]
                                       : project.category}
@@ -704,7 +704,7 @@ const Portfolio = () => {
                                 </div>
 
                                 <div className="absolute top-4 right-4">
-                                  <span className="px-3 py-1 bg-yellow-50 text-yellow-700 text-xs font-medium rounded-full shadow-sm">
+                                  <span className="px-3 py-1 bg-amber-50/90 text-amber-700 text-xs font-medium rounded-full shadow-sm border border-amber-100">
                                     Partnership
                                   </span>
                                 </div>
@@ -840,7 +840,7 @@ const Portfolio = () => {
                       }
                     >
                       {/* Image Container */}
-                      <div className="relative aspect-square overflow-hidden rounded-3xl sm:rounded-3xl bg-gray-100">
+                      <div className="relative aspect-square overflow-hidden rounded-3xl sm:rounded-3xl bg-gray-100 ring-1 ring-white/70">
                         {/* Base Image */}
                         <Image
                           src={filteredProjects[portfolioSliderIndex].image}
@@ -851,7 +851,7 @@ const Portfolio = () => {
                         />
 
                         {/* Overlay Content - Shows on hover */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-4 text-center">
+                        <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-4 text-center">
                           <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">
                             {filteredProjects[portfolioSliderIndex].title}
                           </h3>
@@ -953,11 +953,11 @@ const Portfolio = () => {
 
                       {/* Title and categories (visible always) */}
                       <div className="mt-3 mb-4">
-                        <h3 className="font-medium text-gray-900 group-hover:text-gray-900 transition-colors line-clamp-1 text-base sm:text-lg">
+                        <h3 className="font-medium text-slate-900 group-hover:text-slate-900 transition-colors line-clamp-1 text-base sm:text-lg">
                           {filteredProjects[portfolioSliderIndex].title}
                         </h3>
                         {filteredProjects[portfolioSliderIndex].category && (
-                          <p className="text-xs text-gray-500 mt-1 line-clamp-1">
+                          <p className="text-xs text-slate-500 mt-1 line-clamp-1">
                             {Array.isArray(
                               filteredProjects[portfolioSliderIndex].category,
                             )
@@ -978,13 +978,13 @@ const Portfolio = () => {
                                 .map((tech, i) => (
                                   <span
                                     key={i}
-                                    className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs"
+                                    className="px-2 py-1 bg-slate-100 text-slate-700 rounded-full text-xs border border-slate-200"
                                   >
                                     {tech}
                                   </span>
                                 ))}
                           </div>
-                          <div className="text-xs text-gray-400">
+                          <div className="text-xs text-slate-400">
                             {filteredProjects[portfolioSliderIndex].year || ""}
                           </div>
                         </div>
@@ -1072,7 +1072,7 @@ const Portfolio = () => {
                             />
 
                             {/* Overlay Content - Shows on hover */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-6 text-center">
+                            <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-6 text-center">
                               <h3 className="text-xl font-bold text-white mb-3 line-clamp-2">
                                 {project.title}
                               </h3>

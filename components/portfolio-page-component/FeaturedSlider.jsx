@@ -35,7 +35,7 @@ const FeaturedSlider = ({
   return (
     <div className="relative">
       {/* Slider Container */}
-      <div className="relative h-75 sm:h-100 md:h-125 lg:h-137.5 overflow-hidden rounded-xl sm:rounded-2xl lg:rounded-3xl border border-gray-200 shadow-lg">
+      <div className="relative h-75 sm:h-100 md:h-125 lg:h-137.5 overflow-hidden rounded-2xl sm:rounded-3xl border border-white/70 bg-linear-to-br from-white/85 via-white/75 to-slate-50/80 shadow-[0_24px_80px_rgba(15,23,42,0.10)] backdrop-blur-2xl ring-1 ring-white/70">
         {projects.map((project, index) => (
           <motion.div
             key={project.id}
@@ -54,7 +54,7 @@ const FeaturedSlider = ({
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
             {/* Mobile Layout - Stacked */}
-            <div className="lg:hidden w-full h-full flex flex-col bg-white">
+            <div className="lg:hidden w-full h-full flex flex-col bg-white/80 backdrop-blur-xl">
               {/* Image Section */}
               <div className="relative h-40 sm:h-48 md:h-56 shrink-0">
                 {/* Main Image */}
@@ -84,9 +84,9 @@ const FeaturedSlider = ({
               </div>
 
               {/* Content Section */}
-              <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+              <div className="flex-1 overflow-y-auto p-4 sm:p-6 border-t border-white/60 bg-white/70">
                 <div className="mb-3">
-                  <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full">
+                  <span className="px-2 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-full">
                     {project.category}
                   </span>
                 </div>
@@ -122,7 +122,7 @@ const FeaturedSlider = ({
                     .map((metric, idx) => (
                       <div
                         key={idx}
-                        className="text-center p-2 bg-blue-50 rounded-lg"
+                        className="text-center p-2 bg-slate-50 rounded-lg border border-slate-100"
                       >
                         <div className="text-lg sm:text-xl font-bold text-blue-600">
                           {metric.value}
@@ -165,7 +165,7 @@ const FeaturedSlider = ({
 
               {/* Thumbnails for Mobile */}
               {project.images.length > 1 && (
-                <div className="p-3 border-t border-gray-100">
+                <div className="p-3 border-t border-white/60 bg-white/70 backdrop-blur-xl">
                   <div className="flex gap-2 overflow-x-auto">
                     {project.images.map((image, imgIndex) => (
                       <button
@@ -191,11 +191,11 @@ const FeaturedSlider = ({
             </div>
 
             {/* Desktop Layout - Side by Side */}
-            <div className="hidden lg:grid w-full h-full lg:grid-cols-2 gap-6 items-center bg-white p-6 lg:p-8">
+            <div className="hidden lg:grid w-full h-full lg:grid-cols-2 gap-6 items-center bg-white/80 backdrop-blur-xl p-6 lg:p-8">
               {/* Image Section with Thumbnails */}
               <div className="relative h-full">
                 {/* Main Image */}
-                <div className="relative h-70 lg:h-80 rounded-xl lg:rounded-2xl overflow-hidden mb-4">
+                <div className="relative h-70 lg:h-80 rounded-xl lg:rounded-2xl overflow-hidden mb-4 ring-1 ring-white/70 shadow-[0_18px_40px_rgba(15,23,42,0.12)]">
                   <Image
                     src={project.images[currentImageIndices[index]]}
                     alt={`${project.title} - Image ${currentImageIndices[index] + 1}`}
@@ -246,7 +246,7 @@ const FeaturedSlider = ({
               {/* Content Section */}
               <div className="p-2 lg:p-4 xl:p-8">
                 <div className="mb-4">
-                  <span className="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-semibold rounded-full">
+                  <span className="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-full">
                     {project.category}
                   </span>
                 </div>
@@ -288,7 +288,7 @@ const FeaturedSlider = ({
                     (metric, idx) => (
                       <div
                         key={idx}
-                        className="text-center p-3 bg-blue-50 rounded-xl"
+                        className="text-center p-3 bg-slate-50 rounded-xl border border-slate-100"
                       >
                         {metric.icon && (
                           <div className="text-xl mb-2">{metric.icon}</div>
@@ -326,7 +326,7 @@ const FeaturedSlider = ({
 
                 <button
                   onClick={() => openProjectModal(project)}
-                  className="w-full px-6 py-3 bg-indigo-700 text-white font-medium rounded-md hover:bg-indigo-800 transition-colors flex items-center justify-center gap-2 shadow-sm"
+                  className="w-full px-6 py-3 bg-linear-to-r from-[#1e3a8a] to-[#334155] text-white font-medium rounded-md hover:from-[#1e40af] hover:to-[#1e293b] transition-colors flex items-center justify-center gap-2 shadow-sm"
                 >
                   View Full Case Study
                   <FiExternalLink className="w-4 h-4" />

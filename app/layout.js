@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono, Oswald } from "next/font/google";
+import { Manrope, Source_Code_Pro, Oswald } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import NavbarSwitcher from "@/components/shared/NavbarSwitcher";
@@ -7,13 +7,13 @@ import WhatsAppFloating from "@/components/shared/WhatsAppFloating";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/context/AuthContext";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const sourceCodePro = Source_Code_Pro({
+  variable: "--font-source-code-pro",
   subsets: ["latin"],
 });
 
@@ -145,7 +145,7 @@ export default function RootLayout({ children }) {
         {/* End Meta Pixel Code */}
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable}  antialiased`}
+        className={`${manrope.variable} ${sourceCodePro.variable} ${oswald.variable} antialiased`}
       >
         <AuthProvider>
           <Toaster

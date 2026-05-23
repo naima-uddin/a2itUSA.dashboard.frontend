@@ -1,14 +1,14 @@
-import { Geist, Geist_Mono, Oswald } from "next/font/google";
+import { Manrope, Source_Code_Pro, Oswald } from "next/font/google";
 import "../globals.css";
 import StickyContactBar from "@/components/shared/StickyContactBar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const sourceCodePro = Source_Code_Pro({
+  variable: "--font-source-code-pro",
   subsets: ["latin"],
 });
 
@@ -25,7 +25,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <div
-      className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} antialiased`}
+      className={`${manrope.variable} ${sourceCodePro.variable} ${oswald.variable} antialiased`}
     >
       <StickyContactBar />
       {children}

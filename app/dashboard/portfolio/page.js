@@ -13,6 +13,7 @@ const createEmptyFormData = () => ({
   title: "",
   description: "",
   type: "portfolio",
+  projectTypes: ["portfolio"],
   status: "live",
   year: "",
   category: [],
@@ -195,6 +196,8 @@ export default function PortfolioPage() {
         },
         body: JSON.stringify({
           ...formData,
+          type: formData.projectTypes[0] || formData.type || "portfolio",
+          projectTypes: formData.projectTypes,
           technologies: formData.technologies
             .split(",")
             .map((t) => t.trim())
@@ -465,19 +468,56 @@ export default function PortfolioPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">
-                      Project Type
+                      Project Types
                     </label>
-                    <select
-                      value={formData.type}
-                      onChange={(e) =>
-                        setFormData({ ...formData, type: e.target.value })
-                      }
-                      className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
-                    >
-                      <option value="portfolio">Portfolio</option>
-                      <option value="featured">Featured</option>
-                      <option value="affiliate">Affiliate</option>
-                    </select>
+                    <div className="space-y-2 rounded-lg border border-slate-200 bg-slate-50 p-3">
+                      {[
+                        { value: "portfolio", label: "Portfolio" },
+                        { value: "featured", label: "Featured" },
+                        { value: "affiliate", label: "Affiliate" },
+                      ].map((option) => {
+                        const isChecked = formData.projectTypes.includes(
+                          option.value,
+                        );
+
+                        return (
+                          <label
+                            key={option.value}
+                            className="flex items-center gap-3 rounded-md bg-white px-3 py-2 border border-slate-200 hover:border-cyan-400 transition cursor-pointer"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              onChange={() => {
+                                setFormData((prev) => {
+                                  const nextTypes = prev.projectTypes.includes(
+                                    option.value,
+                                  )
+                                    ? prev.projectTypes.filter(
+                                        (type) => type !== option.value,
+                                      )
+                                    : [...prev.projectTypes, option.value];
+
+                                  return {
+                                    ...prev,
+                                    projectTypes:
+                                      nextTypes.length > 0
+                                        ? nextTypes
+                                        : ["portfolio"],
+                                    type:
+                                      nextTypes[0] || prev.type || "portfolio",
+                                  };
+                                });
+                              }}
+                              className="h-4 w-4 rounded border-slate-300 text-cyan-600 focus:ring-cyan-500"
+                            />
+                            <span className="text-sm font-medium text-slate-700">
+                              {option.label}
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">
@@ -1040,6 +1080,12 @@ export default function PortfolioPage() {
                           title: item.title,
                           description: item.description,
                           type: item.type || "portfolio",
+                          projectTypes:
+                            item.projectTypes?.length > 0
+                              ? item.projectTypes
+                              : item.type
+                                ? [item.type]
+                                : ["portfolio"],
                           status: item.status || "live",
                           year: item.year || "",
                           category: item.category || [],

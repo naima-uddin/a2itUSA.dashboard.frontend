@@ -57,6 +57,18 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
     return [];
   };
 
+  const getProjectTypes = () => {
+    if (Array.isArray(project.projectTypes) && project.projectTypes.length > 0) {
+      return project.projectTypes;
+    }
+
+    if (project.type) return [project.type];
+
+    return [];
+  };
+
+  const projectTypes = getProjectTypes();
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -93,18 +105,53 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                       {project.category}
                     </span>
                   )}
-                  {project.type === "featured" && (
-                    <span className="px-2 py-0.5 sm:px-3 sm:py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full flex items-center gap-1">
-                      <FiStar className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                      Featured
-                    </span>
-                  )}
-                  {project.type === "affiliate" && (
-                    <span className="px-2 py-0.5 sm:px-3 sm:py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full flex items-center gap-1">
-                      <FiTarget className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                      Affiliate
-                    </span>
-                  )}
+                  {projectTypes.map((type) => {
+                    const normalizedType = String(type).toLowerCase();
+
+                    if (normalizedType === "featured") {
+                      return (
+                        <span
+                          key={type}
+                          className="px-2 py-0.5 sm:px-3 sm:py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full flex items-center gap-1"
+                        >
+                          <FiStar className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                          Featured
+                        </span>
+                      );
+                    }
+
+                    if (normalizedType === "affiliate") {
+                      return (
+                        <span
+                          key={type}
+                          className="px-2 py-0.5 sm:px-3 sm:py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full flex items-center gap-1"
+                        >
+                          <FiTarget className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                          Affiliate
+                        </span>
+                      );
+                    }
+
+                    if (normalizedType === "portfolio") {
+                      return (
+                        <span
+                          key={type}
+                          className="px-2 py-0.5 sm:px-3 sm:py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full"
+                        >
+                          Portfolio
+                        </span>
+                      );
+                    }
+
+                    return (
+                      <span
+                        key={type}
+                        className="px-2 py-0.5 sm:px-3 sm:py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full"
+                      >
+                        {type}
+                      </span>
+                    );
+                  })}
                 </div>
                 <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-1.5 sm:mb-2">
                   {project.title}

@@ -36,6 +36,18 @@ const normalizePortfolioBuckets = (items = []) => {
       String(section).trim(),
     );
 
+  const projectTypes = (item) => {
+    const explicitTypes = toArray(item.projectTypes).map((type) =>
+      String(type).trim().toLowerCase(),
+    );
+
+    if (explicitTypes.length > 0) {
+      return explicitTypes;
+    }
+
+    return toArray(item.type).map((type) => String(type).trim().toLowerCase());
+  };
+
   items.forEach((item) => {
     if (!item || typeof item !== "object") return;
 
@@ -63,35 +75,26 @@ const normalizePortfolioBuckets = (items = []) => {
     const sections = sourceSections(item).map((section) =>
       section.toLowerCase(),
     );
-    const isAffiliate =
+    const types = projectTypes(item);
+    const hasAffiliate =
       sections.includes("affiliateprojects") ||
-      normalizedItem.type === "affiliate" ||
-      normalizedItem.category.some((cat) =>
-        String(cat).toLowerCase().includes("affiliate"),
-      );
-    const isFeatured =
-      sections.includes("featuredprojects") ||
-      normalizedItem.type === "featured";
-    const isPortfolio =
-      sections.includes("portfolioprojects") ||
-      normalizedItem.type === "portfolio";
+      types.includes("affiliate");
+    const hasFeatured =
+      sections.includes("featuredprojects") || types.includes("featured");
+    const hasPortfolio =
+      sections.includes("portfolioprojects") || types.includes("portfolio");
 
-    if (isAffiliate) {
+    if (hasAffiliate) {
       buckets.affiliateProjects.push(normalizedItem);
-      return;
     }
 
-    if (isFeatured) {
+    if (hasFeatured) {
       buckets.featuredProjects.push(normalizedItem);
-      return;
     }
 
-    if (isPortfolio) {
+    if (hasPortfolio || (!hasAffiliate && !hasFeatured)) {
       buckets.portfolioProjects.push(normalizedItem);
-      return;
     }
-
-    buckets.portfolioProjects.push(normalizedItem);
   });
 
   return buckets;
@@ -203,11 +206,19 @@ const Portfolio = () => {
   // Get all projects from the new structure
   const getAllProjects = () => {
     if (!portfolioData) return [];
-    return [
+    const allProjects = [
       ...portfolioData.affiliateProjects,
       ...portfolioData.featuredProjects,
       ...portfolioData.portfolioProjects,
     ];
+
+    const seen = new Set();
+    return allProjects.filter((project) => {
+      const key = project?._id || project?.id || `${project?.title}-${project?.image}`;
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   };
 
   // Get affiliate projects

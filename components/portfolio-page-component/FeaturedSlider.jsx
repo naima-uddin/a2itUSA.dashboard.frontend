@@ -240,7 +240,7 @@ const FeaturedSlider = ({
                 )}
               </div>
 
-              <div className="hidden lg:grid w-full h-full lg:grid-cols-2 gap-8 items-center bg-white/85 backdrop-blur-xl p-6 lg:p-8">
+              <div className="hidden lg:grid w-full h-full lg:grid-cols-2 gap-8 items-center bg-white/85 backdrop-blur-xl p-3 lg:p-6">
                 <div className="relative h-full">
                   <div
                     className={`relative h-80 lg:h-96 rounded-xl lg:rounded-2xl overflow-hidden mb-4 ring-1 ${accent.ring} shadow-[0_18px_40px_rgba(15,23,42,0.12)]`}
@@ -252,12 +252,12 @@ const FeaturedSlider = ({
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                       sizes="(max-width:1024px) 100vw, 50vw"
                     />
-                    <div className="absolute inset-0 bg-linear-to-r from-slate-950/10 via-transparent to-slate-950/45" />
+                    <div className="absolute inset-0 bg-linear-to-r from-slate-850/4 via-transparent to-slate-850/15" />
                     <div
                       className="absolute top-0 left-0 right-0 h-1.5"
                       style={{ background: accent.bar }}
                     />
-                    <div className="absolute top-4 left-4">
+                    <div className="absolute top-1 left-4">
                       <div
                         className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold shadow-sm border backdrop-blur-sm ${accent.badge}`}
                       >
@@ -295,7 +295,7 @@ const FeaturedSlider = ({
                 </div>
 
                 <div className="px-2 py-1 lg:px-4 xl:px-8 border-l border-slate-200/80">
-                  <div className="mb-3 flex items-center justify-between gap-3">
+                  <div className="mb-1 flex items-center justify-between gap-3">
                     <span
                       className={`px-3 py-1 text-xs font-semibold rounded-full border ${accent.badge}`}
                     >
@@ -341,11 +341,8 @@ const FeaturedSlider = ({
                     {resolvePerformance(project).map((metric, idx) => (
                       <div
                         key={idx}
-                        className="text-center px-3 py-3 bg-white rounded-xl border border-slate-200 shadow-sm"
+                        className="text-center px-3 py-1 bg-white rounded-xl border border-slate-200 shadow-sm"
                       >
-                        {metric.icon && (
-                          <div className="text-xl mb-2">{metric.icon}</div>
-                        )}
                         <div className="text-2xl font-bold text-slate-900">
                           {metric.value}
                         </div>
@@ -355,28 +352,6 @@ const FeaturedSlider = ({
                       </div>
                     ))}
                   </div>
-
-                  {project.features && project.features.length > 0 && (
-                    <div className="mb-5">
-                      <h4 className="text-sm font-semibold text-slate-700 mb-3">
-                        Key Features
-                      </h4>
-                      <ul className="space-y-1">
-                        {project.features.slice(0, 3).map((feature, idx) => (
-                          <li
-                            key={idx}
-                            className="flex items-center gap-2 text-sm text-slate-600"
-                          >
-                            <div
-                              className="w-1.5 h-1.5 rounded-full"
-                              style={{ background: accent.bar }}
-                            />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
 
                   <button
                     onClick={() => openProjectModal(project)}

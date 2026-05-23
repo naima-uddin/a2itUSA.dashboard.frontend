@@ -885,7 +885,7 @@ const Portfolio = () => {
                           className="group cursor-pointer"
                           onClick={() => openProjectModal(currentProject)}
                         >
-                          <div className="overflow-hidden rounded-4xl border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.10)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(15,23,42,0.15)]">
+                          <div className="overflow-hidden rounded-4xl border border-slate-200 bg-white shadow-[0_26px_80px_rgba(15,23,42,0.12)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_36px_100px_rgba(15,23,42,0.18)]">
                             <div className="relative aspect-16/10 overflow-hidden">
                               <Image
                                 src={currentProject.image}
@@ -1029,7 +1029,7 @@ const Portfolio = () => {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.04 }}
-                          className="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_28px_80px_rgba(15,23,42,0.14)]"
+                          className="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.12)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_40px_120px_rgba(15,23,42,0.18)]"
                         >
                           <div className="block w-full text-left">
                             <div className="relative aspect-3/3 overflow-hidden">

@@ -147,7 +147,7 @@ export default function BlogEdit({ postId }) {
     if (!file) return;
     const fd = new FormData();
     fd.append("file", file);
-    fd.append("folder", "a2it/blog/images");
+    fd.append("folder", "a2it-usa/blog/images");
     const r = await authFetch(`${API}/api/blog/admin/upload`, {
       method: "POST",
       body: fd,
@@ -367,7 +367,7 @@ export default function BlogEdit({ postId }) {
         <h3 className="text-sm font-semibold mb-3">Featured Image</h3>
         <MediaUploader
           onUploadComplete={handleFeaturedImageUpload}
-          folder="a2it/blog/images"
+          folder="a2it-usa/blog/images"
           accept="image/*"
           multiple={false}
           label="Upload Featured Image"
@@ -568,7 +568,7 @@ export default function BlogEdit({ postId }) {
         <h3 className="text-sm font-semibold mb-3">Additional Images</h3>
         <MediaUploader
           onUploadComplete={handleAdditionalImagesUpload}
-          folder="a2it/blog/images"
+          folder="a2it-usa/blog/images"
           accept="image/*"
           multiple={true}
           label="Upload Additional Images"
@@ -584,7 +584,7 @@ export default function BlogEdit({ postId }) {
         <div className="mb-4">
           <MediaUploader
             onUploadComplete={handleVideosUpload}
-            folder="a2it/blog/videos"
+            folder="a2it-usa/blog/videos"
             accept="video/*"
             multiple={true}
             label="Upload Videos"

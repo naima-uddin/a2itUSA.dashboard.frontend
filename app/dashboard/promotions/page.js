@@ -296,7 +296,7 @@ export default function PromotionalPagesDashboard() {
       const formData = new FormData();
       formData.append("image", file);
 
-      const response = await fetch(`${API_BASE}/api/upload/image/general`, {
+      const response = await fetch(`${API_BASE}/api/upload/image/promotions`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

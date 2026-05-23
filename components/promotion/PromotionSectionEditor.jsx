@@ -38,7 +38,7 @@ const uploadImageToCloudinary = async (file) => {
   const formData = new FormData();
   formData.append("image", file);
 
-  const response = await authFetch(`${API_BASE}/api/upload/image/general`, {
+  const response = await authFetch(`${API_BASE}/api/upload/image/promotions`, {
     method: "POST",
     body: formData,
   });

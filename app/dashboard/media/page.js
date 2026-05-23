@@ -167,7 +167,7 @@ export default function MediaPage() {
             </h1>
             <p className="text-slate-600">
               Manage Cloudinary images used across this project, grouped by
-              folder under <span className="font-semibold">a2it/</span>
+              folder under <span className="font-semibold">a2it-usa/</span>
             </p>
           </div>
 
@@ -217,6 +217,7 @@ export default function MediaPage() {
                 <option value="employees">Employees</option>
                 <option value="services">Services</option>
                 <option value="blogs">Blogs</option>
+                <option value="promotions">Promotions</option>
                 <option value="users">Users</option>
                 <option value="general">General</option>
               </select>
@@ -375,7 +376,7 @@ export default function MediaPage() {
                       </p>
                     </div>
                     <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold uppercase tracking-wide">
-                      a2it/{folder}
+                      a2it-usa/{folder}
                     </span>
                   </div>
 

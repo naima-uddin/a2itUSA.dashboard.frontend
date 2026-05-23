@@ -98,7 +98,7 @@ const FeaturedSlider = ({
             >
               <div className="lg:hidden w-full h-full flex flex-col bg-white/85 backdrop-blur-xl">
                 <div
-                  className={`relative h-50 md:h-66 shrink-0 ring-1 ${accent.ring}`}
+                  className={`relative h-56 md:h-72 shrink-0 ring-1 ${accent.ring}`}
                 >
                   <Image
                     src={currentImage}
@@ -243,7 +243,7 @@ const FeaturedSlider = ({
               <div className="hidden lg:grid w-full h-full lg:grid-cols-2 gap-8 items-center bg-white/85 backdrop-blur-xl p-6 lg:p-8">
                 <div className="relative h-full">
                   <div
-                    className={`relative h-70 lg:h-80 rounded-xl lg:rounded-2xl overflow-hidden mb-4 ring-1 ${accent.ring} shadow-[0_18px_40px_rgba(15,23,42,0.12)]`}
+                    className={`relative h-80 lg:h-96 rounded-xl lg:rounded-2xl overflow-hidden mb-4 ring-1 ${accent.ring} shadow-[0_18px_40px_rgba(15,23,42,0.12)]`}
                   >
                     <Image
                       src={currentImage}

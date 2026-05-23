@@ -1032,7 +1032,7 @@ const Portfolio = () => {
                           className="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_28px_80px_rgba(15,23,42,0.14)]"
                         >
                           <div className="block w-full text-left">
-                            <div className="relative aspect-5/4 overflow-hidden">
+                            <div className="relative aspect-3/3 overflow-hidden">
                               <Image
                                 src={project.image}
                                 alt={project.title}
@@ -1042,12 +1042,12 @@ const Portfolio = () => {
                               />
                               <div className="absolute inset-0 bg-linear-to-t from-slate-950/28 via-slate-950/18 to-transparent opacity-100" />
 
-                              <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
+                              <div className="absolute inset-x-0 top-0 flex items-start justify-between p-2">
                                 <div className="flex flex-wrap gap-1.5">
                                   {categories.slice(0, 2).map((cat) => (
                                     <span
                                       key={cat}
-                                      className={`rounded-full border px-2.5 py-1 text-[11px] font-semibold backdrop-blur-sm ${accent.badge}`}
+                                      className={`rounded-full border px-2 py-1 text-[10px] font-semibold backdrop-blur-sm ${accent.badge}`}
                                     >
                                       {cat}
                                     </span>

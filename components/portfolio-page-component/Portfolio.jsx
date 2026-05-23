@@ -429,10 +429,8 @@ const Portfolio = () => {
                 </span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-none">
-                <span className="text-white">
-                  Our Creative <span className="ml-2">😊</span>
-                </span>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl  font-bold mb-6 leading-none">
+                <span className="text-white">Our Creative</span>
                 <div className="relative inline-block ml-2 sm:ml-4 items-center flex">
                   <span className="relative z-10 text-transparent bg-clip-text bg-linear-to-r from-blue-300 to-purple-300 text-6xl">
                     Portfolio

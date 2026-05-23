@@ -98,7 +98,7 @@ const FeaturedSlider = ({
             >
               <div className="lg:hidden w-full h-full flex flex-col bg-white/85 backdrop-blur-xl">
                 <div
-                  className={`relative h-40 sm:h-48 md:h-56 shrink-0 ring-1 ${accent.ring}`}
+                  className={`relative h-50 md:h-66 shrink-0 ring-1 ${accent.ring}`}
                 >
                   <Image
                     src={currentImage}

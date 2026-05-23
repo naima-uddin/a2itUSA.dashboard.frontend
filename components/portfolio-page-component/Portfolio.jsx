@@ -898,7 +898,7 @@ const Portfolio = () => {
                                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                                 sizes="(max-width:768px) 100vw, 50vw"
                               />
-                              <div className="absolute inset-0 bg-linear-to-t from-slate-950/55 via-slate-950/10 to-transparent" />
+                              <div className="absolute inset-0 bg-linear-to-t from-slate-950/60 via-slate-950/20 to-slate-950/10" />
                               <div className="absolute inset-x-0 bottom-0 p-4">
                                 <div className="flex flex-wrap gap-1.5 mb-2 opacity-90">
                                   {categories.slice(0, 2).map((cat) => (
@@ -1048,7 +1048,7 @@ const Portfolio = () => {
                                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.08]"
                                 sizes="(max-width:768px) 100vw, 33vw"
                               />
-                              <div className="absolute inset-0 bg-linear-to-t from-slate-950/55 via-slate-950/10 to-transparent opacity-90" />
+                              <div className="absolute inset-0 bg-linear-to-t from-slate-950/88 via-slate-950/68 to-slate-950/20 opacity-95" />
 
                               <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
                                 <div className="flex flex-wrap gap-1.5">
@@ -1079,9 +1079,9 @@ const Portfolio = () => {
                                 </h3>
                               </div>
                               <div className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
-                                <div className="absolute inset-0 bg-linear-to-t from-slate-950/82 via-slate-950/25 to-transparent" />
+                                <div className="absolute inset-0 bg-linear-to-t from-slate-950/66 via-slate-950/44 to-slate-950/20" />
                                 <div className="absolute inset-x-0 bottom-0 p-4">
-                                  <p className="text-xs leading-relaxed text-white/80 line-clamp-2">
+                                  <p className="text-xs leading-relaxed text-white line-clamp-2">
                                     {project.description}
                                   </p>
                                   <div className="mt-3 flex flex-wrap gap-1.5">

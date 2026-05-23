@@ -25,6 +25,17 @@ const normalizePortfolioBuckets = (items = []) => {
     portfolioProjects: [],
   };
 
+  const toArray = (value) => {
+    if (Array.isArray(value)) return value.filter(Boolean);
+    if (value) return [value];
+    return [];
+  };
+
+  const sourceSections = (item) =>
+    toArray(item.sourceSections || item.sourceSection).map((section) =>
+      String(section).trim(),
+    );
+
   items.forEach((item) => {
     if (!item || typeof item !== "object") return;
 
@@ -49,12 +60,21 @@ const normalizePortfolioBuckets = (items = []) => {
       features: Array.isArray(item.features) ? item.features : [],
     };
 
+    const sections = sourceSections(item).map((section) =>
+      section.toLowerCase(),
+    );
     const isAffiliate =
+      sections.includes("affiliateprojects") ||
       normalizedItem.type === "affiliate" ||
       normalizedItem.category.some((cat) =>
         String(cat).toLowerCase().includes("affiliate"),
       );
-    const isFeatured = normalizedItem.type === "featured";
+    const isFeatured =
+      sections.includes("featuredprojects") ||
+      normalizedItem.type === "featured";
+    const isPortfolio =
+      sections.includes("portfolioprojects") ||
+      normalizedItem.type === "portfolio";
 
     if (isAffiliate) {
       buckets.affiliateProjects.push(normalizedItem);
@@ -63,6 +83,11 @@ const normalizePortfolioBuckets = (items = []) => {
 
     if (isFeatured) {
       buckets.featuredProjects.push(normalizedItem);
+      return;
+    }
+
+    if (isPortfolio) {
+      buckets.portfolioProjects.push(normalizedItem);
       return;
     }
 

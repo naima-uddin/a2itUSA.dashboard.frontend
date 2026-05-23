@@ -13,6 +13,7 @@ import {
 import ProjectModal from "./ProjectModal";
 import FeaturedSlider from "./FeaturedSlider";
 import { ChevronRight, Sparkles } from "lucide-react";
+import Image from "next/image";
 import StatsSection from "./StatsSection";
 import Link from "next/link";
 
@@ -486,7 +487,7 @@ const Portfolio = () => {
           <section className="pt-20">
             <div className="container mx-auto px-4">
               <div className="max-w-7xl text-center mx-auto">
-                <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-gray-900 mb-1 leading-tight text-center">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-1 leading-tight text-center">
                   <span className="text-blue-600">Portfolio Showcase</span>
                 </h1>
                 <p className="text-lg sm:text-xl text-gray-600 mb-8 sm:mb-12 max-w-7xl leading-relaxed text-center mx-auto">
@@ -501,12 +502,12 @@ const Portfolio = () => {
           {/* Affiliate & Partnership Projects */}
           <section className="py-4 bg-linear-to-b from-white to-blue-50">
             <div className="container mx-auto px-4">
-              <div className="text-center mb-2 ">
+              <div className="text-center  -mb-6">
                 <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-blue-600 text-white rounded-full text-xs sm:text-sm font-medium mb-2 sm:mb-3 -mt-6">
                   <FiTarget className="w-3 h-3 sm:w-4 sm:h-4" />
                   Partnership Projects
                 </div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
                   Affiliate & Collaboration Works
                 </h2>
                 <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto mb-6">
@@ -516,7 +517,7 @@ const Portfolio = () => {
               </div>
 
               {/* Mobile View - Single Card with Slider */}
-              <div className="md:hidden">
+              <div className="md:hidden ">
                 {affiliateProjects.length > 0 && (
                   <>
                     {/* Current Card */}

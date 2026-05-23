@@ -352,7 +352,7 @@ export const DEFAULT_PROMOTION_PAGE = {
   footer: {
     headline: "Sign up now for the ultimate website experience!",
     description:
-      "A2it LTD is your all-in-one web design and development agency, featuring a team of skilled and imaginative developers, marketers, and designers.",
+      "A2IT LLC is your all-in-one web design and development agency, featuring a team of skilled and imaginative developers, marketers, and designers.",
     copyrightText: "Copyright © 2026 A2IT LLC | All rights reserved.",
     logoImage: "/A2ITLogo.png",
   },

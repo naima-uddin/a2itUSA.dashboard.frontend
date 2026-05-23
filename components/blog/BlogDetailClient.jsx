@@ -267,7 +267,7 @@ export default function BlogDetailClient({ slug }) {
                 </div>
                 <div className="text-center sm:text-left min-w-0">
                   <div className="font-semibold text-gray-900 text-xs sm:text-sm">
-                    A2IT Ltd
+                    A2IT LLC
                   </div>
                   <div className="text-xs text-gray-500">Author</div>
                 </div>

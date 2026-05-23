@@ -8,6 +8,7 @@ import {
   FiChevronLeft,
   FiChevronRight,
 } from "react-icons/fi";
+import Image from "next/image";
 
 const FeaturedSlider = ({
   projects,
@@ -58,10 +59,12 @@ const FeaturedSlider = ({
               <div className="relative h-40 sm:h-48 md:h-56 shrink-0">
                 {/* Main Image */}
                 <div className="relative w-full h-full">
-                  <img
+                  <Image
                     src={project.images[currentImageIndices[index]]}
                     alt={`${project.title} - Image ${currentImageIndices[index] + 1}`}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="absolute inset-0 w-full h-full object-cover"
+                    sizes="(max-width:640px) 100vw, 50vw"
                   />
                   <div className="absolute inset-0 bg-linear-to-b from-black/20 to-transparent"></div>
 
@@ -72,8 +75,8 @@ const FeaturedSlider = ({
 
                   {/* Featured Badge */}
                   <div className="absolute top-3 left-3">
-                    <div className="inline-flex items-center gap-1 px-2 py-1 bg-blue-600 text-white rounded-full text-xs font-bold">
-                      <FiStar className="w-2.5 h-2.5" />
+                    <div className="inline-flex items-center gap-1 px-2 py-1 bg-indigo-700 text-white rounded-full text-xs font-semibold shadow-sm">
+                      <FiStar className="w-3 h-3" />
                       Featured
                     </div>
                   </div>
@@ -168,16 +171,17 @@ const FeaturedSlider = ({
                       <button
                         key={imgIndex}
                         onClick={() => handleThumbnailClick(index, imgIndex)}
-                        className={`shrink-0 w-12 h-12 rounded-md overflow-hidden border-2 transition-all ${
+                        className={`shrink-0 w-12 h-12 rounded-md overflow-hidden border-2 transition-all relative ${
                           currentImageIndices[index] === imgIndex
-                            ? "border-blue-600 scale-105"
+                            ? "border-indigo-700 scale-105"
                             : "border-gray-200 hover:border-gray-300"
                         }`}
                       >
-                        <img
+                        <Image
                           src={image}
                           alt={`${project.title} - Thumbnail ${imgIndex + 1}`}
-                          className="w-full h-full object-cover"
+                          fill
+                          className="absolute inset-0 w-full h-full object-cover"
                         />
                       </button>
                     ))}
@@ -192,10 +196,12 @@ const FeaturedSlider = ({
               <div className="relative h-full">
                 {/* Main Image */}
                 <div className="relative h-70 lg:h-80 rounded-xl lg:rounded-2xl overflow-hidden mb-4">
-                  <img
+                  <Image
                     src={project.images[currentImageIndices[index]]}
                     alt={`${project.title} - Image ${currentImageIndices[index] + 1}`}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="absolute inset-0 w-full h-full object-cover"
+                    sizes="(max-width:1024px) 100vw, 50vw"
                   />
                   <div className="absolute inset-0 bg-linear-to-r from-black/20 to-transparent"></div>
 
@@ -230,7 +236,7 @@ const FeaturedSlider = ({
 
                 {/* Featured Badge */}
                 <div className="absolute top-4 left-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-600 text-white rounded-full text-xs font-bold">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-700 text-white rounded-full text-xs font-semibold shadow-sm">
                     <FiStar className="w-3 h-3" />
                     Featured
                   </div>
@@ -240,7 +246,7 @@ const FeaturedSlider = ({
               {/* Content Section */}
               <div className="p-2 lg:p-4 xl:p-8">
                 <div className="mb-4">
-                  <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full">
+                  <span className="px-3 py-1 bg-gray-100 text-gray-800 text-xs font-semibold rounded-full">
                     {project.category}
                   </span>
                 </div>
@@ -320,7 +326,7 @@ const FeaturedSlider = ({
 
                 <button
                   onClick={() => openProjectModal(project)}
-                  className="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                  className="w-full px-6 py-3 bg-indigo-700 text-white font-medium rounded-md hover:bg-indigo-800 transition-colors flex items-center justify-center gap-2 shadow-sm"
                 >
                   View Full Case Study
                   <FiExternalLink className="w-4 h-4" />

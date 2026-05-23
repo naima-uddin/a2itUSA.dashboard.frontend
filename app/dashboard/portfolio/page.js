@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import { Plus, Trash2, Edit2, Search } from "lucide-react";
@@ -13,7 +13,7 @@ const createEmptyFormData = () => ({
   title: "",
   description: "",
   type: "portfolio",
-  projectTypes: ["portfolio"],
+  projectTypes: [],
   status: "live",
   year: "",
   category: [],
@@ -50,25 +50,9 @@ export default function PortfolioPage() {
   const [newCategoryName, setNewCategoryName] = useState("");
   const [newCategoryDisplay, setNewCategoryDisplay] = useState("");
   const [formData, setFormData] = useState(createEmptyFormData());
+  const accessDenied = !isAdmin && !isModerator;
 
-  if (!isAdmin && !isModerator) {
-    return (
-      <DashboardLayout>
-        <div className="text-center py-12">
-          <p className="text-slate-600">
-            Access Denied. Admin or Moderator only.
-          </p>
-        </div>
-      </DashboardLayout>
-    );
-  }
-
-  useEffect(() => {
-    fetchPortfolios();
-    fetchCategories();
-  }, [token]);
-
-  const fetchPortfolios = async () => {
+  const fetchPortfolios = useCallback(async () => {
     try {
       setLoading(true);
       const url = isAdmin
@@ -88,9 +72,9 @@ export default function PortfolioPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [isAdmin, token]);
 
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       setLoadingCategories(true);
       const response = await fetch(
@@ -106,7 +90,24 @@ export default function PortfolioPage() {
     } finally {
       setLoadingCategories(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchPortfolios();
+    fetchCategories();
+  }, [fetchPortfolios, fetchCategories]);
+
+  if (accessDenied) {
+    return (
+      <DashboardLayout>
+        <div className="text-center py-12">
+          <p className="text-slate-600">
+            Access Denied. Admin or Moderator only.
+          </p>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   const handleAddCategory = async () => {
     if (!newCategoryName || !newCategoryDisplay) {
@@ -188,6 +189,8 @@ export default function PortfolioPage() {
             .filter((m) => m)
         : [];
 
+      const selectedProjectTypes = formData.projectTypes.filter(Boolean);
+
       const response = await fetch(url, {
         method,
         headers: {
@@ -197,7 +200,9 @@ export default function PortfolioPage() {
         body: JSON.stringify({
           ...formData,
           type: formData.projectTypes[0] || formData.type || "portfolio",
-          projectTypes: formData.projectTypes,
+          ...(selectedProjectTypes.length > 1
+            ? { projectTypes: selectedProjectTypes }
+            : {}),
           technologies: formData.technologies
             .split(",")
             .map((t) => t.trim())
@@ -476,9 +481,13 @@ export default function PortfolioPage() {
                         { value: "featured", label: "Featured" },
                         { value: "affiliate", label: "Affiliate" },
                       ].map((option) => {
-                        const isChecked = formData.projectTypes.includes(
-                          option.value,
-                        );
+                        const selectedTypes =
+                          formData.projectTypes.length > 0
+                            ? formData.projectTypes
+                            : formData.type
+                              ? [formData.type]
+                              : [];
+                        const isChecked = selectedTypes.includes(option.value);
 
                         return (
                           <label
@@ -500,10 +509,7 @@ export default function PortfolioPage() {
 
                                   return {
                                     ...prev,
-                                    projectTypes:
-                                      nextTypes.length > 0
-                                        ? nextTypes
-                                        : ["portfolio"],
+                                    projectTypes: nextTypes,
                                     type:
                                       nextTypes[0] || prev.type || "portfolio",
                                   };
@@ -1083,9 +1089,7 @@ export default function PortfolioPage() {
                           projectTypes:
                             item.projectTypes?.length > 0
                               ? item.projectTypes
-                              : item.type
-                                ? [item.type]
-                                : ["portfolio"],
+                              : [],
                           status: item.status || "live",
                           year: item.year || "",
                           category: item.category || [],

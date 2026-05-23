@@ -264,7 +264,7 @@ export default function BlogDetailClient({ slug }) {
           <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-black/10" />
           <div className="absolute inset-0 flex items-end">
             <div className="w-full p-4 sm:p-6 md:p-8 lg:p-10">
-              <div className="max-w-3xl">
+              <div className="max-w-7xl">
                 <p className="inline-flex items-center rounded-full bg-cyan-400/90 px-3 py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.25em] text-gray-950">
                   Blog banner
                 </p>
@@ -351,7 +351,7 @@ export default function BlogDetailClient({ slug }) {
         </header>
 
         {/* Enhanced Content */}
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 py-2 sm:py-4 px-4 sm:px-8 md:px-10 mb-4 md:mb-6">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 py-2 sm:py-4 px-4 sm:px-8 md:px-10 mb-4 md:mb-6 ">
           <div
             className="prose pcyan-sm sm:prose md:pcyan-lg lg:pcyan-xl max-w-none pcyan-headings:text-gray-900 pcyan-p:text-gray-700 pcyan-p:leading-relaxed pcyan-a:text-blue-600 pcyan-a:no-underline hover:pcyan-a:underline pcyan-img:rounded-xl pcyan-strong:text-gray-900 pcyan-blockquote:border-l-blue-400 pcyan-blockquote:bg-blue-50 pcyan-blockquote:py-4 pcyan-blockquote:px-6 pcyan-blockquote:rounded-r-lg pcyan-code:text-blue-600 pcyan-code:bg-blue-50 pcyan-code:px-2 pcyan-code:py-1 pcyan-code:rounded"
             dangerouslySetInnerHTML={{ __html: blog.content }}

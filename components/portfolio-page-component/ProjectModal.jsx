@@ -45,6 +45,25 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
     setThumbnailStartIndex(0);
   }, [project, isOpen]);
 
+  useEffect(() => {
+    if (allImages.length <= visibleThumbnailCount) return;
+
+    if (currentImageIndex < thumbnailStartIndex) {
+      setThumbnailStartIndex(currentImageIndex);
+      return;
+    }
+
+    const thumbnailEndIndex = thumbnailStartIndex + visibleThumbnailCount - 1;
+    if (currentImageIndex > thumbnailEndIndex) {
+      setThumbnailStartIndex(currentImageIndex - visibleThumbnailCount + 1);
+    }
+  }, [
+    currentImageIndex,
+    allImages.length,
+    thumbnailStartIndex,
+    visibleThumbnailCount,
+  ]);
+
   const nextImage = () => {
     if (allImages.length > 0) {
       setCurrentImageIndex((prev) => (prev + 1) % allImages.length);

@@ -114,20 +114,17 @@ export default function PortfolioPage() {
     }
 
     try {
-      const response = await fetch(
-        `${API_BASE}/api/portfolio-categories`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            name: newCategoryName,
-            displayName: newCategoryDisplay,
-          }),
+      const response = await fetch(`${API_BASE}/api/portfolio-categories`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      );
+        body: JSON.stringify({
+          name: newCategoryName,
+          displayName: newCategoryDisplay,
+        }),
+      });
 
       if (response.ok) {
         setNewCategoryName("");
@@ -234,15 +231,12 @@ export default function PortfolioPage() {
     if (!window.confirm("Delete this portfolio item?")) return;
 
     try {
-      const response = await fetch(
-        `${API_BASE}/api/portfolio/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await fetch(`${API_BASE}/api/portfolio/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
 
       if (response.ok) {
         fetchPortfolios();

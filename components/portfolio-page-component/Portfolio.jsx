@@ -356,10 +356,16 @@ const Portfolio = () => {
   };
 
   const affiliateProjects = getAffiliateProjects();
-  const visibleAffiliateProjects = affiliateProjects.slice(
-    affiliateSliderIndex,
-    affiliateSliderIndex + 3,
-  );
+  const visibleAffiliateProjects =
+    affiliateProjects.length > 0
+      ? Array.from(
+          { length: Math.min(3, affiliateProjects.length) },
+          (_, idx) =>
+            affiliateProjects[
+              (affiliateSliderIndex + idx) % affiliateProjects.length
+            ],
+        )
+      : [];
 
   // Portfolio slider navigation
   const nextPortfolioSlide = () => {
@@ -655,9 +661,7 @@ const Portfolio = () => {
                       >
                         <FiChevronLeft className="w-5 h-5 text-slate-700" />
                       </button>
-                      <div className="text-sm text-slate-500">
-                        {affiliateSliderIndex + 1} / {affiliateProjects.length}
-                      </div>
+
                       <button
                         onClick={nextAffiliateSlide}
                         className="p-2 rounded-full bg-white border border-slate-200 shadow-sm hover:bg-slate-50 transition-colors"

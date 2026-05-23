@@ -898,7 +898,7 @@ const Portfolio = () => {
                                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                                 sizes="(max-width:768px) 100vw, 50vw"
                               />
-                              <div className="absolute inset-0 bg-linear-to-t from-slate-950/60 via-slate-950/20 to-slate-950/10" />
+                              <div className="absolute inset-0 bg-linear-to-t from-slate-950/18 via-slate-950/8 to-transparent" />
                               <div className="absolute inset-x-0 bottom-0 p-4">
                                 <div className="flex flex-wrap gap-1.5 mb-2 opacity-90">
                                   {categories.slice(0, 2).map((cat) => (
@@ -1015,7 +1015,7 @@ const Portfolio = () => {
               {/* Desktop View - Grid */}
               <div className="hidden md:block">
                 {filteredProjects.length > 0 ? (
-                  <div className="grid grid-cols-2 gap-6  md:grid-cols-4 lg:grid-cols-5 ">
+                  <div className="grid grid-cols-2 gap-4  md:grid-cols-4 lg:grid-cols-5 ">
                     {filteredProjects.map((project, index) => {
                       const accent = getCardAccent(project, index);
                       const categories = Array.isArray(project.category)
@@ -1033,7 +1033,7 @@ const Portfolio = () => {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.04 }}
-                          className="group overflow-hidden rounded-4xl border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_28px_80px_rgba(15,23,42,0.14)]"
+                          className="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_28px_80px_rgba(15,23,42,0.14)]"
                         >
                           <div className="block w-full text-left">
                             <div className="relative aspect-5/4 overflow-hidden">
@@ -1048,7 +1048,7 @@ const Portfolio = () => {
                                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.08]"
                                 sizes="(max-width:768px) 100vw, 33vw"
                               />
-                              <div className="absolute inset-0 bg-linear-to-t from-slate-950/88 via-slate-950/68 to-slate-950/20 opacity-95" />
+                              <div className="absolute inset-0 bg-linear-to-t from-slate-950/98 via-slate-950/8 to-transparent opacity-95" />
 
                               <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
                                 <div className="flex flex-wrap gap-1.5">

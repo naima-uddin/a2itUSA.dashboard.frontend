@@ -447,7 +447,7 @@ const Portfolio = () => {
 
   return (
     <>
-      <div className="bg-white text-gray-900">
+      <div className="bg-white/70 text-gray-900">
         {/* Hero Section with Image */}
         <section className="relative min-h-[50vh] sm:min-h-[60vh] md:min-h-[70vh] py-12 sm:py-16 md:py-20 flex items-center justify-center overflow-hidden border-b border-white/10">
           {/* Background Image with Overlay */}

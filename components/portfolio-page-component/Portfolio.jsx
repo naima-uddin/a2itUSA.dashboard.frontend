@@ -858,7 +858,6 @@ const Portfolio = () => {
               <div className="md:hidden">
                 {filteredProjects.length > 0 ? (
                   <>
-                    {/* Current Card */}
                     {(() => {
                       const currentProject =
                         filteredProjects[portfolioSliderIndex];
@@ -866,126 +865,102 @@ const Portfolio = () => {
                         currentProject,
                         portfolioSliderIndex,
                       );
+                      const categories = Array.isArray(currentProject.category)
+                        ? currentProject.category
+                        : currentProject.category
+                          ? [currentProject.category]
+                          : [];
+                      const performance = Array.isArray(
+                        currentProject.performance,
+                      )
+                        ? currentProject.performance
+                        : [];
 
                       return (
                         <motion.div
-                          key={`${filteredProjects[portfolioSliderIndex]?.id}-${portfolioSliderIndex}`}
-                          initial={{ opacity: 0, scale: 0.95 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 0.95 }}
-                          className="group relative cursor-pointer transform transition duration-300 hover:-translate-y-1 hover:shadow-lg"
-                          onClick={() =>
-                            openProjectModal(
-                              filteredProjects[portfolioSliderIndex],
-                            )
-                          }
+                          key={`${currentProject?.id || currentProject?.title}-${portfolioSliderIndex}`}
+                          initial={{ opacity: 0, y: 18 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 18 }}
+                          className="group cursor-pointer"
+                          onClick={() => openProjectModal(currentProject)}
                         >
-                          {/* Image Container */}
-                          <div
-                            className={`relative aspect-square overflow-hidden rounded-3xl sm:rounded-3xl bg-gray-100 ring-1 ${accent.ring}`}
-                          >
-                            <div
-                              className="absolute top-0 left-0 right-0 h-1.5 z-20"
-                              style={{ background: accent.bar }}
-                            />
-                            {/* Base Image */}
-                            <Image
-                              src={currentProject.image}
-                              alt={currentProject.title}
-                              fill
-                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-all duration-500"
-                              sizes="(max-width:768px) 100vw, 50vw"
-                            />
-
-                            {/* Overlay Content - Shows on hover */}
-                            <div className="absolute inset-0 bg-linear-to-t from-slate-950/85 via-slate-950/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 text-left">
-                              <div className="w-full rounded-2xl border border-white/15 bg-white/10 backdrop-blur-xl p-4 shadow-2xl">
-                                <div className="flex items-start justify-between gap-3 mb-2">
-                                  <h3 className="text-lg font-semibold text-white line-clamp-2">
-                                    {currentProject.title}
-                                  </h3>
-                                  <span className="shrink-0 px-2 py-0.5 rounded-full bg-white/15 text-white text-[11px] border border-white/15">
-                                    Hover
-                                  </span>
-                                </div>
-                                <p className="text-gray-200 text-xs mb-3 line-clamp-2">
-                                  {currentProject.description}
-                                </p>
-
-                                <div className="flex flex-wrap gap-1.5 mb-3">
-                                  {currentProject.technologies &&
-                                    currentProject.technologies
-                                      .slice(0, 2)
-                                      .map((tech, idx) => (
-                                        <span
-                                          key={idx}
-                                          className="px-2 py-0.5 rounded-full border border-white/15 bg-white/10 text-white text-[11px]"
-                                        >
-                                          {tech}
-                                        </span>
-                                      ))}
-                                </div>
-
-                                <div className="flex items-center justify-between">
-                                  <div className="flex items-center gap-2 text-[11px] text-white/80">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                                    Tap to open
-                                  </div>
-                                  <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white text-slate-900 text-[11px] font-medium shadow-sm">
-                                    View details
-                                    <FiExternalLink className="w-3 h-3" />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Category Badges - Show up to 2 categories */}
-                            <div className="absolute top-3 left-3 flex flex-wrap gap-1">
-                              {currentProject.category &&
-                                (Array.isArray(currentProject.category)
-                                  ? currentProject.category
-                                  : [currentProject.category]
-                                )
-                                  .slice(0, 2)
-                                  .map((cat, idx) => (
+                          <div className="overflow-hidden rounded-4xl border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.10)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(15,23,42,0.15)]">
+                            <div className="relative aspect-4/3 overflow-hidden">
+                              <div
+                                className="absolute top-0 left-0 right-0 h-1.5 z-20"
+                                style={{ background: accent.bar }}
+                              />
+                              <Image
+                                src={currentProject.image}
+                                alt={currentProject.title}
+                                fill
+                                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                                sizes="(max-width:768px) 100vw, 50vw"
+                              />
+                              <div className="absolute inset-0 bg-linear-to-t from-slate-950/75 via-slate-950/10 to-transparent" />
+                              <div className="absolute inset-x-0 bottom-0 p-4">
+                                <div className="flex flex-wrap gap-1.5 mb-2">
+                                  {categories.slice(0, 2).map((cat) => (
                                     <span
-                                      key={idx}
-                                      className={`px-2 py-0.5 backdrop-blur-sm text-xs font-semibold rounded-full shadow-sm border ${accent.badge}`}
+                                      key={cat}
+                                      className={`px-2 py-0.5 rounded-full border text-[11px] font-semibold backdrop-blur-sm ${accent.badge}`}
                                     >
                                       {cat}
                                     </span>
                                   ))}
-                            </div>
-                          </div>
-
-                          {/* Title and categories (visible always) */}
-                          <div className="mt-3 mb-4">
-                            <h3 className="font-medium text-slate-900 group-hover:text-slate-900 transition-colors line-clamp-1 text-base sm:text-lg">
-                              {currentProject.title}
-                            </h3>
-                            {currentProject.category && (
-                              <p className="text-xs text-slate-500 mt-1 line-clamp-1">
-                                {Array.isArray(currentProject.category)
-                                  ? currentProject.category.join(", ")
-                                  : currentProject.category}
-                              </p>
-                            )}
-                            <div className="mt-2 flex items-center justify-between">
-                              <div className="flex flex-wrap gap-2">
-                                {currentProject.technologies &&
-                                  currentProject.technologies
-                                    .slice(0, 2)
-                                    .map((tech, i) => (
-                                      <span
-                                        key={i}
-                                        className="px-2 py-1 bg-slate-100 text-slate-700 rounded-full text-xs border border-slate-200"
-                                      >
-                                        {tech}
-                                      </span>
-                                    ))}
+                                </div>
+                                <h3 className="text-lg font-semibold text-white line-clamp-2 tracking-tight">
+                                  {currentProject.title}
+                                </h3>
+                                <p className="mt-1 text-xs text-white/80 line-clamp-1">
+                                  {currentProject.year || "Selected project"}
+                                </p>
                               </div>
-                              <div className="text-xs text-slate-400">
-                                {currentProject.year || ""}
+                            </div>
+
+                            <div className="p-4">
+                              <p className="text-sm leading-relaxed text-slate-600 line-clamp-3">
+                                {currentProject.description}
+                              </p>
+
+                              <div className="mt-4 flex flex-wrap gap-2">
+                                {(currentProject.technologies || [])
+                                  .slice(0, 3)
+                                  .map((tech) => (
+                                    <span
+                                      key={tech}
+                                      className="px-2.5 py-1 rounded-full border border-slate-200 bg-slate-50 text-slate-700 text-xs"
+                                    >
+                                      {tech}
+                                    </span>
+                                  ))}
+                              </div>
+
+                              <div className="mt-4 grid grid-cols-2 gap-2">
+                                {performance.slice(0, 2).map((metric, idx) => (
+                                  <div
+                                    key={idx}
+                                    className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2"
+                                  >
+                                    <div className="text-sm font-semibold text-slate-900">
+                                      {metric.value}
+                                    </div>
+                                    <div className="text-[11px] text-slate-500">
+                                      {metric.label}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+
+                              <div className="mt-4 flex items-center justify-between">
+                                <div className="text-[11px] text-slate-500">
+                                  Tap to open full details
+                                </div>
+                                <button className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-3.5 py-2 text-xs font-medium text-white shadow-sm transition hover:bg-slate-800">
+                                  View case
+                                  <FiExternalLink className="w-3.5 h-3.5" />
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -993,54 +968,56 @@ const Portfolio = () => {
                       );
                     })()}
 
-                    {/* Slider Controls and Dots */}
                     {filteredProjects.length > 1 && (
                       <>
-                        <div className="flex justify-center items-center gap-4 mt-6">
+                        <div className="mt-6 flex items-center justify-center gap-4">
                           <button
                             onClick={prevPortfolioSlide}
-                            className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                            aria-label="Previous portfolio project"
                           >
-                            <FiChevronLeft className="w-5 h-5 text-gray-700" />
+                            <FiChevronLeft className="w-5 h-5" />
                           </button>
 
-                          <div className="flex gap-1.5">
+                          <div className="flex items-center gap-1.5">
                             {filteredProjects.map((_, index) => (
                               <button
                                 key={index}
                                 onClick={() => setPortfolioSliderIndex(index)}
-                                className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                                className={`h-2 rounded-full transition-all ${
                                   portfolioSliderIndex === index
-                                    ? "bg-blue-600"
-                                    : "bg-gray-300"
+                                    ? "w-6 bg-slate-900"
+                                    : "w-2 bg-slate-300"
                                 }`}
+                                aria-label={`Go to portfolio project ${index + 1}`}
                               />
                             ))}
                           </div>
 
                           <button
                             onClick={nextPortfolioSlide}
-                            className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                            aria-label="Next portfolio project"
                           >
-                            <FiChevronRight className="w-5 h-5 text-gray-700" />
+                            <FiChevronRight className="w-5 h-5" />
                           </button>
                         </div>
 
-                        <div className="text-center mt-2 text-xs text-gray-500">
+                        <div className="mt-2 text-center text-xs text-slate-500">
                           Slide {portfolioSliderIndex + 1} of{" "}
-                          {filteredProjects.length} • Auto-changing in 6s
+                          {filteredProjects.length}
                         </div>
                       </>
                     )}
                   </>
                 ) : (
-                  <div className="text-center py-8">
-                    <p className="text-gray-500">
+                  <div className="rounded-4xl border border-dashed border-slate-200 bg-white p-8 text-center shadow-sm">
+                    <p className="text-slate-500">
                       No projects found for this category
                     </p>
                     <button
                       onClick={() => setActiveFilter("all")}
-                      className="mt-4 px-4 py-2 bg-blue-600 text-white text-sm rounded-full hover:bg-blue-700 transition-colors"
+                      className="mt-4 rounded-full bg-slate-900 px-4 py-2 text-sm text-white transition hover:bg-slate-800"
                     >
                       View All Projects
                     </button>
@@ -1051,177 +1028,132 @@ const Portfolio = () => {
               {/* Desktop View - Grid */}
               <div className="hidden md:block">
                 {filteredProjects.length > 0 ? (
-                  <>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                      {filteredProjects.map((project, index) =>
-                        (() => {
-                          const accent = getCardAccent(project, index);
-                          return (
-                            <motion.div
-                              key={`${project.id}-${index}`}
-                              initial={{ opacity: 0, scale: 0.9 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ delay: index * 0.05 }}
-                              className="group relative cursor-pointer transform transition duration-300 hover:-translate-y-1 hover:shadow-lg"
-                              onClick={() => openProjectModal(project)}
-                            >
-                              {/* Image Container */}
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+                    {filteredProjects.map((project, index) => {
+                      const accent = getCardAccent(project, index);
+                      const categories = Array.isArray(project.category)
+                        ? project.category
+                        : project.category
+                          ? [project.category]
+                          : [];
+                      const performance = Array.isArray(project.performance)
+                        ? project.performance
+                        : [];
+
+                      return (
+                        <motion.article
+                          key={`${project.id}-${index}`}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.04 }}
+                          className="group overflow-hidden rounded-4xl border border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_28px_80px_rgba(15,23,42,0.14)]"
+                        >
+                          <button
+                            onClick={() => openProjectModal(project)}
+                            className="block w-full text-left"
+                          >
+                            <div className="relative aspect-4/3 overflow-hidden">
                               <div
-                                className={`relative aspect-square overflow-hidden rounded-3xl bg-gray-100 ring-1 ${accent.ring}`}
-                              >
-                                <div
-                                  className="absolute top-0 left-0 right-0 h-1.5 z-20"
-                                  style={{ background: accent.bar }}
-                                />
-                                {/* Base Image */}
-                                <Image
-                                  src={project.image}
-                                  alt={project.title}
-                                  fill
-                                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-all duration-500"
-                                  sizes="(max-width:768px) 100vw, 25vw"
-                                />
+                                className="absolute top-0 left-0 right-0 h-1.5 z-20"
+                                style={{ background: accent.bar }}
+                              />
+                              <Image
+                                src={project.image}
+                                alt={project.title}
+                                fill
+                                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
+                                sizes="(max-width:768px) 100vw, 33vw"
+                              />
+                              <div className="absolute inset-0 bg-linear-to-t from-slate-950/70 via-slate-950/10 to-transparent opacity-90" />
 
-                                {/* Overlay Content - Shows on hover */}
-                                <div className="absolute inset-0 bg-linear-to-t from-slate-950/85 via-slate-950/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 text-left">
-                                  <div className="w-full rounded-2xl border border-white/15 bg-white/10 backdrop-blur-xl p-5 shadow-2xl">
-                                    <div className="flex items-start justify-between gap-3 mb-2">
-                                      <h3 className="text-xl font-semibold text-white line-clamp-2">
-                                        {project.title}
-                                      </h3>
-                                      <span className="shrink-0 px-2 py-0.5 rounded-full bg-white/15 text-white text-[11px] border border-white/15">
-                                        Hover
-                                      </span>
-                                    </div>
-                                    <p className="text-gray-200 text-sm mb-4 line-clamp-2">
-                                      {project.description}
-                                    </p>
-
-                                    <div className="flex flex-wrap gap-2 mb-4">
-                                      {(Array.isArray(project.category)
-                                        ? project.category
-                                        : [project.category]
-                                      )
-                                        .slice(0, 2)
-                                        .map((cat, idx) => (
-                                          <span
-                                            key={idx}
-                                            className="px-2.5 py-1 rounded-full border border-white/15 bg-white/10 text-white text-xs"
-                                          >
-                                            {cat}
-                                          </span>
-                                        ))}
-                                    </div>
-
-                                    <div className="flex flex-wrap gap-2 mb-4">
-                                      {project.technologies &&
-                                        project.technologies
-                                          .slice(0, 2)
-                                          .map((tech, idx) => (
-                                            <span
-                                              key={idx}
-                                              className="px-2.5 py-1 rounded-full border border-white/15 bg-white/10 text-white text-xs"
-                                            >
-                                              {tech}
-                                            </span>
-                                          ))}
-                                    </div>
-
-                                    <div className="flex items-center justify-between">
-                                      <div className="flex items-center gap-4">
-                                        {project.performance &&
-                                          project.performance.length > 0 &&
-                                          project.performance
-                                            .slice(0, 2)
-                                            .map((metric, idx) => (
-                                              <div
-                                                key={idx}
-                                                className="text-center"
-                                              >
-                                                <div className="text-base font-bold text-white">
-                                                  {metric.value}
-                                                </div>
-                                                <div className="text-[11px] text-gray-300">
-                                                  {metric.label}
-                                                </div>
-                                              </div>
-                                            ))}
-                                      </div>
-
-                                      <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white text-slate-900 text-sm font-medium shadow-sm">
-                                        View details
-                                        <FiExternalLink className="w-3.5 h-3.5" />
-                                      </div>
-                                    </div>
-                                  </div>
+                              <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
+                                <div className="flex flex-wrap gap-1.5">
+                                  {categories.slice(0, 2).map((cat) => (
+                                    <span
+                                      key={cat}
+                                      className={`rounded-full border px-2.5 py-1 text-[11px] font-semibold backdrop-blur-sm ${accent.badge}`}
+                                    >
+                                      {cat}
+                                    </span>
+                                  ))}
                                 </div>
-
-                                {/* Category Badges - Show up to 2 categories */}
-                                <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                                  {project.category &&
-                                    (Array.isArray(project.category)
-                                      ? project.category
-                                      : [project.category]
-                                    )
-                                      .slice(0, 2)
-                                      .map((cat, idx) => (
-                                        <span
-                                          key={idx}
-                                          className={`px-3 py-1 backdrop-blur-sm text-xs font-semibold rounded-full shadow-sm border ${accent.badge}`}
-                                        >
-                                          {cat}
-                                        </span>
-                                      ))}
-                                </div>
+                                {project.year ? (
+                                  <span className="rounded-full border border-white/20 bg-white/15 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
+                                    {project.year}
+                                  </span>
+                                ) : null}
                               </div>
 
-                              {/* Title and categories (visible always) */}
-                              <div
-                                className={`mt-4 mb-4 rounded-2xl border px-3 py-3 ${accent.badge} bg-white/70 backdrop-blur-sm`}
-                              >
-                                <h3 className="font-medium text-gray-900 group-hover:text-gray-900 transition-colors line-clamp-1 text-base">
+                              <div className="absolute inset-x-0 bottom-0 p-4">
+                                <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md">
+                                  <span
+                                    className={`h-1.5 w-1.5 rounded-full ${accent.dot}`}
+                                  />
+                                  Portfolio Project
+                                </div>
+                                <h3 className="mt-3 text-xl font-semibold tracking-tight text-white line-clamp-2">
                                   {project.title}
                                 </h3>
-                                {project.category && (
-                                  <p className="text-sm text-gray-500 mt-1 line-clamp-1">
-                                    {Array.isArray(project.category)
-                                      ? project.category.join(", ")
-                                      : project.category}
-                                  </p>
-                                )}
-                                <div className="mt-2 flex items-center justify-between">
-                                  <div className="flex flex-wrap gap-2">
-                                    {project.technologies &&
-                                      project.technologies
-                                        .slice(0, 2)
-                                        .map((tech, i) => (
-                                          <span
-                                            key={i}
-                                            className="px-2 py-1 bg-white/80 text-gray-700 rounded-full text-xs border border-gray-200"
-                                          >
-                                            {tech}
-                                          </span>
-                                        ))}
-                                  </div>
-                                  <div className="text-xs text-gray-400">
-                                    {project.year || ""}
-                                  </div>
-                                </div>
                               </div>
-                            </motion.div>
-                          );
-                        })(),
-                      )}
-                    </div>
-                  </>
+                            </div>
+
+                            <div className="p-5">
+                              <p className="text-sm leading-relaxed text-slate-600 line-clamp-3">
+                                {project.description}
+                              </p>
+
+                              <div className="mt-4 flex flex-wrap gap-2">
+                                {(project.technologies || [])
+                                  .slice(0, 3)
+                                  .map((tech) => (
+                                    <span
+                                      key={tech}
+                                      className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs text-slate-700"
+                                    >
+                                      {tech}
+                                    </span>
+                                  ))}
+                              </div>
+
+                              <div className="mt-5 grid grid-cols-[1fr_auto] items-end gap-3">
+                                <div className="space-y-2">
+                                  {performance
+                                    .slice(0, 2)
+                                    .map((metric, idx) => (
+                                      <div
+                                        key={idx}
+                                        className="flex items-center gap-2 text-sm text-slate-600"
+                                      >
+                                        <span
+                                          className={`h-2 w-2 rounded-full ${accent.dot}`}
+                                        />
+                                        <span className="font-semibold text-slate-900">
+                                          {metric.value}
+                                        </span>
+                                        <span>{metric.label}</span>
+                                      </div>
+                                    ))}
+                                </div>
+
+                                <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-900 px-3.5 py-2 text-xs font-medium text-white transition group-hover:bg-slate-800">
+                                  View case
+                                  <FiExternalLink className="w-3.5 h-3.5" />
+                                </span>
+                              </div>
+                            </div>
+                          </button>
+                        </motion.article>
+                      );
+                    })}
+                  </div>
                 ) : (
-                  <div className="text-center py-12">
-                    <p className="text-gray-500">
+                  <div className="rounded-4xl border border-dashed border-slate-200 bg-white p-12 text-center shadow-sm">
+                    <p className="text-slate-500">
                       No projects found for this category
                     </p>
                     <button
                       onClick={() => setActiveFilter("all")}
-                      className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
+                      className="mt-4 rounded-full bg-slate-900 px-6 py-2 text-white transition hover:bg-slate-800"
                     >
                       View All Projects
                     </button>

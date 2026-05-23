@@ -185,8 +185,8 @@ export default function BlogDetailClient({ slug }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
-      {/* Enhanced Breadcrumb */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200/60 sticky top-0 z-10">
+      {/* Enhanced Breadcrumb (fixed below main navbar) */}
+      <div className="fixed top-16 left-0 right-0 z-40 bg-white/80 backdrop-blur-sm border-b border-gray-200/60">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <nav className="flex items-center gap-2 text-sm text-gray-600">
             <Link
@@ -247,8 +247,11 @@ export default function BlogDetailClient({ slug }) {
         </div>
       </div>
 
+      {/* Spacer to offset navbar + breadcrumb height */}
+      <div className="h-32 sm:h-32 lg:h-32" />
+
       {/* Blog Banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 md:pt-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
         <div className="relative overflow-hidden rounded-3xl bg-gray-900 shadow-2xl aspect-21/8 sm:aspect-21/7">
           <Image
             src={bannerImageUrl}
@@ -774,7 +777,7 @@ export default function BlogDetailClient({ slug }) {
       {/* Enhanced Related Blogs */}
       {relatedBlogs.length > 0 && (
         <section className="bg-gradient-to-r from-blue-50 to-cyan-50 py-4 sm:py-4 md:py-6 lg:py-10">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-4 md:mb-8">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-2">
                 You Might Also Like

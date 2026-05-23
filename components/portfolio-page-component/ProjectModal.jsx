@@ -1,7 +1,7 @@
 // components/ProjectModal.jsx
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FiX,
   FiChevronLeft,
@@ -18,6 +18,7 @@ import {
 
 const ProjectModal = ({ project, isOpen, onClose }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [thumbnailStartIndex, setThumbnailStartIndex] = useState(0);
 
   if (!project) return null;
 
@@ -29,6 +30,20 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
   };
 
   const allImages = getProjectImages();
+  const visibleThumbnailCount = 5;
+  const maxThumbnailStart = Math.max(
+    0,
+    allImages.length - visibleThumbnailCount,
+  );
+  const visibleThumbnails = allImages.slice(
+    thumbnailStartIndex,
+    thumbnailStartIndex + visibleThumbnailCount,
+  );
+
+  useEffect(() => {
+    setCurrentImageIndex(0);
+    setThumbnailStartIndex(0);
+  }, [project, isOpen]);
 
   const nextImage = () => {
     if (allImages.length > 0) {
@@ -42,6 +57,14 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
         (prev) => (prev - 1 + allImages.length) % allImages.length,
       );
     }
+  };
+
+  const nextThumbnailGroup = () => {
+    setThumbnailStartIndex((prev) => Math.min(prev + 1, maxThumbnailStart));
+  };
+
+  const prevThumbnailGroup = () => {
+    setThumbnailStartIndex((prev) => Math.max(prev - 1, 0));
   };
 
   // Get performance metrics - handle different structures
@@ -211,24 +234,52 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
 
                 {/* Thumbnail Gallery */}
                 {allImages.length > 1 && (
-                  <div className="p-3 sm:p-4 lg:p-6 flex gap-2 sm:gap-3 lg:gap-4 overflow-x-auto">
-                    {allImages.map((img, idx) => (
+                  <div className="p-3 sm:p-4 lg:p-6 flex items-center gap-2 sm:gap-3 lg:gap-4">
+                    {allImages.length > visibleThumbnailCount && (
                       <button
-                        key={idx}
-                        onClick={() => setCurrentImageIndex(idx)}
-                        className={`shrink-0 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-lg overflow-hidden border-2 transition-all ${
-                          currentImageIndex === idx
-                            ? "border-blue-600 scale-105"
-                            : "border-transparent hover:border-gray-300"
-                        }`}
+                        onClick={prevThumbnailGroup}
+                        disabled={thumbnailStartIndex === 0}
+                        className="inline-flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+                        aria-label="Previous thumbnails"
                       >
-                        <img
-                          src={img}
-                          alt={`${project.title} - Image ${idx + 1}`}
-                          className="w-full h-full object-cover"
-                        />
+                        <FiChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
                       </button>
-                    ))}
+                    )}
+
+                    <div className="flex flex-1 gap-2 sm:gap-3 lg:gap-4 overflow-hidden">
+                      {visibleThumbnails.map((img, idx) => {
+                        const imageIndex = thumbnailStartIndex + idx;
+
+                        return (
+                          <button
+                            key={imageIndex}
+                            onClick={() => setCurrentImageIndex(imageIndex)}
+                            className={`shrink-0 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-lg overflow-hidden border-2 transition-all ${
+                              currentImageIndex === imageIndex
+                                ? "border-blue-600 scale-105"
+                                : "border-transparent hover:border-gray-300"
+                            }`}
+                          >
+                            <img
+                              src={img}
+                              alt={`${project.title} - Image ${imageIndex + 1}`}
+                              className="w-full h-full object-cover"
+                            />
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {allImages.length > visibleThumbnailCount && (
+                      <button
+                        onClick={nextThumbnailGroup}
+                        disabled={thumbnailStartIndex === maxThumbnailStart}
+                        className="inline-flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40"
+                        aria-label="Next thumbnails"
+                      >
+                        <FiChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                      </button>
+                    )}
                   </div>
                 )}
               </div>
@@ -433,29 +484,31 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
                   project.testimonial.author ||
                   project.testimonial.position ||
                   project.testimonial.company) && (
-                <div className="mt-6 sm:mt-8 p-4 sm:p-5 lg:p-6 bg-linear-to-r from-blue-50 to-indigo-50 rounded-xl lg:rounded-2xl">
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
-                      <span className="text-lg sm:text-xl lg:text-2xl">"</span>
-                    </div>
-                    <div>
-                      <p className="text-sm sm:text-base lg:text-lg italic text-gray-700 mb-3 sm:mb-4">
-                        {project.testimonial.text}
-                      </p>
+                  <div className="mt-6 sm:mt-8 p-4 sm:p-5 lg:p-6 bg-linear-to-r from-blue-50 to-indigo-50 rounded-xl lg:rounded-2xl">
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
+                        <span className="text-lg sm:text-xl lg:text-2xl">
+                          "
+                        </span>
+                      </div>
                       <div>
-                        <div className="font-bold text-gray-900 text-sm sm:text-base">
-                          {project.testimonial.author}
-                        </div>
-                        <div className="text-gray-600 text-xs sm:text-sm">
-                          {project.testimonial.position}
-                          {project.testimonial.company &&
-                            `, ${project.testimonial.company}`}
+                        <p className="text-sm sm:text-base lg:text-lg italic text-gray-700 mb-3 sm:mb-4">
+                          {project.testimonial.text}
+                        </p>
+                        <div>
+                          <div className="font-bold text-gray-900 text-sm sm:text-base">
+                            {project.testimonial.author}
+                          </div>
+                          <div className="text-gray-600 text-xs sm:text-sm">
+                            {project.testimonial.position}
+                            {project.testimonial.company &&
+                              `, ${project.testimonial.company}`}
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {/* Action Buttons */}
               <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-100 flex flex-col sm:flex-row gap-3 sm:gap-4">

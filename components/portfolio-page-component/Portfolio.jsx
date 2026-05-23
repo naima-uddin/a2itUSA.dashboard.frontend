@@ -638,11 +638,6 @@ const Portfolio = () => {
                             <FiChevronRight className="w-5 h-5 text-gray-700" />
                           </button>
                         </div>
-
-                        <div className="text-center mt-2 text-sm text-gray-500">
-                          {affiliateSliderIndex + 1} /{" "}
-                          {affiliateProjects.length}
-                        </div>
                       </>
                     )}
                   </>

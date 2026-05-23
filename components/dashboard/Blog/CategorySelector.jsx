@@ -66,7 +66,7 @@ export default function CategorySelector({
         setNewCategoryDesc("");
         setShowCreateModal(false);
       } else {
-        alert(b.error || "Failed to create category");
+        alert(b.message || b.error || "Failed to create category");
       }
     } catch (err) {
       console.error("Error creating category:", err);

@@ -429,13 +429,13 @@ const Portfolio = () => {
                 </span>
               </div>
 
-              <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl  font-bold mb-6 leading-none">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-5xl font-bold mb-6 leading-none">
                 <span className="text-white">Our Creative</span>
-                <div className="relative inline-block ml-2 sm:ml-4 items-center flex">
-                  <span className="relative z-10 text-transparent bg-clip-text bg-linear-to-r from-blue-300 to-purple-300 text-6xl">
+                <div className="relative inline-block ml-2 sm:ml-4 flex items-center">
+                  <span className="relative z-10 text-transparent bg-clip-text bg-linear-to-r from-blue-300 to-purple-300 text-3xl sm:text-4xl">
                     Portfolio
                   </span>
-                  <Sparkles className="ml-3 text-white/90 w-6 h-6 animate-pulse" />
+                  <Sparkles className="ml-3 text-white/80 w-4 h-4" />
                   <div className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-1 sm:h-2 bg-linear-to-r from-blue-400 to-purple-400"></div>
                 </div>
               </h1>
@@ -449,7 +449,7 @@ const Portfolio = () => {
               {/* Quick Stats */}
               <div className="grid grid-cols-3 gap-4 sm:gap-6 mt-8 sm:mt-12">
                 <div className="text-center">
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1">
+                  <div className="text-2xl sm:text-3xl md:text-3xl font-bold text-white mb-1">
                     120+
                   </div>
                   <div className="text-xs sm:text-sm text-white/70">
@@ -457,7 +457,7 @@ const Portfolio = () => {
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1">
+                  <div className="text-2xl sm:text-3xl md:text-3xl font-bold text-white mb-1">
                     100%
                   </div>
                   <div className="text-xs sm:text-sm text-white/70">
@@ -465,7 +465,7 @@ const Portfolio = () => {
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-1">
+                  <div className="text-2xl sm:text-3xl md:text-3xl font-bold text-white mb-1">
                     50K+
                   </div>
                   <div className="text-xs sm:text-sm text-white/70">Users</div>
@@ -529,7 +529,7 @@ const Portfolio = () => {
                       exit={{ opacity: 0, x: -20 }}
                       className="relative"
                     >
-                      <div className="bg-white border border-teal-100 rounded-2xl overflow-hidden shadow-lg">
+                      <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
                         {/* Image */}
                         <div className="relative h-48 sm:h-56 overflow-hidden">
                           <Image
@@ -544,14 +544,14 @@ const Portfolio = () => {
 
                           {/* Category badge */}
                           <div className="absolute top-3 left-3">
-                            <span className="px-2 py-1 bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-bold rounded-full">
+                            <span className="px-2 py-1 bg-white/80 backdrop-blur-sm text-gray-800 text-xs font-semibold rounded-full shadow-sm">
                               {affiliateProjects[affiliateSliderIndex].category}
                             </span>
                           </div>
 
                           {/* Partnership badge */}
                           <div className="absolute top-3 right-3">
-                            <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full">
+                            <span className="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs font-medium rounded-full shadow-sm">
                               Partnership
                             </span>
                           </div>
@@ -680,7 +680,7 @@ const Portfolio = () => {
                             transition={{ duration: 0.3 }}
                             className="group relative"
                           >
-                            <div className="bg-white border border-teal-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500">
+                            <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
                               <div className="relative h-64 overflow-hidden">
                                 <Image
                                   src={project.images[0]}
@@ -696,7 +696,7 @@ const Portfolio = () => {
                                 />
 
                                 <div className="absolute top-4 left-4">
-                                  <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-bold rounded-full">
+                                  <span className="px-3 py-1 bg-white/80 backdrop-blur-sm text-gray-800 text-xs font-semibold rounded-full shadow-sm">
                                     {Array.isArray(project.category)
                                       ? project.category[0]
                                       : project.category}
@@ -704,7 +704,7 @@ const Portfolio = () => {
                                 </div>
 
                                 <div className="absolute top-4 right-4">
-                                  <span className="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full">
+                                  <span className="px-3 py-1 bg-yellow-50 text-yellow-700 text-xs font-medium rounded-full shadow-sm">
                                     Partnership
                                   </span>
                                 </div>
@@ -943,7 +943,7 @@ const Portfolio = () => {
                               .map((cat, idx) => (
                                 <span
                                   key={idx}
-                                  className="px-2 py-0.5 bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-bold rounded-full"
+                                  className="px-2 py-0.5 bg-white/80 backdrop-blur-sm text-gray-800 text-xs font-semibold rounded-full shadow-sm"
                                 >
                                   {cat}
                                 </span>
@@ -1126,7 +1126,7 @@ const Portfolio = () => {
                                   .map((cat, idx) => (
                                     <span
                                       key={idx}
-                                      className="px-3 py-1 bg-white/90 backdrop-blur-sm text-blue-600 text-xs font-bold rounded-full"
+                                      className="px-3 py-1 bg-white/80 backdrop-blur-sm text-gray-800 text-xs font-semibold rounded-full shadow-sm"
                                     >
                                       {cat}
                                     </span>
@@ -1193,7 +1193,7 @@ const Portfolio = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <button className="px-6 py-2.5 sm:px-8 sm:py-3 bg-gradient-to-r from-white to-blue-50 text-blue-700 font-bold rounded-full shadow-xl transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-200 text-sm sm:text-base flex items-center gap-2 justify-center">
+                    <button className="px-6 py-2.5 sm:px-8 sm:py-3 bg-white text-blue-700 font-semibold rounded-full shadow-sm border border-gray-200 hover:shadow-md transition transform duration-200 focus:outline-none focus:ring-2 focus:ring-blue-100 text-sm sm:text-base flex items-center gap-2 justify-center">
                       <Sparkles className="w-4 h-4 text-yellow-400" /> Start a
                       Project
                     </button>

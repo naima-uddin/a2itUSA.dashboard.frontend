@@ -469,7 +469,7 @@ export default function PortfolioPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">
-                      Project Types
+                      Project Types for frontend display
                     </label>
                     <div className="space-y-2 rounded-lg border border-slate-200 bg-slate-50 p-3">
                       {[
@@ -777,7 +777,7 @@ export default function PortfolioPage() {
                     </h3>
 
                     {/* Duration, Team Size, Role - Row 1 */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                       <div>
                         <label className="block text-sm font-semibold text-slate-700 mb-2">
                           Duration
@@ -807,23 +807,6 @@ export default function PortfolioPage() {
                             setFormData({
                               ...formData,
                               teamSize: e.target.value,
-                            })
-                          }
-                          className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-semibold text-slate-700 mb-2">
-                          Your Role
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="e.g., Lead Developer"
-                          value={formData.role}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              role: e.target.value,
                             })
                           }
                           className="w-full px-4 py-2 bg-white border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition"
@@ -895,13 +878,13 @@ export default function PortfolioPage() {
 
                   <div className="bg-white rounded-lg p-6 border border-slate-200">
                     <h3 className="text-lg font-semibold text-slate-900 mb-4">
-                      Testimonial
+                      Review & Testimonial
                     </h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="md:col-span-2">
                         <label className="block text-sm font-semibold text-slate-700 mb-2">
-                          Testimonial Text
+                          Review Text
                         </label>
                         <textarea
                           placeholder="Optional customer feedback used on the website..."

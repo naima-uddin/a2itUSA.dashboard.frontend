@@ -953,7 +953,7 @@ const Portfolio = () => {
 
                       {/* Title and categories (visible always) */}
                       <div className="mt-3 mb-4">
-                        <h3 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-1">
+                        <h3 className="font-medium text-gray-900 group-hover:text-gray-900 transition-colors line-clamp-1 text-base sm:text-lg">
                           {filteredProjects[portfolioSliderIndex].title}
                         </h3>
                         {filteredProjects[portfolioSliderIndex].category && (
@@ -967,6 +967,27 @@ const Portfolio = () => {
                               : filteredProjects[portfolioSliderIndex].category}
                           </p>
                         )}
+                        <div className="mt-2 flex items-center justify-between">
+                          <div className="flex flex-wrap gap-2">
+                            {filteredProjects[portfolioSliderIndex]
+                              .technologies &&
+                              filteredProjects[
+                                portfolioSliderIndex
+                              ].technologies
+                                .slice(0, 2)
+                                .map((tech, i) => (
+                                  <span
+                                    key={i}
+                                    className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs"
+                                  >
+                                    {tech}
+                                  </span>
+                                ))}
+                          </div>
+                          <div className="text-xs text-gray-400">
+                            {filteredProjects[portfolioSliderIndex].year || ""}
+                          </div>
+                        </div>
                       </div>
                     </motion.div>
 
@@ -1136,7 +1157,7 @@ const Portfolio = () => {
 
                           {/* Title and categories (visible always) */}
                           <div className="mt-4 mb-4">
-                            <h3 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-1">
+                            <h3 className="font-medium text-gray-900 group-hover:text-gray-900 transition-colors line-clamp-1 text-base">
                               {project.title}
                             </h3>
                             {project.category && (
@@ -1146,6 +1167,24 @@ const Portfolio = () => {
                                   : project.category}
                               </p>
                             )}
+                            <div className="mt-2 flex items-center justify-between">
+                              <div className="flex flex-wrap gap-2">
+                                {project.technologies &&
+                                  project.technologies
+                                    .slice(0, 2)
+                                    .map((tech, i) => (
+                                      <span
+                                        key={i}
+                                        className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs"
+                                      >
+                                        {tech}
+                                      </span>
+                                    ))}
+                              </div>
+                              <div className="text-xs text-gray-400">
+                                {project.year || ""}
+                              </div>
+                            </div>
                           </div>
                         </motion.div>
                       ))}

@@ -31,21 +31,11 @@ const normalizePortfolioBuckets = (items = []) => {
     return [];
   };
 
-  const sourceSections = (item) =>
-    toArray(item.sourceSections || item.sourceSection).map((section) =>
-      String(section).trim(),
-    );
-
   const projectTypes = (item) => {
     const explicitTypes = toArray(item.projectTypes).map((type) =>
       String(type).trim().toLowerCase(),
     );
-
-    if (explicitTypes.length > 0) {
-      return explicitTypes;
-    }
-
-    return toArray(item.type).map((type) => String(type).trim().toLowerCase());
+    return explicitTypes;
   };
 
   items.forEach((item) => {
@@ -72,16 +62,10 @@ const normalizePortfolioBuckets = (items = []) => {
       features: Array.isArray(item.features) ? item.features : [],
     };
 
-    const sections = sourceSections(item).map((section) =>
-      section.toLowerCase(),
-    );
     const types = projectTypes(item);
-    const hasAffiliate =
-      sections.includes("affiliateprojects") || types.includes("affiliate");
-    const hasFeatured =
-      sections.includes("featuredprojects") || types.includes("featured");
-    const hasPortfolio =
-      sections.includes("portfolioprojects") || types.includes("portfolio");
+    const hasAffiliate = types.includes("affiliate");
+    const hasFeatured = types.includes("featured");
+    const hasPortfolio = types.includes("portfolio");
 
     if (hasAffiliate) {
       buckets.affiliateProjects.push(normalizedItem);

@@ -12,8 +12,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 const createEmptyFormData = () => ({
   title: "",
   description: "",
-  type: "portfolio",
-  projectTypes: [],
+  projectTypes: ["portfolio"],
   status: "live",
   year: "",
   category: [],
@@ -199,10 +198,7 @@ export default function PortfolioPage() {
         },
         body: JSON.stringify({
           ...formData,
-          type: formData.projectTypes[0] || formData.type || "portfolio",
-          ...(selectedProjectTypes.length > 1
-            ? { projectTypes: selectedProjectTypes }
-            : {}),
+          projectTypes: selectedProjectTypes,
           technologies: formData.technologies
             .split(",")
             .map((t) => t.trim())
@@ -481,13 +477,9 @@ export default function PortfolioPage() {
                         { value: "featured", label: "Featured" },
                         { value: "affiliate", label: "Affiliate" },
                       ].map((option) => {
-                        const selectedTypes =
-                          formData.projectTypes.length > 0
-                            ? formData.projectTypes
-                            : formData.type
-                              ? [formData.type]
-                              : [];
-                        const isChecked = selectedTypes.includes(option.value);
+                        const isChecked = formData.projectTypes.includes(
+                          option.value,
+                        );
 
                         return (
                           <label
@@ -507,11 +499,13 @@ export default function PortfolioPage() {
                                       )
                                     : [...prev.projectTypes, option.value];
 
+                                  if (nextTypes.length === 0) {
+                                    return prev;
+                                  }
+
                                   return {
                                     ...prev,
                                     projectTypes: nextTypes,
-                                    type:
-                                      nextTypes[0] || prev.type || "portfolio",
                                   };
                                 });
                               }}
@@ -1085,11 +1079,12 @@ export default function PortfolioPage() {
                         setFormData({
                           title: item.title,
                           description: item.description,
-                          type: item.type || "portfolio",
                           projectTypes:
                             item.projectTypes?.length > 0
                               ? item.projectTypes
-                              : [],
+                              : item.type
+                                ? [item.type]
+                                : ["portfolio"],
                           status: item.status || "live",
                           year: item.year || "",
                           category: item.category || [],

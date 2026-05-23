@@ -65,8 +65,6 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
       return project.projectTypes;
     }
 
-    if (project.type) return [project.type];
-
     return [];
   };
 

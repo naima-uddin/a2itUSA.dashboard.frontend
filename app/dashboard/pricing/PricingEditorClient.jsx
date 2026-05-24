@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, ChevronDown } from "lucide-react";
 import DashboardLayout from "../components/DashboardLayout";
 import { useAuth } from "@/context/AuthContext";
 import {
@@ -155,6 +155,7 @@ function PackageEditor({ pkg, onChange, onRemove, index }) {
 
 function ServiceEditor({ service, index, onChange, onRemove }) {
   const packages = Array.isArray(service.packages) ? service.packages : [];
+  const [open, setOpen] = useState(true);
 
   const updateService = (key, value) => onChange({ ...service, [key]: value });
 
@@ -176,16 +177,36 @@ function ServiceEditor({ service, index, onChange, onRemove }) {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+    <div
+      className={`rounded-2xl border border-slate-200 p-4 ${
+        open ? "bg-white shadow-sm" : "bg-slate-50"
+      }`}
+    >
       <div className="mb-4 flex items-center justify-between gap-3">
-        <div>
-          <h3 className="text-lg font-bold text-slate-900">
-            Service {index + 1}
-          </h3>
-          <p className="text-xs text-slate-500">
-            This becomes a tab on the public pricing page.
-          </p>
+        <div className="flex items-start gap-3">
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            className="-ml-1 inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 hover:bg-slate-100"
+          >
+            <ChevronDown
+              className={`h-4 w-4 transform transition-transform ${
+                open ? "rotate-0" : "-rotate-90"
+              }`}
+            />
+          </button>
+
+          <div>
+            <h3 className="text-lg font-bold text-slate-900">
+              Service {index + 1}
+            </h3>
+            <p className="text-xs text-slate-500">
+              This becomes a tab on the public pricing page.
+            </p>
+          </div>
         </div>
+
         <button
           type="button"
           onClick={onRemove}
@@ -196,42 +217,48 @@ function ServiceEditor({ service, index, onChange, onRemove }) {
         </button>
       </div>
 
-      <div className="grid gap-3 md:grid-cols-2">
-        <Field label="Service category">
-          <Input
-            value={service.category || ""}
-            onChange={(event) => updateService("category", event.target.value)}
-            placeholder="Design & Development"
-          />
-        </Field>
-        <Field label="Service ID" description="Optional internal identifier.">
-          <Input
-            value={service.id || ""}
-            onChange={(event) => updateService("id", event.target.value)}
-            placeholder="design-development"
-          />
-        </Field>
-      </div>
+      <div className={`${open ? "block" : "hidden"}`}>
+        <div className="grid gap-3 md:grid-cols-2">
+          <Field label="Service category">
+            <Input
+              value={service.category || ""}
+              onChange={(event) =>
+                updateService("category", event.target.value)
+              }
+              placeholder="Design & Development"
+            />
+          </Field>
+          <Field label="Service ID" description="Optional internal identifier.">
+            <Input
+              value={service.id || ""}
+              onChange={(event) => updateService("id", event.target.value)}
+              placeholder="design-development"
+            />
+          </Field>
+        </div>
 
-      <div className="mt-4 space-y-4">
-        {packages.map((pkg, packageIndex) => (
-          <PackageEditor
-            key={pkg.id || `${service.category || "service"}-${packageIndex}`}
-            index={packageIndex}
-            pkg={pkg}
-            onChange={(nextPackage) => updatePackage(packageIndex, nextPackage)}
-            onRemove={() => removePackage(packageIndex)}
-          />
-        ))}
+        <div className="mt-4 space-y-4">
+          {packages.map((pkg, packageIndex) => (
+            <PackageEditor
+              key={pkg.id || `${service.category || "service"}-${packageIndex}`}
+              index={packageIndex}
+              pkg={pkg}
+              onChange={(nextPackage) =>
+                updatePackage(packageIndex, nextPackage)
+              }
+              onRemove={() => removePackage(packageIndex)}
+            />
+          ))}
 
-        <button
-          type="button"
-          onClick={addPackage}
-          className="inline-flex items-center gap-2 rounded-xl border border-dashed border-cyan-300 px-3 py-2 text-sm font-semibold text-cyan-700 transition hover:bg-cyan-50"
-        >
-          <Plus className="h-4 w-4" />
-          Add package
-        </button>
+          <button
+            type="button"
+            onClick={addPackage}
+            className="inline-flex items-center gap-2 rounded-xl border border-dashed border-cyan-300 px-3 py-2 text-sm font-semibold text-cyan-700 transition hover:bg-cyan-50"
+          >
+            <Plus className="h-4 w-4" />
+            Add package
+          </button>
+        </div>
       </div>
     </div>
   );

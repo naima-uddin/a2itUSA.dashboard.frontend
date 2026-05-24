@@ -1125,7 +1125,9 @@ const Portfolio = () => {
                     <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                       {hasMoreDesktopProjects && (
                         <button
-                          onClick={() => setDesktopVisibleRows((prev) => prev + 1)}
+                          onClick={() =>
+                            setDesktopVisibleRows((prev) => prev + 1)
+                          }
                           className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800"
                         >
                           View More
@@ -1136,7 +1138,9 @@ const Portfolio = () => {
                       {canShowViewLess && (
                         <button
                           onClick={() =>
-                            setDesktopVisibleRows((prev) => Math.max(2, prev - 1))
+                            setDesktopVisibleRows((prev) =>
+                              Math.max(2, prev - 1),
+                            )
                           }
                           className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
                         >

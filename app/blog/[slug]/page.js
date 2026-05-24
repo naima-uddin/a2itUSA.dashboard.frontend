@@ -38,11 +38,7 @@ const loadStaticBlogParams = async () => {
   }
 
   try {
-    const jsonPath = path.join(
-      process.cwd(),
-      "public",
-      "blog-data.json",
-    );
+    const jsonPath = path.join(process.cwd(), "public", "blog-data.json");
     const raw = await readFile(jsonPath, "utf8");
     const parsed = JSON.parse(raw);
     const posts = Array.isArray(parsed) ? parsed : parsed.blogs || [];

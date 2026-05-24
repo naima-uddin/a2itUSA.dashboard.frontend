@@ -384,8 +384,7 @@ export default function PromotionalPagesDashboard() {
               Manage Promotion Pages
             </h1>
             <p className="text-slate-600">
-              Add slugs like /promotions/seo or /promotions/erp and choose the
-              sections for each page.
+              Add links like /seo or /erp and choose the sections for each page.
             </p>
           </div>
 
@@ -419,8 +418,8 @@ export default function PromotionalPagesDashboard() {
             className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6"
           >
             <div>
-              <h2 className="text-xl font-bold text-slate-900 mb-1">
-                {editing ? "Edit Promotion Page" : "Create Promotion Page"}
+              <h2 className="text-2xl font-bold text-blue-700 mb-1">
+                {editing ? "Edit Promotion Page" : "Create Promotion Page "}
               </h2>
               <p className="text-slate-600 text-sm">
                 Start from the website template, then save each section on its
@@ -451,7 +450,7 @@ export default function PromotionalPagesDashboard() {
                   onChange={(e) =>
                     setFormData({ ...formData, slug: e.target.value })
                   }
-                  placeholder="Slug e.g. seo"
+                  placeholder="link e.g. seo"
                   className="w-full px-4 py-2 border rounded-lg"
                 />
               </div>

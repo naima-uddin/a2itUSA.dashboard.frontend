@@ -17,6 +17,7 @@ export default function MediaPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const [selectedFolder, setSelectedFolder] = useState("all");
+  const [copiedUrl, setCopiedUrl] = useState("");
 
   const canAccess = isAdmin || isModerator;
 
@@ -70,6 +71,16 @@ export default function MediaPage() {
   useEffect(() => {
     if (token) fetchResources();
   }, [token]);
+
+  useEffect(() => {
+    if (!copiedUrl) return undefined;
+
+    const timeoutId = window.setTimeout(() => {
+      setCopiedUrl("");
+    }, 1800);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [copiedUrl]);
 
   const handleUpload = async () => {
     if (!selectedFile) return;
@@ -139,6 +150,8 @@ export default function MediaPage() {
     } catch {
       window.prompt("Copy this URL", url);
     }
+
+    setCopiedUrl(url);
   };
 
   if (!canAccess) {
@@ -336,7 +349,9 @@ export default function MediaPage() {
                         className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 text-slate-700 text-sm font-semibold"
                       >
                         <Copy className="w-4 h-4" />
-                        Copy URL
+                        {copiedUrl === resource.secure_url
+                          ? "Copied"
+                          : "Copy URL"}
                       </button>
                       <a
                         href={resource.secure_url}
@@ -411,7 +426,9 @@ export default function MediaPage() {
                               className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 text-slate-700 text-sm font-semibold"
                             >
                               <Copy className="w-4 h-4" />
-                              Copy URL
+                              {copiedUrl === resource.secure_url
+                                ? "Copied"
+                                : "Copy URL"}
                             </button>
                             <a
                               href={resource.secure_url}

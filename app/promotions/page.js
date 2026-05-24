@@ -22,8 +22,38 @@ async function loadPromotionPages() {
 }
 
 export const metadata = {
-  title: "Promotions",
-  description: "Browse all active promotion landing pages.",
+  title: "All Promotions",
+  description:
+    "Browse all active A2IT promotion landing pages and launch the experience that matches your campaign.",
+  alternates: {
+    canonical: "/promotions",
+  },
+  openGraph: {
+    title: "All Promotions | A2IT LLC",
+    description:
+      "Browse all active A2IT promotion landing pages and launch the experience that matches your campaign.",
+    url: "/promotions",
+    type: "website",
+    images: [
+      {
+        url: "/portfolio.png",
+        width: 1200,
+        height: 630,
+        alt: "A2IT Promotions Hub",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "All Promotions | A2IT LLC",
+    description:
+      "Browse all active A2IT promotion landing pages and launch the experience that matches your campaign.",
+    images: ["/portfolio.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default async function PromotionsIndexPage() {

@@ -13,6 +13,12 @@ export const metadata = {
   title: "Website Promotion",
   description:
     "Explore A2IT website promotion offers, featured packages, and growth-focused digital solutions.",
+  keywords: [
+    "website promotion",
+    "A2IT landing page",
+    "digital campaign",
+    "web growth solutions",
+  ],
   alternates: {
     canonical: "/promotions/website",
   },
@@ -22,12 +28,25 @@ export const metadata = {
       "Explore A2IT website promotion offers, featured packages, and growth-focused digital solutions.",
     url: "/promotions/website",
     type: "website",
+    images: [
+      {
+        url: "/portfolio.png",
+        width: 1200,
+        height: 630,
+        alt: "Website Promotion - A2IT",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Website Promotion | A2IT LLC",
     description:
       "Explore A2IT website promotion offers, featured packages, and growth-focused digital solutions.",
+    images: ["/portfolio.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

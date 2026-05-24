@@ -69,19 +69,69 @@ export async function generateMetadata({ params }) {
   const resolvedParams = await Promise.resolve(params || {});
   const slug = String(resolvedParams.slug || "website");
   const page = await loadPromotionPage(slug);
+  const readableSlug = slug
+    .split("-")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 
   if (!page) {
     return {
-      title: "Promotions",
-      description: "Promotional landing pages",
+      title: `${readableSlug || "Promotion"}`,
+      description: "Promotional landing page by A2IT LLC.",
+      alternates: {
+        canonical: `/promotions/${slug}`,
+      },
+      robots: {
+        index: true,
+        follow: true,
+      },
     };
   }
 
+  const title = page.metaTitle || page.title || `${readableSlug} Promotion`;
+  const description =
+    page.metaDescription ||
+    page.description ||
+    "Explore this promotion by A2IT LLC.";
+  const image =
+    page?.sections?.find((section) => section?.key === "banner")?.config
+      ?.bannerImage || "/portfolio.png";
+
   return {
-    title: page.metaTitle || page.title,
-    description: page.metaDescription || page.description,
+    title,
+    description,
+    keywords: [
+      `${readableSlug} promotion`,
+      "A2IT promotions",
+      "landing page",
+      "digital campaign",
+    ],
     alternates: {
       canonical: `/promotions/${slug}`,
+    },
+    openGraph: {
+      title: `${title} | A2IT LLC`,
+      description,
+      url: `/promotions/${slug}`,
+      type: "website",
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: `${title} - A2IT Promotion`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | A2IT LLC`,
+      description,
+      images: [image],
+    },
+    robots: {
+      index: true,
+      follow: true,
     },
   };
 }

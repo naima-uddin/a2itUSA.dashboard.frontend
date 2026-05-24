@@ -30,7 +30,9 @@ export default function CloudinaryImageField({
         <input
           value={value || ""}
           onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder || `Paste ${String(label || "image").toLowerCase()} URL`}
+          placeholder={
+            placeholder || `Paste ${String(label || "image").toLowerCase()} URL`
+          }
           className="w-full rounded-lg border border-slate-300 px-3 py-2"
         />
 

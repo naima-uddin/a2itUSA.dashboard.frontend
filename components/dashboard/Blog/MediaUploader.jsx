@@ -13,7 +13,9 @@ export default function MediaUploader({
   currentMedia = [],
   showMediaLibrary = true,
 }) {
-  const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+  const API =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://a2it-usa-dashboard-backend.vercel.app";
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState("");
   const [showLibrary, setShowLibrary] = useState(false);

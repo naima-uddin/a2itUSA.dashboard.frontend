@@ -7,7 +7,9 @@ import { Plus, Trash2, Edit2, Search } from "lucide-react";
 import DashboardLayout from "../components/DashboardLayout";
 import ImageUploadFactory from "../components/forms/ImageUploadFactory";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://a2it-usa-dashboard-backend.vercel.app";
 
 const createEmptyFormData = () => ({
   title: "",

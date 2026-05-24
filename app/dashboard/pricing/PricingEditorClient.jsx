@@ -9,7 +9,9 @@ import {
   normalizePricingPageContent,
 } from "@/components/pricing-page-compoents/pricingPageData";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://a2it-usa-dashboard-backend.vercel.app";
 
 const createId = (prefix) =>
   `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;

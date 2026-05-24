@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import { Plus, Trash2, Edit2, Search } from "lucide-react";
@@ -8,7 +8,9 @@ import DashboardLayout from "../components/DashboardLayout";
 
 export default function UsersPage() {
   const { token, isAdmin } = useAuth();
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+  const API_BASE =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://a2it-usa-dashboard-backend.vercel.app";
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,21 +23,9 @@ export default function UsersPage() {
     role: "moderator",
   });
 
-  if (!isAdmin) {
-    return (
-      <DashboardLayout>
-        <div className="text-center py-12">
-          <p className="text-slate-600">Access Denied. Admin only.</p>
-        </div>
-      </DashboardLayout>
-    );
-  }
+  const fetchUsers = useCallback(async () => {
+    if (!token) return;
 
-  useEffect(() => {
-    fetchUsers();
-  }, [token]);
-
-  const fetchUsers = async () => {
     try {
       setLoading(true);
       const response = await fetch(`${API_BASE}/api/users`, {
@@ -53,7 +43,21 @@ export default function UsersPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_BASE, token]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
+  if (!isAdmin) {
+    return (
+      <DashboardLayout>
+        <div className="text-center py-12">
+          <p className="text-slate-600">Access Denied. Admin only.</p>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

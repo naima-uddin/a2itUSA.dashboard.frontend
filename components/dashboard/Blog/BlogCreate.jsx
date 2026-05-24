@@ -10,7 +10,9 @@ import TagInput from "./TagInput";
 import DynamicSectionBuilder from "./DynamicSectionBuilder";
 
 export default function BlogCreate() {
-  const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+  const API =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://a2it-usa-dashboard-backend.vercel.app";
   const router = useRouter();
   const { user } = useUser();
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useCallback } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import { Plus, Trash2, Copy, RefreshCw, Search, Upload, X } from "lucide-react";
@@ -48,7 +48,7 @@ export default function MediaPage() {
     [filteredResources],
   );
 
-  const fetchResources = async () => {
+  const fetchResources = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`${API_BASE}/api/upload/media/list`, {
@@ -66,11 +66,11 @@ export default function MediaPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
 
   useEffect(() => {
     if (token) fetchResources();
-  }, [token]);
+  }, [token, fetchResources]);
 
   useEffect(() => {
     if (!copiedUrl) return undefined;

@@ -7,7 +7,9 @@ import {
   normalizePricingPageContent,
 } from "./pricingPageData";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://a2it-usa-dashboard-backend.vercel.app";
 
 const Pricing = ({ content = null }) => {
   const [activeFaq, setActiveFaq] = useState(null);

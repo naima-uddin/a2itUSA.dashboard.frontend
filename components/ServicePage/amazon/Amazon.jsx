@@ -51,7 +51,9 @@ import Link from "next/link";
 import Image from "next/image";
 import pricingDataJson from "@/public/pricing-data.json";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://a2it-usa-dashboard-backend.vercel.app";
 
 const normalizePortfolioBuckets = (items = []) => {
   const buckets = {

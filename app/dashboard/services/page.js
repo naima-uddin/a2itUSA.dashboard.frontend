@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import { Plus, Trash2, Edit2, Search } from "lucide-react";
@@ -8,6 +8,7 @@ import DashboardLayout from "../components/DashboardLayout";
 
 export default function ServicesPage() {
   const { token, isAdmin, isModerator } = useAuth();
+  const canAccess = isAdmin || isModerator;
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
@@ -35,28 +36,11 @@ export default function ServicesPage() {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
 
-  if (!isAdmin && !isModerator) {
-    return (
-      <DashboardLayout>
-        <div className="text-center py-12">
-          <p className="text-slate-600">
-            Access Denied. Admin or Moderator only.
-          </p>
-        </div>
-      </DashboardLayout>
-    );
-  }
-
-  useEffect(() => {
-    fetchServices();
-    fetchCategories();
-  }, [token]);
-
   const handleAddCategory = () => {
     saveCategory();
   };
 
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
       setCategoriesLoading(true);
       const response = await fetch(
@@ -66,11 +50,15 @@ export default function ServicesPage() {
       if (response.ok) {
         const data = await response.json();
         setCategories(data.categories || []);
-        if (!formData.category && data.categories?.length) {
-          setFormData((prev) => ({
-            ...prev,
-            category: data.categories[0].name,
-          }));
+        if (data.categories?.length) {
+          setFormData((prev) =>
+            prev.category
+              ? prev
+              : {
+                  ...prev,
+                  category: data.categories[0].name,
+                },
+          );
         }
       }
     } catch (error) {
@@ -78,7 +66,7 @@ export default function ServicesPage() {
     } finally {
       setCategoriesLoading(false);
     }
-  };
+  }, []);
 
   const saveCategory = async () => {
     const val = (newCategory || "").trim();
@@ -150,7 +138,9 @@ export default function ServicesPage() {
     }
   };
 
-  const fetchServices = async () => {
+  const fetchServices = useCallback(async () => {
+    if (!token) return;
+
     try {
       setLoading(true);
       const url = isAdmin
@@ -170,7 +160,24 @@ export default function ServicesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [isAdmin, token]);
+
+  useEffect(() => {
+    fetchServices();
+    fetchCategories();
+  }, [fetchCategories, fetchServices]);
+
+  if (!canAccess) {
+    return (
+      <DashboardLayout>
+        <div className="text-center py-12">
+          <p className="text-slate-600">
+            Access Denied. Admin or Moderator only.
+          </p>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

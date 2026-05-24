@@ -4,7 +4,9 @@ import Link from "next/link";
 import ReviewCarousel from "./Reviews";
 
 export default function PricingPage() {
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+  const API_BASE =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://a2it-usa-dashboard-backend.vercel.app";
   const [activeService, setActiveService] = useState("Design & Development");
   const [currentPage, setCurrentPage] = useState(0);
   const [pricingData, setPricingData] = useState(null);

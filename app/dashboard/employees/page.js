@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { motion } from "framer-motion";
 import { Plus, Trash2, Edit2, Search, Users } from "lucide-react";
@@ -9,29 +9,16 @@ import EmployeeForm from "../components/forms/EmployeeForm";
 
 export default function EmployeesPage() {
   const { token, isAdmin, isModerator } = useAuth();
+  const canAccess = isAdmin || isModerator;
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null);
 
-  if (!isAdmin && !isModerator) {
-    return (
-      <DashboardLayout>
-        <div className="text-center py-12">
-          <p className="text-slate-600">
-            Access Denied. Admin or Moderator only.
-          </p>
-        </div>
-      </DashboardLayout>
-    );
-  }
+  const fetchEmployees = useCallback(async () => {
+    if (!token) return;
 
-  useEffect(() => {
-    fetchEmployees();
-  }, [token]);
-
-  const fetchEmployees = async () => {
     try {
       setLoading(true);
       const url = isAdmin
@@ -51,7 +38,23 @@ export default function EmployeesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [isAdmin, token]);
+
+  useEffect(() => {
+    fetchEmployees();
+  }, [fetchEmployees]);
+
+  if (!canAccess) {
+    return (
+      <DashboardLayout>
+        <div className="text-center py-12">
+          <p className="text-slate-600">
+            Access Denied. Admin or Moderator only.
+          </p>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this employee?")) return;

@@ -4,7 +4,9 @@ import React, { useMemo, useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://a2it-usa-dashboard-backend.vercel.app";
 
 const normalizeProject = (project) => ({
   ...project,

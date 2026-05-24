@@ -6,13 +6,39 @@ import {
   normalizePromotionPage,
 } from "@/components/promotion/promotionPageConfig";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://a2it-usa-dashboard-backend.vercel.app";
+
+export const dynamicParams = false;
+
+async function loadPromotionSlugs() {
+  try {
+    const response = await fetch(`${API_BASE}/api/promotional-pages`, {
+      cache: "force-cache",
+    });
+
+    if (!response.ok) {
+      return ["website"];
+    }
+
+    const data = await response.json();
+    const slugs = (data.pages || [])
+      .map((page) => String(page?.slug || "").trim())
+      .filter(Boolean);
+
+    const unique = Array.from(new Set(["website", ...slugs]));
+    return unique;
+  } catch {
+    return ["website"];
+  }
+}
 
 async function loadPromotionPage(slug) {
   try {
     const response = await fetch(
       `${API_BASE}/api/promotional-pages/${encodeURIComponent(slug)}`,
-      { cache: "no-store" },
+      { cache: "force-cache" },
     );
 
     if (!response.ok) {
@@ -32,6 +58,11 @@ async function loadPromotionPage(slug) {
 
     return null;
   }
+}
+
+export async function generateStaticParams() {
+  const slugs = await loadPromotionSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }) {

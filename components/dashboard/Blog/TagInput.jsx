@@ -4,7 +4,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { authFetch } from "@/lib/api/authFetch";
 
 export default function TagInput({ tags = [], onChange }) {
-  const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+  const API =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://a2it-usa-dashboard-backend.vercel.app";
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [allTags, setAllTags] = useState([]);

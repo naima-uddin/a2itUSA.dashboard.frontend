@@ -17,7 +17,9 @@ export function BlogCacheProvider({ children }) {
   const fetchBlogs = useCallback(async () => {
     try {
       setIsLoading(true);
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const apiUrl =
+        process.env.NEXT_PUBLIC_API_URL ||
+        "https://a2it-usa-dashboard-backend.vercel.app";
       const res = await fetch(`${apiUrl}/api/blog`, {
         headers: { Accept: "application/json" },
         cache: "no-store",
@@ -44,7 +46,9 @@ export function BlogCacheProvider({ children }) {
   // Reload blogs - same as fetchBlogs but always fetches fresh
   const reloadBlogs = useCallback(async () => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const apiUrl =
+        process.env.NEXT_PUBLIC_API_URL ||
+        "https://a2it-usa-dashboard-backend.vercel.app";
       const res = await fetch(`${apiUrl}/api/blog?_t=${Date.now()}`, {
         headers: { Accept: "application/json" },
         cache: "no-store",

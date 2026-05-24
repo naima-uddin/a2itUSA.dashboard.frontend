@@ -5,7 +5,9 @@ import { authFetch } from "@/lib/api/authFetch";
 import Gallery from "./Home/Gallery";
 import CloudinaryImageField from "@/components/shared/CloudinaryImageField";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "https://a2it-usa-dashboard-backend.vercel.app";
 
 const splitLines = (value) =>
   String(value || "")

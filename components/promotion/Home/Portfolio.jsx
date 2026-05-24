@@ -8,13 +8,17 @@ const API_BASE =
   process.env.NEXT_PUBLIC_API_URL ||
   "https://a2it-usa-dashboard-backend.vercel.app";
 
+const splitCategories = (value) =>
+  String(value || "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+
 const normalizeProject = (project) => ({
   ...project,
   category: Array.isArray(project.category)
-    ? project.category
-    : project.category
-      ? [project.category]
-      : [],
+    ? project.category.flatMap(splitCategories)
+    : splitCategories(project.category),
   images: Array.isArray(project.images)
     ? project.images
     : project.image
@@ -29,6 +33,7 @@ const normalizeProject = (project) => ({
 
 export default function Portfolio({ config = {} }) {
   const [projects, setProjects] = useState([]);
+  const [categoryOptions, setCategoryOptions] = useState([]);
   const [active, setActive] = useState("All");
   const [selectedIndex, setSelectedIndex] = useState(null);
   // don't highlight any category button on initial load; showAll logic still uses "All"
@@ -52,6 +57,17 @@ export default function Portfolio({ config = {} }) {
 
   useEffect(() => {
     let mounted = true;
+
+    fetch(`${API_BASE}/api/portfolio-categories`, { cache: "no-store" })
+      .then((response) => response.json())
+      .then((data) => {
+        if (!mounted) return;
+        setCategoryOptions(
+          Array.isArray(data?.categories) ? data.categories : [],
+        );
+      })
+      .catch(() => {});
+
     const configProjects =
       Array.isArray(config.projects) && config.projects.length
         ? config.projects
@@ -81,24 +97,28 @@ export default function Portfolio({ config = {} }) {
 
   const categories = useMemo(() => {
     const set = new Set();
+
+    categoryOptions.forEach((category) => {
+      const label = String(
+        category?.displayName || category?.name || "",
+      ).trim();
+      if (label) set.add(label);
+    });
+
     projects.forEach((p) => {
-      (Array.isArray(p.category) ? p.category : [p.category || ""])
-        .map((c) => c.trim())
-        .forEach((c) => {
-          if (c) set.add(c);
-        });
+      splitCategories(
+        Array.isArray(p.category) ? p.category.join(",") : p.category,
+      ).forEach((c) => set.add(c));
     });
     return ["All", ...Array.from(set)];
-  }, [projects]);
+  }, [projects, categoryOptions]);
 
   const filtered = useMemo(() => {
     if (active === "All") return projects;
     return projects.filter((p) => {
-      const cats = Array.isArray(p.category)
-        ? p.category.map((c) => c.trim())
-        : String(p.category || "")
-            .split(",")
-            .map((c) => c.trim());
+      const cats = splitCategories(
+        Array.isArray(p.category) ? p.category.join(",") : p.category,
+      );
       return cats.includes(active);
     });
   }, [projects, active]);

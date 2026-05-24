@@ -6,6 +6,8 @@ const API =
   process.env.NEXT_PUBLIC_API_URL ||
   "https://a2it-usa-dashboard-backend.vercel.app";
 
+export const dynamicParams = false;
+
 const slugify = (value) =>
   String(value || "")
     .toLowerCase()
@@ -39,10 +41,11 @@ const loadStaticBlogParams = async () => {
     const jsonPath = path.join(
       process.cwd(),
       "public",
-      "extended_blogPosts.json",
+      "blog-data.json",
     );
     const raw = await readFile(jsonPath, "utf8");
-    const posts = JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    const posts = Array.isArray(parsed) ? parsed : parsed.blogs || [];
 
     return posts
       .map((post) => ({

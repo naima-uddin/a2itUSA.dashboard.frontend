@@ -153,9 +153,15 @@ function PackageEditor({ pkg, onChange, onRemove, index }) {
   );
 }
 
-function ServiceEditor({ service, index, onChange, onRemove }) {
+function ServiceEditor({
+  service,
+  index,
+  onChange,
+  onRemove,
+  isOpen,
+  onToggleOpen,
+}) {
   const packages = Array.isArray(service.packages) ? service.packages : [];
-  const [open, setOpen] = useState(false);
 
   const updateService = (key, value) => onChange({ ...service, [key]: value });
 
@@ -186,20 +192,20 @@ function ServiceEditor({ service, index, onChange, onRemove }) {
         <div className="flex items-start gap-3">
           <button
             type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
+            onClick={onToggleOpen}
+            aria-expanded={isOpen}
             className="-ml-1 inline-flex h-8 w-8 items-center justify-center rounded-md text-slate-500 hover:bg-slate-100"
           >
             <ChevronDown
               className={`h-4 w-4 transform transition-transform ${
-                open ? "rotate-0" : "-rotate-90"
+                isOpen ? "rotate-0" : "-rotate-90"
               }`}
             />
           </button>
 
           <div>
             <h3 className="text-lg font-bold text-slate-900">
-              Service {index + 1}
+              {service.category ? service.category : `Service ${index + 1}`}
             </h3>
             <p className="text-xs text-slate-500">
               This becomes a tab on the public pricing page.
@@ -217,7 +223,7 @@ function ServiceEditor({ service, index, onChange, onRemove }) {
         </button>
       </div>
 
-      <div className={`${open ? "block" : "hidden"}`}>
+      <div className={`${isOpen ? "block" : "hidden"}`}>
         <div className="grid gap-3 md:grid-cols-2">
           <Field label="Service category">
             <Input
@@ -311,7 +317,7 @@ export default function PricingEditorClient() {
     : [];
 
   const servicesTopRef = useRef(null);
-  const [lastAddedId, setLastAddedId] = useState(null);
+  const [openServiceId, setOpenServiceId] = useState(null);
 
   const addService = () => {
     const newService = createServiceItem();
@@ -320,7 +326,7 @@ export default function PricingEditorClient() {
       services: [newService, ...(prev.services || [])],
     }));
 
-    setLastAddedId(newService.id);
+    setOpenServiceId(newService.id);
 
     // scroll the services container into view so the newly added service is visible at top
     setTimeout(() => {
@@ -347,6 +353,11 @@ export default function PricingEditorClient() {
       ...prev,
       services: prev.services.filter((_, itemIndex) => itemIndex !== index),
     }));
+    // if removed service was open, clear openServiceId
+    setOpenServiceId((current) => {
+      const removed = Array.isArray(services) && services[index];
+      return removed && removed.id === current ? null : current;
+    });
   };
 
   const handleReset = () => {
@@ -470,6 +481,12 @@ export default function PricingEditorClient() {
                 key={service.id || `${service.category || "service"}-${index}`}
                 index={index}
                 service={service}
+                isOpen={openServiceId === service.id}
+                onToggleOpen={() =>
+                  setOpenServiceId((prev) =>
+                    prev === service.id ? null : service.id,
+                  )
+                }
                 onChange={(nextService) => updateService(index, nextService)}
                 onRemove={() => removeService(index)}
               />

@@ -56,7 +56,7 @@ export default function Gallery({ config = {} }) {
   }, [lightboxOpen, closeLightbox, showPrev, showNext]);
 
   return (
-    <section className="w-full py-10 md:py-16 bg-linear-to-b from-white via-slate-50 to-slate-100">
+    <section className="w-full py-4 md:py-10 mt-16 -mb-20 bg-linear-to-b from-white via-slate-50 to-slate-100">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-8 md:mb-12">
           <h2
@@ -78,9 +78,8 @@ export default function Gallery({ config = {} }) {
           }}
         >
           <div
-            className="grid"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
             style={{
-              gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
               gridAutoRows: "var(--row-h)",
               gap: "1rem",
               maxHeight: "calc(var(--row-h) * 3 + (var(--gap) * 2))",
@@ -126,7 +125,7 @@ export default function Gallery({ config = {} }) {
 
         {/* Lightbox modal */}
         {lightboxOpen && items.length > 0 && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4">
             <button
               className="absolute top-4 right-4 z-60 text-white text-2xl"
               onClick={closeLightbox}
@@ -136,7 +135,7 @@ export default function Gallery({ config = {} }) {
             </button>
 
             <button
-              className="absolute left-4 text-white text-3xl"
+              className="absolute left-6 text-white text-5xl"
               onClick={showPrev}
               aria-label="Previous"
             >
@@ -164,7 +163,7 @@ export default function Gallery({ config = {} }) {
             </div>
 
             <button
-              className="absolute right-4 text-white text-3xl"
+              className="absolute right-6 text-white text-5xl"
               onClick={showNext}
               aria-label="Next"
             >

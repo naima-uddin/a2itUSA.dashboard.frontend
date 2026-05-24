@@ -22,7 +22,7 @@ const Banner = () => {
       />
 
       {/* Content Container - Positioned at bottom-left with padding */}
-      <div className="absolute bottom-4 md:bottom-6 left-4 md:left-10 lg:left-16 transform -translate-x-1/2 sm:translate-x-0 w-full px-4 sm:px-0">
+      <div className="absolute bottom-4 md:bottom-6 lg:bottom-10 left-4 md:left-10 lg:left-16 transform -translate-x-1/2 sm:translate-x-0 w-full px-4 sm:px-0">
         {/* Buttons Container */}
         <div className="flex flex-row sm:flex-row gap-4 justify-center sm:justify-start">
           <button

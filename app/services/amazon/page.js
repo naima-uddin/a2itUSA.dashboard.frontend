@@ -24,7 +24,7 @@ export const metadata = {
     siteName: "A2IT",
     images: [
       {
-        url: "/og-amazon.jpg", // 👉 add an OG image in /public
+        url: "/portfolio.png", // 👉 add an OG image in /public
         width: 1200,
         height: 630,
         alt: "Amazon Services by A2IT",
@@ -37,7 +37,7 @@ export const metadata = {
     title: "Amazon Services | A2IT",
     description:
       "Grow your Amazon business with A2IT’s Vendor Central, DSP, FBA, and Marketing solutions.",
-    images: ["/og-amazon.jpg"],
+    images: ["/portfolio.png"],
   },
 };
 
@@ -58,7 +58,7 @@ export default function Page() {
               "@type": "Organization",
               name: "A2IT",
               url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
+              logo: "https://a2itllc.com/A2ITLogo.png",
             },
             areaServed: {
               "@type": "Country",

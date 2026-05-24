@@ -67,7 +67,7 @@ export async function generateMetadata({ params }) {
       siteName: "A2IT LLC",
       images: [
         {
-          url: "/og-services.jpg",
+          url: "/portfolio.png",
           width: 1200,
           height: 630,
           alt: `${service.title} by A2IT LLC`,
@@ -79,7 +79,7 @@ export async function generateMetadata({ params }) {
       card: "summary_large_image",
       title: `${service.title} `,
       description: service.desc,
-      images: ["/og-services.jpg"],
+      images: ["/portfolio.png"],
     },
     robots: {
       index: true,
@@ -154,7 +154,7 @@ export default async function ServiceTemplate({ params }) {
               "@type": "Organization",
               name: "A2IT LLC",
               url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
+              logo: "https://a2itllc.com/A2ITLogo.png",
             },
             areaServed: {
               "@type": "Country",

@@ -26,7 +26,7 @@ export const metadata = {
     siteName: "A2IT",
     images: [
       {
-        url: "/og-hosting.jpg", // 👉 add hosting OG image in /public
+        url: "/portfolio.png", // 👉 add hosting OG image in /public
         width: 1200,
         height: 630,
         alt: "Web Hosting Services by A2IT",
@@ -39,7 +39,7 @@ export const metadata = {
     title: "Web Hosting Services | Secure & Scalable Hosting | A2IT",
     description:
       "A2IT offers secure, scalable, and high-performance hosting solutions — Shared, VPS, Cloud, and Dedicated hosting with 24/7 support.",
-    images: ["/og-hosting.jpg"],
+    images: ["/portfolio.png"],
   },
 };
 
@@ -60,7 +60,7 @@ export default function Page() {
               "@type": "Organization",
               name: "A2IT",
               url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
+              logo: "https://a2itllc.com/A2ITLogo.png",
             },
             areaServed: {
               "@type": "Country",

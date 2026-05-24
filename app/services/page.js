@@ -28,7 +28,7 @@ export const metadata = {
     siteName: "A2IT LLC",
     images: [
       {
-        url: "/og-itservices.jpg",
+        url: "/portfolio.png",
         width: 1200,
         height: 630,
         alt: "IT Services by A2IT LLC",
@@ -41,7 +41,7 @@ export const metadata = {
     title: "IT Services",
     description:
       "Explore A2IT LLC's full range of IT services including Web Development, Mobile App Development, UI/UX, SEO, Paid Media, Amazon Marketing, ERP Solutions, Hosting, Shopify, and more.",
-    images: ["/og-itservices.jpg"],
+    images: ["/portfolio.png"],
   },
 };
 
@@ -63,7 +63,7 @@ export default function ServicesPage() {
               "@type": "Organization",
               name: "A2IT LLC",
               url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
+              logo: "https://a2itllc.com/A2ITLogo.png",
             },
             areaServed: {
               "@type": "Country",

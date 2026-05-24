@@ -65,7 +65,7 @@ export default function page() {
               "@type": "Organization",
               name: "A2IT LLC",
               url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
+              logo: "https://a2itllc.com/A2ITLogo.png",
             },
           }),
         }}

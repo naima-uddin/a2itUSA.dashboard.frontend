@@ -25,7 +25,7 @@ export const metadata = {
     siteName: "A2IT",
     images: [
       {
-        url: "/og-ecommerce.jpg", // 👉 place an OG image in /public
+        url: "/portfolio.png", // 👉 place an OG image in /public
         width: 1200,
         height: 630,
         alt: "E-commerce Development by A2IT",
@@ -38,7 +38,7 @@ export const metadata = {
     title: "E-commerce Development Services | A2IT",
     description:
       "A2IT provides e-commerce solutions including Shopify, WooCommerce, Magento, and secure payment integrations.",
-    images: ["/og-ecommerce.jpg"],
+    images: ["/portfolio.png"],
   },
 };
 
@@ -59,7 +59,7 @@ export default function Page() {
               "@type": "Organization",
               name: "A2IT",
               url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
+              logo: "https://a2itllc.com/A2ITLogo.png",
             },
             areaServed: {
               "@type": "Country",

@@ -26,7 +26,7 @@ export const metadata = {
     siteName: "A2IT LLC",
     images: [
       {
-        url: "/og-shopify.jpg",
+        url: "/portfolio.png",
         width: 1200,
         height: 630,
         alt: "Shopify Services by A2IT LLC",
@@ -39,7 +39,7 @@ export const metadata = {
     title: "Shopify Development Services | eCommerce Solutions",
     description:
       "A2IT LLC offers custom Shopify development, store optimization, and eCommerce solutions with professional support.",
-    images: ["/og-shopify.jpg"],
+    images: ["/portfolio.png"],
   },
 };
 
@@ -60,7 +60,7 @@ export default function Page() {
               "@type": "Organization",
               name: "A2IT LLC",
               url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
+              logo: "https://a2itllc.com/A2ITLogo.png",
             },
             areaServed: {
               "@type": "Country",

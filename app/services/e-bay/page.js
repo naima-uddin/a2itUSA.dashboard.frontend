@@ -24,7 +24,7 @@ export const metadata = {
     siteName: "A2IT",
     images: [
       {
-        url: "/og-ebay.jpg", // 👉 place this OG image in /public
+        url: "/portfolio.png", // 👉 place this OG image in /public
         width: 1200,
         height: 630,
         alt: "eBay Services by A2IT",
@@ -37,7 +37,7 @@ export const metadata = {
     title: "eBay Services | A2IT",
     description:
       "A2IT offers eBay store management, SEO, product listing optimization, and marketing services for sellers worldwide.",
-    images: ["/og-ebay.jpg"],
+    images: ["/portfolio.png"],
   },
 };
 
@@ -58,7 +58,7 @@ export default function Page() {
               "@type": "Organization",
               name: "A2IT",
               url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
+              logo: "https://a2itllc.com/A2ITLogo.png",
             },
             areaServed: {
               "@type": "Country",

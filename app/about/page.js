@@ -26,7 +26,7 @@ export const metadata = {
     siteName: "A2IT LLC",
     images: [
       {
-        url: "/og-about.jpg", // 👉 add About OG image in /public
+        url: "/portfolio.png", // 👉 add About OG image in /public
         width: 1200,
         height: 630,
         alt: "About A2IT LLC",
@@ -39,7 +39,7 @@ export const metadata = {
     title: "About Us",
     description:
       "Learn about A2IT LLC’s mission, vision, and team providing innovative IT, eCommerce, and digital solutions.",
-    images: ["/og-about.jpg"],
+    images: ["/portfolio.png"],
   },
 };
 
@@ -63,7 +63,7 @@ export default function Page() {
               "@type": "Organization",
               name: "A2IT LLC",
               url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
+              logo: "https://a2itllc.com/A2ITLogo.png",
             },
           }),
         }}

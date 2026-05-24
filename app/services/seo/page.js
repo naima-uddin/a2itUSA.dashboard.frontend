@@ -26,7 +26,7 @@ export const metadata = {
     siteName: "A2IT",
     images: [
       {
-        url: "/og-digital-marketing.jpg", // 👉 place an OG image in /public
+        url: "/portfolio.png", // 👉 place an OG image in /public
         width: 1200,
         height: 630,
         alt: "Digital Marketing SEO SEM PPC Services - A2IT",
@@ -39,7 +39,7 @@ export const metadata = {
     title: "Digital Marketing Services | SEO, SEM & PPC | A2IT",
     description:
       "A2IT delivers result-driven SEO, SEM, and PPC services to improve visibility, generate leads, and maximize ROI.",
-    images: ["/og-digital-marketing.jpg"],
+    images: ["/portfolio.png"],
   },
 };
 
@@ -60,7 +60,7 @@ export default function Page() {
               "@type": "Organization",
               name: "A2IT",
               url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
+              logo: "https://a2itllc.com/A2ITLogo.png",
             },
             areaServed: {
               "@type": "Country",

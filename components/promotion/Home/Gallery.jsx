@@ -12,6 +12,7 @@ export default function Gallery({ config = {} }) {
   // Do not fall back to any default images.
   const items =
     Array.isArray(config.items) && config.items.length ? config.items : [];
+  const validItems = items.filter((it) => it && typeof it.image === "string" && it.image.trim());
 
   const heights = [
     "h-56",
@@ -35,12 +36,14 @@ export default function Gallery({ config = {} }) {
   const closeLightbox = useCallback(() => setLightboxOpen(false), []);
 
   const showPrev = useCallback(() => {
-    setSelectedIndex((prev) => (prev - 1 + items.length) % items.length);
-  }, [items.length]);
+    setSelectedIndex(
+      (prev) => (prev - 1 + validItems.length) % validItems.length,
+    );
+  }, [validItems.length]);
 
   const showNext = useCallback(() => {
-    setSelectedIndex((prev) => (prev + 1) % items.length);
-  }, [items.length]);
+    setSelectedIndex((prev) => (prev + 1) % validItems.length);
+  }, [validItems.length]);
 
   useEffect(() => {
     if (!lightboxOpen) return;
@@ -86,10 +89,7 @@ export default function Gallery({ config = {} }) {
               overflow: "hidden",
             }}
           >
-            {items
-              .filter(Boolean)
-              .filter((it) => it && it.image)
-              .map((item, index) => (
+            {validItems.map((item, index) => (
                 <article
                   key={`${item.title || "item"}-${index}`}
                   onClick={() => openLightbox(index)}
@@ -124,7 +124,7 @@ export default function Gallery({ config = {} }) {
         </div>
 
         {/* Lightbox modal */}
-        {lightboxOpen && items.length > 0 && (
+        {lightboxOpen && validItems.length > 0 && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4">
             <button
               className="absolute top-10 right-4 z-60 text-white text-4xl"
@@ -145,8 +145,8 @@ export default function Gallery({ config = {} }) {
             <div className="max-w-[90%] max-h-[90%] w-full">
               <div className="relative w-full h-[70vh]">
                 <Image
-                  src={items[selectedIndex].image}
-                  alt={items[selectedIndex].title || "Gallery image"}
+                  src={validItems[selectedIndex].image}
+                  alt={validItems[selectedIndex].title || "Gallery image"}
                   fill
                   className="object-contain"
                 />
@@ -154,10 +154,10 @@ export default function Gallery({ config = {} }) {
 
               <div className="mt-4 text-center text-white">
                 <div className="text-lg font-semibold">
-                  {items[selectedIndex].title}
+                  {validItems[selectedIndex].title}
                 </div>
                 <div className="text-sm mt-1">
-                  {items[selectedIndex].description}
+                  {validItems[selectedIndex].description}
                 </div>
               </div>
             </div>

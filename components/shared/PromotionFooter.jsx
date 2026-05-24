@@ -15,7 +15,10 @@ export default function PromotionFooter({ config = {} }) {
     "A2IT LLC is your all-in-one web design and development agency, featuring a team of skilled and imaginative developers, marketers, and designers.";
   const copyrightText =
     config.copyrightText || "Copyright © 2026 A2IT LLC | All rights reserved.";
-  const logoImage = config.logoImage || "/A2ITLogo.png";
+  const logoImage =
+    typeof config.logoImage === "string" && config.logoImage.trim()
+      ? config.logoImage
+      : "/A2ITLogo.png";
 
   const handleSubmit = async (e) => {
     e.preventDefault();

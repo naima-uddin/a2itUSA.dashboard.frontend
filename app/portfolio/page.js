@@ -29,7 +29,7 @@ export const metadata = {
     siteName: "A2IT LLC",
     images: [
       {
-        url: "/og-portfolio.jpg", // 👉 add portfolio OG image in /public
+        url: "/portfolio.png", // 👉 add portfolio OG image in /public
         width: 1200,
         height: 630,
         alt: "Portfolio of A2IT LLC",
@@ -42,7 +42,7 @@ export const metadata = {
     title: "Portfolio | Web, eCommerce & Marketplace Projects",
     description:
       "Explore A2IT LLC’s portfolio showcasing web, mobile, UI/UX, eCommerce, Shopify, Amazon, and eBay projects.",
-    images: ["/og-portfolio.jpg"],
+    images: ["/portfolio.png"],
   },
 };
 
@@ -63,7 +63,7 @@ export default function Page() {
               "@type": "Organization",
               name: "A2IT LLC",
               url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
+              logo: "https://a2itllc.com/A2ITLogo.png",
             },
             description:
               "A2IT LLC’s portfolio showcasing projects in web development, mobile apps, UI/UX, eCommerce, Shopify, Amazon, and eBay.",

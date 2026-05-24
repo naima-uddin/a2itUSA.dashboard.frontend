@@ -26,7 +26,7 @@ export const metadata = {
     siteName: "A2IT",
     images: [
       {
-        url: "/og-erp.jpg", // 👉 add an ERP OG image in /public
+        url: "/portfolio.png", // 👉 add an ERP OG image in /public
         width: 1200,
         height: 630,
         alt: "ERP Services by A2IT",
@@ -39,7 +39,7 @@ export const metadata = {
     title: "ERP Services | A2IT",
     description:
       "A2IT delivers ERP development, integration, and automation services to optimize business processes and scalability.",
-    images: ["/og-erp.jpg"],
+    images: ["/portfolio.png"],
   },
 };
 
@@ -60,7 +60,7 @@ export default function Page() {
               "@type": "Organization",
               name: "A2IT",
               url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
+              logo: "https://a2itllc.com/A2ITLogo.png",
             },
             areaServed: {
               "@type": "Country",

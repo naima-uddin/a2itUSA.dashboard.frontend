@@ -27,7 +27,7 @@ export const metadata = {
     siteName: "A2IT LLC",
     images: [
       {
-        url: "/og-contact.jpg",
+        url: "/portfolio.png",
         width: 1200,
         height: 630,
         alt: "Contact A2IT LLC",
@@ -40,7 +40,7 @@ export const metadata = {
     title: "Contact Us | Get in Touch",
     description:
       "Contact A2IT LLC for inquiries about IT services, web development, eCommerce, Shopify, Amazon, and digital marketing solutions.",
-    images: ["/og-contact.jpg"],
+    images: ["/portfolio.png"],
   },
 };
 
@@ -64,7 +64,7 @@ export default function Page() {
               "@type": "Organization",
               name: "A2IT LLC",
               url: "https://a2itllc.com",
-              logo: "https://a2itllc.com/logo.png",
+              logo: "https://a2itllc.com/A2ITLogo.png",
             },
             contactOption: [
               {

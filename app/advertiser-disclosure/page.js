@@ -15,7 +15,7 @@ export const metadata = {
     siteName: "A2IT LLC",
     images: [
       {
-        url: "https://a2itllc.com/og-image.jpg",
+        url: "/portfolio.png",
         width: 1200,
         height: 630,
         alt: "Advertiser Disclosure - A2IT LLC",
@@ -28,7 +28,7 @@ export const metadata = {
     title: "Advertiser Disclosure | A2IT LLC",
     description:
       "A2IT LLC participates in affiliate advertising programs. Learn about our disclosure and commissions policy.",
-    images: ["https://a2itllc.com/og-image.jpg"],
+    images: ["/portfolio.png"],
   },
   alternates: {
     canonical: "https://a2itllc.com/advertiser-disclosure",

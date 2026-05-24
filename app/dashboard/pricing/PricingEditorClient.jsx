@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Plus, Trash2, ChevronDown } from "lucide-react";
 import DashboardLayout from "../components/DashboardLayout";
 import { useAuth } from "@/context/AuthContext";
@@ -155,7 +155,7 @@ function PackageEditor({ pkg, onChange, onRemove, index }) {
 
 function ServiceEditor({ service, index, onChange, onRemove }) {
   const packages = Array.isArray(service.packages) ? service.packages : [];
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const updateService = (key, value) => onChange({ ...service, [key]: value });
 
@@ -310,11 +310,27 @@ export default function PricingEditorClient() {
     ? draftContent.services
     : [];
 
+  const servicesTopRef = useRef(null);
+  const [lastAddedId, setLastAddedId] = useState(null);
+
   const addService = () => {
+    const newService = createServiceItem();
     setDraftContent((prev) => ({
       ...prev,
-      services: [...(prev.services || []), createServiceItem()],
+      services: [newService, ...(prev.services || [])],
     }));
+
+    setLastAddedId(newService.id);
+
+    // scroll the services container into view so the newly added service is visible at top
+    setTimeout(() => {
+      if (servicesTopRef.current) {
+        servicesTopRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 50);
   };
 
   const updateService = (index, nextService) => {
@@ -448,6 +464,7 @@ export default function PricingEditorClient() {
           }
         >
           <div className="space-y-4">
+            <div ref={servicesTopRef} />
             {services.map((service, index) => (
               <ServiceEditor
                 key={service.id || `${service.category || "service"}-${index}`}

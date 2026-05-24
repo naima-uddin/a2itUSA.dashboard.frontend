@@ -118,7 +118,12 @@ export default function PromotionalPagesDashboard() {
   const [formError, setFormError] = useState("");
   const [uploadingFooterLogo, setUploadingFooterLogo] = useState(false);
   const [savingSectionKey, setSavingSectionKey] = useState("");
-  const [collapsedSections, setCollapsedSections] = useState({});
+  const [collapsedSections, setCollapsedSections] = useState(() =>
+    PROMOTION_SECTION_KEYS.reduce((accumulator, key) => {
+      accumulator[key] = true;
+      return accumulator;
+    }, {}),
+  );
 
   const isAllowed = isAdmin || isModerator;
 
@@ -496,7 +501,7 @@ export default function PromotionalPagesDashboard() {
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
-                    <h3 className="text-lg font-semibold text-slate-900">
+                    <h3 className="text-2xl font-semibold text-slate-900">
                       Sections
                     </h3>
                     <p className="text-sm text-slate-600">
@@ -518,7 +523,7 @@ export default function PromotionalPagesDashboard() {
                     return (
                       <div
                         key={section.key}
-                        className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-4"
+                        className="rounded-2xl border border-blue-200 bg-white p-5 shadow-sm space-y-4"
                       >
                         <div className="flex flex-wrap items-start justify-between gap-4">
                           <div className="space-y-1">

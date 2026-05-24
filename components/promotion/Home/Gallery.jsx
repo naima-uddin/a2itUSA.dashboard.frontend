@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 
 export default function Gallery({ config = {} }) {
@@ -24,6 +24,37 @@ export default function Gallery({ config = {} }) {
     "h-56",
   ];
 
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const openLightbox = useCallback((index) => {
+    setSelectedIndex(index);
+    setLightboxOpen(true);
+  }, []);
+
+  const closeLightbox = useCallback(() => setLightboxOpen(false), []);
+
+  const showPrev = useCallback(() => {
+    setSelectedIndex((prev) => (prev - 1 + items.length) % items.length);
+  }, [items.length]);
+
+  const showNext = useCallback(() => {
+    setSelectedIndex((prev) => (prev + 1) % items.length);
+  }, [items.length]);
+
+  useEffect(() => {
+    if (!lightboxOpen) return;
+
+    const onKey = (e) => {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") showPrev();
+      if (e.key === "ArrowRight") showNext();
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightboxOpen, closeLightbox, showPrev, showNext]);
+
   return (
     <section className="w-full py-10 md:py-16 bg-linear-to-b from-white via-slate-50 to-slate-100">
       <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
@@ -37,43 +68,110 @@ export default function Gallery({ config = {} }) {
           <p className="text-slate-600 text-sm md:text-base">{description}</p>
         </div>
 
-        <div className="columns-1 sm:columns-2 lg:columns-4 gap-4 md:gap-5 [column-fill:balance]">
-          {items
-            .filter(Boolean)
-            .filter((it) => it && it.image)
-            .map((item, index) => (
-              <article
-                key={`${item.title || "item"}-${index}`}
-                className="mb-4 break-inside-avoid overflow-hidden rounded-sm border border-white/70 bg-slate-200 shadow-[0_6px_20px_rgba(15,23,42,0.18)] group"
-              >
-                <div
-                  className={`relative overflow-hidden bg-slate-100 ${heights[index % heights.length]}`}
+        {/* Grid: fixed row height, show only 3 rows (overflow hidden). Clicking opens lightbox showing full gallery. */}
+        <div
+          className="overflow-hidden"
+          style={{
+            // row height for each grid row
+            ["--row-h"]: "240px",
+            ["--gap"]: "1rem",
+          }}
+        >
+          <div
+            className="grid"
+            style={{
+              gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+              gridAutoRows: "var(--row-h)",
+              gap: "1rem",
+              maxHeight: "calc(var(--row-h) * 3 + (var(--gap) * 2))",
+              overflow: "hidden",
+            }}
+          >
+            {items
+              .filter(Boolean)
+              .filter((it) => it && it.image)
+              .map((item, index) => (
+                <article
+                  key={`${item.title || "item"}-${index}`}
+                  onClick={() => openLightbox(index)}
+                  className="relative cursor-pointer overflow-hidden rounded-sm border border-white/70 bg-slate-200 shadow-[0_6px_20px_rgba(15,23,42,0.18)] group"
                 >
-                  <Image
-                    src={item.image}
-                    alt={item.title || "Gallery item"}
-                    fill
-                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                  />
+                  <div className={`relative w-full h-full`}>
+                    <Image
+                      src={item.image}
+                      alt={item.title || "Gallery item"}
+                      fill
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    />
 
-                  <div className="absolute top-2 right-2 z-10 rounded bg-white/80 px-2 py-0.5 text-[11px] font-medium text-slate-700 backdrop-blur-sm">
-                    {String(index + 1).padStart(2, "0")}
+                    <div className="absolute top-2 right-2 z-10 rounded bg-white/80 px-2 py-0.5 text-[11px] font-medium text-slate-700 backdrop-blur-sm">
+                      {String(index + 1).padStart(2, "0")}
+                    </div>
+
+                    <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/25 to-transparent" />
+
+                    <div className="absolute inset-x-0 bottom-0 z-10 p-4 md:p-5 text-center text-white">
+                      <h3 className="text-xl md:text-2xl font-bold leading-tight drop-shadow-sm">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1 text-sm md:text-base text-white/90">
+                        {item.description}
+                      </p>
+                    </div>
                   </div>
-
-                  <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/25 to-transparent" />
-
-                  <div className="absolute inset-x-0 bottom-0 z-10 p-4 md:p-5 text-center text-white">
-                    <h3 className="text-xl md:text-2xl font-bold leading-tight drop-shadow-sm">
-                      {item.title}
-                    </h3>
-                    <p className="mt-1 text-sm md:text-base text-white/90">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              ))}
+          </div>
         </div>
+
+        {/* Lightbox modal */}
+        {lightboxOpen && items.length > 0 && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
+            <button
+              className="absolute top-4 right-4 z-60 text-white text-2xl"
+              onClick={closeLightbox}
+              aria-label="Close gallery"
+            >
+              ×
+            </button>
+
+            <button
+              className="absolute left-4 text-white text-3xl"
+              onClick={showPrev}
+              aria-label="Previous"
+            >
+              ‹
+            </button>
+
+            <div className="max-w-[90%] max-h-[90%] w-full">
+              <div className="relative w-full h-[70vh]">
+                <Image
+                  src={items[selectedIndex].image}
+                  alt={items[selectedIndex].title || "Gallery image"}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+
+              <div className="mt-4 text-center text-white">
+                <div className="text-lg font-semibold">
+                  {items[selectedIndex].title}
+                </div>
+                <div className="text-sm mt-1">
+                  {items[selectedIndex].description}
+                </div>
+              </div>
+            </div>
+
+            <button
+              className="absolute right-4 text-white text-3xl"
+              onClick={showNext}
+              aria-label="Next"
+            >
+              ›
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

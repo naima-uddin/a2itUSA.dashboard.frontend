@@ -139,8 +139,8 @@ const Enhancement = ({ config = {} }) => {
                   <Image
                     src={card.image}
                     alt={card.title}
-                    width={160}
-                    height={160}
+                    width={180}
+                    height={180}
                     quality={100}
                     className="w-full h-full object-contain"
                   />

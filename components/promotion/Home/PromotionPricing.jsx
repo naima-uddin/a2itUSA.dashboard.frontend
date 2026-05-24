@@ -163,7 +163,7 @@ const PromotionPricing = ({ config = {} }) => {
         ? config.packages
         : designService.packages,
   };
-  const pricingHeading = config.heading || "WE ARE OPTIMISTS WHO LOVE ";
+  const pricingHeading = config.heading || "WE ARE OPTIMISTS WHO LOVE  ";
   const pricingHighlight = config.highlight || "TO WORK TOGETHER";
   const pricingDescription =
     config.description ||

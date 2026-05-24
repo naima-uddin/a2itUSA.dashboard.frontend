@@ -275,7 +275,7 @@ const Pricing = ({ content = null }) => {
               </span>
             </div>
 
-            <h1 className="text-3xl md:text-4xl lg:text-5xl  xl:text-6xl font-bold mb-6 leading-none ">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl  xl:text-5xl font-bold mb-6 leading-none ">
               <span className="text-white">{pageContent.hero.titleLine1}</span>
               <div className="relative inline-block ml-2 sm:ml-4">
                 <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-800">
@@ -437,13 +437,7 @@ const Pricing = ({ content = null }) => {
           <section className="py-2">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
               <div className="text-center mb-3">
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 md:mb-6 leading-tight">
-                  {pageContent.pricingSection.titleLine1}{" "}
-                  <span className="text-blue-600">
-                    {pageContent.pricingSection.highlight}
-                  </span>
-                </h2>
-                <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto mb-4 px-4">
+                <p className="text-gray-600 text-2xl max-w-4xl mx-auto mb-4 px-4">
                   {pageContent.pricingSection.description}
                 </p>
 

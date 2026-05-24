@@ -40,6 +40,7 @@ export default function Portfolio({ config = {} }) {
   const [showActive, setShowActive] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [autoScrollIndex, setAutoScrollIndex] = useState(0);
+  const hasConfiguredProjects = Array.isArray(config.projects);
 
   // responsive visible count: mobile -> 2, desktop -> 4
   const [visibleCount, setVisibleCount] = useState(4);
@@ -58,22 +59,20 @@ export default function Portfolio({ config = {} }) {
   useEffect(() => {
     let mounted = true;
 
-    fetch(`${API_BASE}/api/portfolio-categories`, { cache: "no-store" })
-      .then((response) => response.json())
-      .then((data) => {
-        if (!mounted) return;
-        setCategoryOptions(
-          Array.isArray(data?.categories) ? data.categories : [],
-        );
-      })
-      .catch(() => {});
+    if (!hasConfiguredProjects) {
+      fetch(`${API_BASE}/api/portfolio-categories`, { cache: "no-store" })
+        .then((response) => response.json())
+        .then((data) => {
+          if (!mounted) return;
+          setCategoryOptions(
+            Array.isArray(data?.categories) ? data.categories : [],
+          );
+        })
+        .catch(() => {});
+    }
 
-    const configProjects =
-      Array.isArray(config.projects) && config.projects.length
-        ? config.projects
-        : null;
-    if (configProjects) {
-      const items = configProjects
+    if (hasConfiguredProjects) {
+      const items = config.projects
         .map(normalizeProject)
         .filter((p) => p && p.image);
       setProjects(items);
@@ -93,7 +92,7 @@ export default function Portfolio({ config = {} }) {
       })
       .catch(() => {});
     return () => (mounted = false);
-  }, [config.projects]);
+  }, [config.projects, hasConfiguredProjects]);
 
   const categories = useMemo(() => {
     const set = new Set();

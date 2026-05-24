@@ -1,34 +1,22 @@
-"use client";
+import ProtectedLayoutClient from "./ProtectedLayoutClient";
 
-import React, { useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
+export const metadata = {
+  title: "Dashboard",
+  description: "A2IT internal dashboard for content and team management.",
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  },
+  alternates: {
+    canonical: "/dashboard",
+  },
+};
 
-export default function ProtectedLayout({ children }) {
-  const { user, token, loading } = useAuth();
-  const router = useRouter();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    if (!loading && !token) {
-      router.push("/login");
-    }
-  }, [token, loading, router]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-slate-200 border-t-cyan-500 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-slate-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!token) {
-    return null;
-  }
-
-  return <>{children}</>;
+export default function DashboardLayout({ children }) {
+  return <ProtectedLayoutClient>{children}</ProtectedLayoutClient>;
 }

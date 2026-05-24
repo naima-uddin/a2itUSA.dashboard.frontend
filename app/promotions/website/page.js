@@ -9,6 +9,28 @@ const API_BASE =
   process.env.NEXT_PUBLIC_API_URL ||
   "https://a2it-usa-dashboard-backend.vercel.app";
 
+export const metadata = {
+  title: "Website Promotion",
+  description:
+    "Explore A2IT website promotion offers, featured packages, and growth-focused digital solutions.",
+  alternates: {
+    canonical: "/promotions/website",
+  },
+  openGraph: {
+    title: "Website Promotion | A2IT LLC",
+    description:
+      "Explore A2IT website promotion offers, featured packages, and growth-focused digital solutions.",
+    url: "/promotions/website",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Website Promotion | A2IT LLC",
+    description:
+      "Explore A2IT website promotion offers, featured packages, and growth-focused digital solutions.",
+  },
+};
+
 async function loadPromotionPage(slug) {
   try {
     const response = await fetch(

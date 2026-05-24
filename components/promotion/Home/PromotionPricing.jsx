@@ -167,7 +167,7 @@ const PromotionPricing = ({ config = {} }) => {
   const pricingHighlight = config.highlight || "TO WORK TOGETHER";
   const pricingDescription =
     config.description ||
-    "Choose the perfect plan for your business needs. All packages come with our commitment to excellence.";
+    "Choose the perfect plan for your business needs. All packages come with our commitment to excellence. ";
 
   // Determine packages per page based on screen size
   const packagesPerPage = isMobile ? currentService.packages.length : 3;
@@ -429,7 +429,7 @@ const PromotionPricing = ({ config = {} }) => {
             <div className="max-w-7xl mx-auto px-4">
               <div className="text-center mb-3">
                 <h2
-                  className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-4 leading-tight"
+                  className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-2 leading-tight"
                   style={{ fontFamily: "var(--font-oswald), sans-serif" }}
                 >
                   {pricingHeading}{" "}

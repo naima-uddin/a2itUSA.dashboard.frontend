@@ -212,7 +212,7 @@ const ServicesSection = ({ config = {} }) => {
                 "In the ever-connected, attention-challenged digital era."}
             </p>
             <h3
-              className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-3 md:mb-4"
+              className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight mb-3 md:mb-4"
               style={{ fontFamily: "var(--font-oswald), sans-serif" }}
             >
               {config.title ||
@@ -223,7 +223,7 @@ const ServicesSection = ({ config = {} }) => {
 
             <p className="text-white/85 max-w-lg mb-6 md:mb-8 text-sm md:text-base">
               {config.description ||
-                "Choose the perfect plan for your business needs. All packages come with our commitment to excellence."}
+                "Choose the perfect plan for your business needs. All packages come with our commitment to excellence. "}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3 mb-6 md:mb-8 max-w-md">

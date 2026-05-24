@@ -601,7 +601,7 @@ export default function PromotionalPagesDashboard() {
                                   className="w-full px-4 py-2 border rounded-lg"
                                 />
                               </label>
-                              <div className="rounded-xl border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+                              <div className="rounded-xl   px-4 py-3 text-sm text-slate-600">
                                 Lower numbers appear earlier in the public page.
                               </div>
                             </div>

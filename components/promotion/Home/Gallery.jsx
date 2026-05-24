@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 
 export default function Gallery({ config = {} }) {
-  const title = config.title || "Explore Our Creative Gallery";
+  const title = config.title || "Explore Our Creative Gallery ";
   const description =
     config.description ||
     "Use this section for image-first promotional pages, campaign highlights, and featured work.";

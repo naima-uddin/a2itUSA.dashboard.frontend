@@ -12,7 +12,9 @@ export default function Gallery({ config = {} }) {
   // Do not fall back to any default images.
   const items =
     Array.isArray(config.items) && config.items.length ? config.items : [];
-  const validItems = items.filter((it) => it && typeof it.image === "string" && it.image.trim());
+  const validItems = items.filter(
+    (it) => it && typeof it.image === "string" && it.image.trim(),
+  );
 
   const heights = [
     "h-56",
@@ -90,36 +92,36 @@ export default function Gallery({ config = {} }) {
             }}
           >
             {validItems.map((item, index) => (
-                <article
-                  key={`${item.title || "item"}-${index}`}
-                  onClick={() => openLightbox(index)}
-                  className="relative cursor-pointer overflow-hidden rounded-sm border border-white/70 bg-slate-200 shadow-[0_6px_20px_rgba(15,23,42,0.18)] group"
-                >
-                  <div className={`relative w-full h-full`}>
-                    <Image
-                      src={item.image}
-                      alt={item.title || "Gallery item"}
-                      fill
-                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    />
+              <article
+                key={`${item.title || "item"}-${index}`}
+                onClick={() => openLightbox(index)}
+                className="relative cursor-pointer overflow-hidden rounded-sm border border-white/70 bg-slate-200 shadow-[0_6px_20px_rgba(15,23,42,0.18)] group"
+              >
+                <div className={`relative w-full h-full`}>
+                  <Image
+                    src={item.image}
+                    alt={item.title || "Gallery item"}
+                    fill
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  />
 
-                    <div className="absolute top-2 right-2 z-10 rounded bg-white/80 px-2 py-0.5 text-[11px] font-medium text-slate-700 backdrop-blur-sm">
-                      {String(index + 1).padStart(2, "0")}
-                    </div>
-
-                    <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/25 to-transparent" />
-
-                    <div className="absolute inset-x-0 bottom-0 z-10 p-4 md:p-5 text-center text-white">
-                      <h3 className="text-xl md:text-2xl font-bold leading-tight drop-shadow-sm">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1 text-sm md:text-base text-white/90">
-                        {item.description}
-                      </p>
-                    </div>
+                  <div className="absolute top-2 right-2 z-10 rounded bg-white/80 px-2 py-0.5 text-[11px] font-medium text-slate-700 backdrop-blur-sm">
+                    {String(index + 1).padStart(2, "0")}
                   </div>
-                </article>
-              ))}
+
+                  <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/25 to-transparent" />
+
+                  <div className="absolute inset-x-0 bottom-0 z-10 p-4 md:p-5 text-center text-white">
+                    <h3 className="text-xl md:text-2xl font-bold leading-tight drop-shadow-sm">
+                      {item.title}
+                    </h3>
+                    <p className="mt-1 text-sm md:text-base text-white/90">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
 

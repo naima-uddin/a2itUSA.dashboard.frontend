@@ -1,0 +1,724 @@
+{
+    "services": [
+        {
+            "id": 1,
+            "category": "Design & Development",
+            "packages": [
+                {
+                    "id": "design-special",
+                    "name": "Special",
+                    "price": "$299.00",
+                    "color": "blue",
+                    "features": [
+                        "Custom Website Design",
+                        "Responsive Layout",
+                        "5 Page Website",
+                        "Contact Form",
+                        "Basic SEO Setup",
+                        "1 Month Support"
+                    ]
+                },
+                {
+                    "id": "design-plus",
+                    "name": "Plus",
+                    "price": "$599.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Special",
+                        "10 Page Website",
+                        "CMS Integration",
+                        "Custom Animations",
+                        "E-commerce Ready",
+                        "3 Months Support"
+                    ]
+                },
+                {
+                    "id": "design-gold",
+                    "name": "Gold",
+                    "price": "$999.00",
+                    "color": "black",
+                    "features": [
+                        "Everything in Plus",
+                        "15 Page Website",
+                        "Advanced SEO",
+                        "Performance Optimization",
+                        "Custom Admin Panel",
+                        "6 Months Support"
+                    ]
+                },
+                {
+                    "id": "design-platinum",
+                    "name": "Platinum",
+                    "price": "$1499.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Gold",
+                        "20 Page Website",
+                        "Custom Plugins",
+                        "API Integration",
+                        "Multi-language Support",
+                        "1 Year Support"
+                    ]
+                },
+                {
+                    "id": "design-boss",
+                    "name": "The Boss",
+                    "price": "$2499.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Platinum",
+                        "Unlimited Pages",
+                        "Custom Frameworks",
+                        "Progressive Web App",
+                        "Advanced Security",
+                        "Lifetime Updates"
+                    ]
+                },
+                {
+                    "id": "design-diamond",
+                    "name": "Diamond",
+                    "price": "$3999.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in The Boss",
+                        "Enterprise Solution",
+                        "Dedicated Team",
+                        "Custom AI Features",
+                        "White Label",
+                        "24/7 Priority Support"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "category": "E-Commerce",
+            "packages": [
+                {
+                    "id": "ecom-special",
+                    "name": "Special",
+                    "price": "$499.00",
+                    "color": "blue",
+                    "features": [
+                        "Basic Online Store",
+                        "10 Product Listings",
+                        "Payment Gateway Setup",
+                        "Shopping Cart",
+                        "Basic Design",
+                        "1 Month Support"
+                    ]
+                },
+                {
+                    "id": "ecom-plus",
+                    "name": "Plus",
+                    "price": "$899.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Special",
+                        "50 Product Listings",
+                        "Inventory Management",
+                        "Order Tracking",
+                        "Email Marketing",
+                        "3 Months Support"
+                    ]
+                },
+                {
+                    "id": "ecom-gold",
+                    "name": "Gold",
+                    "price": "$1499.00",
+                    "color": "black",
+                    "features": [
+                        "Everything in Plus",
+                        "Unlimited Products",
+                        "Advanced Analytics",
+                        "CRM Integration",
+                        "Multi-currency",
+                        "6 Months Support"
+                    ]
+                },
+                {
+                    "id": "ecom-platinum",
+                    "name": "Platinum",
+                    "price": "$2499.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Gold",
+                        "Mobile App",
+                        "AI Recommendations",
+                        "Custom Reports",
+                        "API Access",
+                        "1 Year Support"
+                    ]
+                },
+                {
+                    "id": "ecom-boss",
+                    "name": "The Boss",
+                    "price": "$3999.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Platinum",
+                        "Multi-vendor Marketplace",
+                        "Custom Modules",
+                        "Enterprise Security",
+                        "White Label Solution",
+                        "Priority Support"
+                    ]
+                },
+                {
+                    "id": "ecom-diamond",
+                    "name": "Diamond",
+                    "price": "$5999.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in The Boss",
+                        "Complete Solution",
+                        "Dedicated Servers",
+                        "Custom AI Chatbot",
+                        "Blockchain Integration",
+                        "24/7 Dedicated Support"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "category": "Amazon Services",
+            "packages": [
+                {
+                    "id": "amazon-special",
+                    "name": "Special",
+                    "price": "$299.00",
+                    "color": "blue",
+                    "features": [
+                        "Amazon Account Setup",
+                        "Product Listing (10)",
+                        "Basic SEO",
+                        "Inventory Management",
+                        "Order Processing",
+                        "1 Month Support"
+                    ]
+                },
+                {
+                    "id": "amazon-plus",
+                    "name": "Plus",
+                    "price": "$599.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Special",
+                        "Product Listing (50)",
+                        "A+ Content",
+                        "PPC Campaign Setup",
+                        "Review Management",
+                        "3 Months Support"
+                    ]
+                },
+                {
+                    "id": "amazon-gold",
+                    "name": "Gold",
+                    "price": "$999.00",
+                    "color": "black",
+                    "features": [
+                        "Everything in Plus",
+                        "Unlimited Listings",
+                        "Advanced PPC",
+                        "Brand Registry",
+                        "Competitor Analysis",
+                        "6 Months Support"
+                    ]
+                },
+                {
+                    "id": "amazon-platinum",
+                    "name": "Platinum",
+                    "price": "$1999.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Gold",
+                        "Storefront Design",
+                        "Amazon Advertising",
+                        "Custom Analytics",
+                        "API Integration",
+                        "1 Year Support"
+                    ]
+                },
+                {
+                    "id": "amazon-boss",
+                    "name": "The Boss",
+                    "price": "$3499.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Platinum",
+                        "Full Account Management",
+                        "International Expansion",
+                        "Custom Software",
+                        "Dedicated Manager",
+                        "Priority Support"
+                    ]
+                },
+                {
+                    "id": "amazon-diamond",
+                    "name": "Diamond",
+                    "price": "$4999.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in The Boss",
+                        "Enterprise Solution",
+                        "AI Optimization",
+                        "Complete Automation",
+                        "White Label Service",
+                        "24/7 VIP Support"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "category": "Shopify",
+            "packages": [
+                {
+                    "id": "shopify-special",
+                    "name": "Special",
+                    "price": "$399.00",
+                    "color": "blue",
+                    "features": [
+                        "Shopify Store Setup",
+                        "Theme Customization",
+                        "10 Product Import",
+                        "Payment Setup",
+                        "Basic Apps",
+                        "1 Month Support"
+                    ]
+                },
+                {
+                    "id": "shopify-plus",
+                    "name": "Plus",
+                    "price": "$799.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Special",
+                        "Custom Theme",
+                        "50 Product Import",
+                        "Advanced Apps",
+                        "Email Marketing",
+                        "3 Months Support"
+                    ]
+                },
+                {
+                    "id": "shopify-gold",
+                    "name": "Gold",
+                    "price": "$1299.00",
+                    "color": "black",
+                    "features": [
+                        "Everything in Plus",
+                        "Custom Development",
+                        "Unlimited Products",
+                        "API Integration",
+                        "Abandoned Cart",
+                        "6 Months Support"
+                    ]
+                },
+                {
+                    "id": "shopify-platinum",
+                    "name": "Platinum",
+                    "price": "$2299.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Gold",
+                        "Custom Apps",
+                        "Multi-currency",
+                        "Advanced Analytics",
+                        "Custom Checkout",
+                        "1 Year Support"
+                    ]
+                },
+                {
+                    "id": "shopify-boss",
+                    "name": "The Boss",
+                    "price": "$3799.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Platinum",
+                        "Headless Shopify",
+                        "Custom Features",
+                        "ERP Integration",
+                        "Dropshipping Setup",
+                        "Priority Support"
+                    ]
+                },
+                {
+                    "id": "shopify-diamond",
+                    "name": "Diamond",
+                    "price": "$5499.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in The Boss",
+                        "Enterprise Solution",
+                        "Custom AI Tools",
+                        "Complete Automation",
+                        "White Label",
+                        "24/7 Support"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "category": "ERP System Development",
+            "packages": [
+                {
+                    "id": "erp-special",
+                    "name": "Special",
+                    "price": "$2999.00",
+                    "color": "blue",
+                    "features": [
+                        "Basic ERP Setup",
+                        "Inventory Module",
+                        "Sales Module",
+                        "Basic Reports",
+                        "User Management",
+                        "3 Months Support"
+                    ]
+                },
+                {
+                    "id": "erp-plus",
+                    "name": "Plus",
+                    "price": "$5999.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Special",
+                        "Accounting Module",
+                        "HR Module",
+                        "Advanced Reports",
+                        "Mobile Access",
+                        "6 Months Support"
+                    ]
+                },
+                {
+                    "id": "erp-gold",
+                    "name": "Gold",
+                    "price": "$9999.00",
+                    "color": "black",
+                    "features": [
+                        "Everything in Plus",
+                        "CRM Integration",
+                        "Supply Chain",
+                        "Custom Modules",
+                        "API Access",
+                        "1 Year Support"
+                    ]
+                },
+                {
+                    "id": "erp-platinum",
+                    "name": "Platinum",
+                    "price": "$14999.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Gold",
+                        "AI Analytics",
+                        "IoT Integration",
+                        "Custom Dashboards",
+                        "Multi-company",
+                        "2 Years Support"
+                    ]
+                },
+                {
+                    "id": "erp-boss",
+                    "name": "The Boss",
+                    "price": "$24999.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Platinum",
+                        "Blockchain Integration",
+                        "Predictive Analytics",
+                        "Custom AI Features",
+                        "Enterprise Security",
+                        "Priority Support"
+                    ]
+                },
+                {
+                    "id": "erp-diamond",
+                    "name": "Diamond",
+                    "price": "$39999.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in The Boss",
+                        "Complete Custom ERP",
+                        "Machine Learning",
+                        "White Label Solution",
+                        "24/7 Dedicated Team",
+                        "Lifetime Updates"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "category": "SEO / SEM / PPC",
+            "packages": [
+                {
+                    "id": "seo-special",
+                    "name": "Special",
+                    "price": "$299.00",
+                    "color": "blue",
+                    "features": [
+                        "Keyword Research",
+                        "On-page SEO",
+                        "Monthly Reports",
+                        "Google Analytics",
+                        "Basic Link Building",
+                        "1 Month Service"
+                    ]
+                },
+                {
+                    "id": "seo-plus",
+                    "name": "Plus",
+                    "price": "$599.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Special",
+                        "Technical SEO",
+                        "Content Strategy",
+                        "Local SEO",
+                        "Competitor Analysis",
+                        "3 Months Service"
+                    ]
+                },
+                {
+                    "id": "seo-gold",
+                    "name": "Gold",
+                    "price": "$999.00",
+                    "color": "black",
+                    "features": [
+                        "Everything in Plus",
+                        "SEM Campaign",
+                        "PPC Management",
+                        "Conversion Optimization",
+                        "A/B Testing",
+                        "6 Months Service"
+                    ]
+                },
+                {
+                    "id": "seo-platinum",
+                    "name": "Platinum",
+                    "price": "$1999.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Gold",
+                        "Full Campaign",
+                        "Social Media Ads",
+                        "Advanced Analytics",
+                        "Custom Strategy",
+                        "1 Year Service"
+                    ]
+                },
+                {
+                    "id": "seo-boss",
+                    "name": "The Boss",
+                    "price": "$3499.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Platinum",
+                        "International SEO",
+                        "Voice Search",
+                        "AI Optimization",
+                        "Dedicated Manager",
+                        "Priority Support"
+                    ]
+                },
+                {
+                    "id": "seo-diamond",
+                    "name": "Diamond",
+                    "price": "$4999.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in The Boss",
+                        "Enterprise SEO",
+                        "Predictive Analytics",
+                        "Full Automation",
+                        "White Label Reports",
+                        "24/7 Monitoring"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "category": "Server & Hosting Services",
+            "packages": [
+                {
+                    "id": "hosting-special",
+                    "name": "Special",
+                    "price": "$99.00",
+                    "color": "blue",
+                    "features": [
+                        "Shared Hosting",
+                        "10 GB Storage",
+                        "Unlimited Bandwidth",
+                        "Email Accounts",
+                        "Basic SSL",
+                        "24/7 Support"
+                    ]
+                },
+                {
+                    "id": "hosting-plus",
+                    "name": "Plus",
+                    "price": "$199.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Special",
+                        "VPS Hosting",
+                        "50 GB Storage",
+                        "Enhanced SSL",
+                        "Daily Backups",
+                        "Priority Support"
+                    ]
+                },
+                {
+                    "id": "hosting-gold",
+                    "name": "Gold",
+                    "price": "$399.00",
+                    "color": "black",
+                    "features": [
+                        "Everything in Plus",
+                        "Dedicated Server",
+                        "100 GB Storage",
+                        "Advanced Security",
+                        "CDN Integration",
+                        "Managed Services"
+                    ]
+                },
+                {
+                    "id": "hosting-platinum",
+                    "name": "Platinum",
+                    "price": "$799.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Gold",
+                        "Cloud Hosting",
+                        "Unlimited Storage",
+                        "DDoS Protection",
+                        "Auto Scaling",
+                        "Enterprise Support"
+                    ]
+                },
+                {
+                    "id": "hosting-boss",
+                    "name": "The Boss",
+                    "price": "$1499.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Platinum",
+                        "Custom Infrastructure",
+                        "Load Balancing",
+                        "Disaster Recovery",
+                        "Custom Firewall",
+                        "Dedicated Team"
+                    ]
+                },
+                {
+                    "id": "hosting-diamond",
+                    "name": "Diamond",
+                    "price": "$2999.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in The Boss",
+                        "Enterprise Cloud",
+                        "Global CDN",
+                        "AI Monitoring",
+                        "Custom Solutions",
+                        "24/7 VIP Support"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "category": "E-bay Services",
+            "packages": [
+                {
+                    "id": "ebay-special",
+                    "name": "Special",
+                    "price": "$199.00",
+                    "color": "blue",
+                    "features": [
+                        "eBay Store Setup",
+                        "10 Listings",
+                        "Basic Template",
+                        "Inventory Sync",
+                        "Order Management",
+                        "1 Month Support"
+                    ]
+                },
+                {
+                    "id": "ebay-plus",
+                    "name": "Plus",
+                    "price": "$399.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Special",
+                        "50 Listings",
+                        "Custom Template",
+                        "Promotion Tools",
+                        "Analytics Reports",
+                        "3 Months Support"
+                    ]
+                },
+                {
+                    "id": "ebay-gold",
+                    "name": "Gold",
+                    "price": "$699.00",
+                    "color": "black",
+                    "features": [
+                        "Everything in Plus",
+                        "Unlimited Listings",
+                        "Advanced Template",
+                        "Bulk Listing Tools",
+                        "Competitor Analysis",
+                        "6 Months Support"
+                    ]
+                },
+                {
+                    "id": "ebay-platinum",
+                    "name": "Platinum",
+                    "price": "$1299.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Gold",
+                        "Store Customization",
+                        "Marketing Campaigns",
+                        "API Integration",
+                        "Custom Reports",
+                        "1 Year Support"
+                    ]
+                },
+                {
+                    "id": "ebay-boss",
+                    "name": "The Boss",
+                    "price": "$2299.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in Platinum",
+                        "Full Automation",
+                        "Multi-account",
+                        "Custom Solutions",
+                        "Dropshipping Setup",
+                        "Priority Support"
+                    ]
+                },
+                {
+                    "id": "ebay-diamond",
+                    "name": "Diamond",
+                    "price": "$3499.00",
+                    "color": "blue",
+                    "features": [
+                        "Everything in The Boss",
+                        "Enterprise Solution",
+                        "AI Optimization",
+                        "Complete Management",
+                        "White Label Service",
+                        "24/7 Support"
+                    ]
+                }
+            ]
+        }
+    ]
+}

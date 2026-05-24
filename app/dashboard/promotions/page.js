@@ -533,7 +533,11 @@ export default function PromotionalPagesDashboard() {
                             </div>
                             <p className="text-sm text-slate-500">
                               Toggle visibility, adjust order, then save just
-                              this component.
+                              this component.{" "}
+                              <span className="text-red-600">
+                                Lower order numbers appear earlier in the
+                                promotion page.
+                              </span>
                             </p>
                           </div>
                           <div className="flex flex-wrap items-center gap-2">
@@ -601,9 +605,6 @@ export default function PromotionalPagesDashboard() {
                                   className="w-full px-4 py-2 border rounded-lg"
                                 />
                               </label>
-                              <div className="rounded-xl   px-4 py-3 text-sm text-slate-600">
-                                Lower numbers appear earlier in the public page.
-                              </div>
                             </div>
 
                             <PromotionSectionEditor

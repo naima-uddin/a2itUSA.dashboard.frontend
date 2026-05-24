@@ -396,11 +396,11 @@ export default function BlogListClient() {
                             />
                           )}
 
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/40 group-hover:from-black/70 transition-all duration-300" />
-                          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
+                          <div className="absolute inset-0 bg-linear-to-t from-black/45 via-black/10 to-transparent group-hover:from-black/30 transition-all duration-300" />
+                          <div className="absolute inset-0 bg-linear-to-r from-black/10 via-transparent to-black/10" />
 
                           <div className="absolute inset-0 flex items-end">
-                            <div className="p-4 sm:p-6 md:p-8 lg:p-10 text-white w-full">
+                            <div className="p-4 sm:p-6 md:p-8 lg:p-10 text-white w-full ">
                               <div className="flex flex-wrap items-center gap-4 text-white/80 text-sm mb-4">
                                 <span className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full">
                                   <svg
@@ -541,7 +541,7 @@ export default function BlogListClient() {
                                       />
                                     )}
 
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40 group-hover:from-black/70 transition-all duration-300" />
+                                    <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/10 to-transparent group-hover:from-black/28 transition-all duration-300" />
 
                                     <div className="absolute inset-0 flex items-end">
                                       <div className="p-2.5 sm:p-4 md:p-6 lg:p-8 text-white w-full h-full flex flex-col justify-between">

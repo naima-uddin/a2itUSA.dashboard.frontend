@@ -261,13 +261,10 @@ export default function BlogDetailClient({ slug }) {
             sizes="(max-width: 768px) 100vw, 1024px"
             priority
           />
-          <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-black/10" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/25 via-black/10 to-black/10" />
           <div className="absolute inset-0 flex items-end">
             <div className="w-full p-4 sm:p-6 md:p-8 lg:p-10">
               <div className="max-w-7xl">
-                <p className="inline-flex items-center rounded-full bg-cyan-400/90 px-3 py-1 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.25em] text-gray-950">
-                  Blog banner
-                </p>
                 <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-bold leading-tight text-white">
                   {blog.title}
                 </h2>
@@ -285,12 +282,6 @@ export default function BlogDetailClient({ slug }) {
         {/* Enhanced Header */}
         <header className="mb-1">
           <div className="text-center mb-2">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 leading-tight">
-              <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
-                {blog.title}
-              </span>
-            </h1>
-
             {/* Enhanced Author & Meta Info */}
             <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 text-gray-600 mb-2 px-2 sm:px-4 md:px-0">
               <div className="flex items-center gap-2 sm:gap-3">

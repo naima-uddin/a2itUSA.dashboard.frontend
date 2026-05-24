@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -8,25 +8,23 @@ const Banner = () => {
   const router = useRouter();
 
   return (
-    <div
-      className="relative w-full  mx-auto aspect-[16/9] sm:aspect-[16/7] md:aspect-[16/6] lg:aspect-auto lg:h-[90vh] overflow-hidden">
+    <div className="relative w-full  mx-auto aspect-[16/9] sm:aspect-[16/7] md:aspect-[16/6] lg:aspect-auto lg:h-[90vh] overflow-hidden">
       {/* Banner Image */}
       <Image
-        src="/bannerImg.png"
+        src="/main-banner.jpeg"
         alt="Banner"
         fill
         priority
         quality={100}
         sizes="100vw"
-        className="object-cover object-center"
+        className="object-cover object-center quality-100"
         unoptimized
       />
-      
+
       {/* Content Container - Positioned at bottom-left with padding */}
       <div className="absolute bottom-4 sm:bottom-26 left-1/2 sm:left-10 md:left-20 lg:left-32 transform -translate-x-1/2 sm:translate-x-0 w-full px-4 sm:px-0">
         {/* Buttons Container */}
-        <div className="flex flex-row sm:flex-row gap-4 justify-center sm:justify-start"
-        >
+        <div className="flex flex-row sm:flex-row gap-4 justify-center sm:justify-start">
           <button
             type="button"
             className="btn-3d flex justify-center items-center gap-2 group"
@@ -46,7 +44,6 @@ const Banner = () => {
           </button>
         </div>
       </div>
-
 
       <style jsx>{`
         .btn-3d {

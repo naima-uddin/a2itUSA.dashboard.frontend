@@ -8,7 +8,7 @@ const Banner = () => {
   const router = useRouter();
 
   return (
-    <div className="relative w-full  mx-auto aspect-[16/9] sm:aspect-[16/7] md:aspect-[16/6] lg:aspect-auto lg:h-[90vh] overflow-hidden">
+    <div className="relative w-full  mx-auto aspect-[16/9] sm:aspect-[16/7] md:aspect-[16/6] lg:aspect-auto lg:h-[96vh] overflow-hidden">
       {/* Banner Image */}
       <Image
         src="/main-banner.jpeg"
@@ -22,7 +22,7 @@ const Banner = () => {
       />
 
       {/* Content Container - Positioned at bottom-left with padding */}
-      <div className="absolute bottom-4 sm:bottom-26 left-1/2 sm:left-10 md:left-20 lg:left-32 transform -translate-x-1/2 sm:translate-x-0 w-full px-4 sm:px-0">
+      <div className="absolute bottom-4 md:bottom-6 left-4 md:left-10 lg:left-16 transform -translate-x-1/2 sm:translate-x-0 w-full px-4 sm:px-0">
         {/* Buttons Container */}
         <div className="flex flex-row sm:flex-row gap-4 justify-center sm:justify-start">
           <button
@@ -31,7 +31,7 @@ const Banner = () => {
             onClick={() => router.push("/contact")}
           >
             Contact With Us
-            <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ChevronRight className="w-5 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
 
           <button
@@ -40,7 +40,7 @@ const Banner = () => {
             onClick={() => router.push("/about")}
           >
             Learn More About Us
-            <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ChevronRight className="w-5 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
       </div>

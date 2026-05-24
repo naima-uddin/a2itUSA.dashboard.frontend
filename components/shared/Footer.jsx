@@ -150,26 +150,17 @@ const Footer = () => {
 
           {/* Third Row: Newsletter - Full width */}
           <div className="pt-6 border-t border-gray-200">
-            <div className="space-y-4">
+            <div className="space-y-2">
               <h3 className="text-lg font-bold text-gray-900">Stay Updated</h3>
               <p className="text-gray-600 text-sm">
-                Subscribe to our newsletter for the latest updates and insights.
+                Talk to our experts today and discover how we can help your
+                business thrive in the digital world.Great service and support
+                eagerly waiting to assist you.
               </p>
-              <div className="space-y-3">
-                <div className="flex gap-2">
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="flex-1 px-4 py-2 bg-gray-50 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                  />
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors duration-300 text-sm">
-                    Subscribe
-                  </button>
-                </div>
-                <p className="text-xs text-gray-500">
-                  We respect your privacy. Unsubscribe at any time.
-                </p>
-              </div>
+
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-sm transition-colors duration-300">
+                Contact Us
+              </button>
             </div>
           </div>
         </div>
@@ -385,20 +376,10 @@ const Footer = () => {
             <p className="text-gray-600 mb-6">
               Subscribe to our newsletter for the latest updates and insights.
             </p>
-            <div className="space-y-4">
-              <div className="relative">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-gray-500"
-                />
-                <button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-sm transition-colors duration-300">
-                  Subscribe
-                </button>
-              </div>
-              <p className="text-sm text-gray-500">
-                We respect your privacy. Unsubscribe at any time.
-              </p>
+            <div className="space-y-2">
+              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-sm transition-colors duration-300">
+                Contact Us
+              </button>
             </div>
           </div>
         </div>

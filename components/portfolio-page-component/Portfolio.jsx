@@ -140,6 +140,8 @@ const Portfolio = () => {
   const [affiliateSliderIndex, setAffiliateSliderIndex] = useState(0);
   const [portfolioSliderIndex, setPortfolioSliderIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [desktopColumns, setDesktopColumns] = useState(5);
+  const [desktopVisibleRows, setDesktopVisibleRows] = useState(2);
 
   // Update categories based on your actual data
   const getCategoryCounts = () => {
@@ -211,6 +213,7 @@ const Portfolio = () => {
     // Check screen size
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
+      setDesktopColumns(window.innerWidth >= 1024 ? 5 : 4);
     };
 
     checkMobile();
@@ -231,6 +234,11 @@ const Portfolio = () => {
       return () => clearInterval(interval);
     }
   }, [isMobile, activeFilter]);
+
+  useEffect(() => {
+    setDesktopVisibleRows(2);
+    setPortfolioSliderIndex(0);
+  }, [activeFilter, desktopColumns]);
 
   // Get all projects from the new structure
   const getAllProjects = () => {
@@ -444,6 +452,10 @@ const Portfolio = () => {
 
   const categories = getCategoryCounts();
   const filteredProjects = getFilteredProjects();
+  const desktopVisibleCount = desktopVisibleRows * desktopColumns;
+  const desktopVisibleProjects = filteredProjects.slice(0, desktopVisibleCount);
+  const hasMoreDesktopProjects = desktopVisibleCount < filteredProjects.length;
+  const canShowViewLess = desktopVisibleRows > 2;
 
   return (
     <>
@@ -1011,103 +1023,129 @@ const Portfolio = () => {
               {/* Desktop View - Grid */}
               <div className="hidden md:block">
                 {filteredProjects.length > 0 ? (
-                  <div className="grid grid-cols-2 gap-4  md:grid-cols-4 lg:grid-cols-5 ">
-                    {filteredProjects.map((project, index) => {
-                      const accent = getCardAccent(project, index);
-                      const categories = Array.isArray(project.category)
-                        ? project.category
-                        : project.category
-                          ? [project.category]
+                  <>
+                    <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">
+                      {desktopVisibleProjects.map((project, index) => {
+                        const accent = getCardAccent(project, index);
+                        const categories = Array.isArray(project.category)
+                          ? project.category
+                          : project.category
+                            ? [project.category]
+                            : [];
+                        const performance = Array.isArray(project.performance)
+                          ? project.performance
                           : [];
-                      const performance = Array.isArray(project.performance)
-                        ? project.performance
-                        : [];
 
-                      return (
-                        <motion.article
-                          key={`${project.id}-${index}`}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.04 }}
-                          className="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.12)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_40px_120px_rgba(15,23,42,0.18)]"
-                        >
-                          <div className="block w-full text-left">
-                            <div className="relative aspect-3/3 overflow-hidden">
-                              <Image
-                                src={project.image}
-                                alt={project.title}
-                                fill
-                                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.08]"
-                                sizes="(max-width:768px) 100vw, 33vw"
-                              />
-                              <div className="absolute inset-0 bg-linear-to-t from-slate-950/28 via-slate-950/18 to-transparent opacity-100" />
+                        return (
+                          <motion.article
+                            key={`${project.id}-${index}`}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.04 }}
+                            className="group overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.12)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_40px_120px_rgba(15,23,42,0.18)]"
+                          >
+                            <div className="block w-full text-left">
+                              <div className="relative aspect-3/3 overflow-hidden">
+                                <Image
+                                  src={project.image}
+                                  alt={project.title}
+                                  fill
+                                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.08]"
+                                  sizes="(max-width:768px) 100vw, 33vw"
+                                />
+                                <div className="absolute inset-0 bg-linear-to-t from-slate-950/28 via-slate-950/18 to-transparent opacity-100" />
 
-                              <div className="absolute inset-x-0 top-0 flex items-start justify-between p-2">
-                                <div className="flex flex-wrap gap-1.5">
-                                  {categories.slice(0, 2).map((cat) => (
-                                    <span
-                                      key={cat}
-                                      className={`rounded-full border px-2 py-1 text-[10px] font-semibold backdrop-blur-sm ${accent.badge}`}
-                                    >
-                                      {cat}
+                                <div className="absolute inset-x-0 top-0 flex items-start justify-between p-2">
+                                  <div className="flex flex-wrap gap-1.5">
+                                    {categories.slice(0, 2).map((cat) => (
+                                      <span
+                                        key={cat}
+                                        className={`rounded-full border px-2 py-1 text-[10px] font-semibold backdrop-blur-sm ${accent.badge}`}
+                                      >
+                                        {cat}
+                                      </span>
+                                    ))}
+                                  </div>
+                                  {project.year ? (
+                                    <span className="rounded-full border border-white/20 bg-white/15 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
+                                      {project.year}
                                     </span>
-                                  ))}
+                                  ) : null}
                                 </div>
-                                {project.year ? (
-                                  <span className="rounded-full border border-white/20 bg-white/15 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
-                                    {project.year}
-                                  </span>
-                                ) : null}
-                              </div>
 
-                              <div className="absolute inset-x-0 bottom-0 p-4"></div>
-                              <div className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
-                                <div className="absolute inset-0 bg-linear-to-t from-slate-950/66 via-slate-950/44 to-slate-950/20" />
-                                <div className="absolute inset-x-0 bottom-0 p-4">
-                                  <p className="text-xs leading-relaxed text-white line-clamp-2">
-                                    {project.description}
-                                  </p>
-                                  <div className="mt-3 flex flex-wrap gap-1.5">
-                                    {(project.technologies || [])
-                                      .slice(0, 2)
-                                      .map((tech) => (
-                                        <span
-                                          key={tech}
-                                          className="rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[11px] text-white backdrop-blur-sm"
-                                        >
-                                          {tech}
-                                        </span>
-                                      ))}
+                                <div className="absolute inset-x-0 bottom-0 p-4"></div>
+                                <div className="absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100">
+                                  <div className="absolute inset-0 bg-linear-to-t from-slate-950/66 via-slate-950/44 to-slate-950/20" />
+                                  <div className="absolute inset-x-0 bottom-0 p-4">
+                                    <p className="text-xs leading-relaxed text-white line-clamp-2">
+                                      {project.description}
+                                    </p>
+                                    <div className="mt-3 flex flex-wrap gap-1.5">
+                                      {(project.technologies || [])
+                                        .slice(0, 2)
+                                        .map((tech) => (
+                                          <span
+                                            key={tech}
+                                            className="rounded-full border border-white/15 bg-white/10 px-2.5 py-1 text-[11px] text-white backdrop-blur-sm"
+                                          >
+                                            {tech}
+                                          </span>
+                                        ))}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
 
-                            <div className="px-4 py-2">
-                              <div className="flex items-start justify-between gap-3">
-                                <div>
-                                  <h3 className="text-base font-semibold tracking-tight text-slate-900 line-clamp-1">
-                                    {project.title}
-                                  </h3>
-                                  <p className="mt-1 text-xs text-slate-500 line-clamp-1">
-                                    {categories.join(" • ") || "Portfolio"}
-                                  </p>
+                              <div className="px-4 py-2">
+                                <div className="flex items-start justify-between gap-3">
+                                  <div>
+                                    <h3 className="text-base font-semibold tracking-tight text-slate-900 line-clamp-1">
+                                      {project.title}
+                                    </h3>
+                                    <p className="mt-1 text-xs text-slate-500 line-clamp-1">
+                                      {categories.join(" • ") || "Portfolio"}
+                                    </p>
+                                  </div>
+
+                                  <button
+                                    onClick={() => openProjectModal(project)}
+                                    className="inline-flex shrink-0 items-center gap-1 rounded-full bg-slate-900 px-3 py-2 text-xs font-medium text-white shadow-sm transition hover:bg-slate-800"
+                                  >
+                                    View case
+                                    <FiExternalLink className="w-3.5 h-3.5" />
+                                  </button>
                                 </div>
-
-                                <button
-                                  onClick={() => openProjectModal(project)}
-                                  className="inline-flex shrink-0 items-center gap-1 rounded-full bg-slate-900 px-3 py-2 text-xs font-medium text-white shadow-sm transition hover:bg-slate-800"
-                                >
-                                  View case
-                                  <FiExternalLink className="w-3.5 h-3.5" />
-                                </button>
                               </div>
                             </div>
-                          </div>
-                        </motion.article>
-                      );
-                    })}
-                  </div>
+                          </motion.article>
+                        );
+                      })}
+                    </div>
+
+                    <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                      {hasMoreDesktopProjects && (
+                        <button
+                          onClick={() => setDesktopVisibleRows((prev) => prev + 1)}
+                          className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-slate-800"
+                        >
+                          View More
+                          <FiChevronRight className="w-4 h-4" />
+                        </button>
+                      )}
+
+                      {canShowViewLess && (
+                        <button
+                          onClick={() =>
+                            setDesktopVisibleRows((prev) => Math.max(2, prev - 1))
+                          }
+                          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                        >
+                          View Less
+                          <FiChevronLeft className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
+                  </>
                 ) : (
                   <div className="rounded-4xl border border-dashed border-slate-200 bg-white/80 p-12 text-center shadow-sm backdrop-blur-sm">
                     <p className="text-slate-500">

@@ -4,6 +4,7 @@ import Link from "next/link";
 import ReviewCarousel from "./Reviews";
 
 export default function PricingPage() {
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
   const [activeService, setActiveService] = useState("Design & Development");
   const [currentPage, setCurrentPage] = useState(0);
   const [pricingData, setPricingData] = useState(null);
@@ -35,10 +36,25 @@ export default function PricingPage() {
   };
 
   useEffect(() => {
-    fetch("/pricing-data.json")
+    // Load pricing data from backend pricing page (DB)
+    fetch(`${API_BASE}/api/pricing-page`)
       .then((res) => res.json())
       .then((data) => {
-        setPricingData(data);
+        const services =
+          data?.page?.content?.services || data?.content?.services || [];
+
+        // Sort services by category A -> Z
+        services.sort((a, b) =>
+          String(a.category || "").localeCompare(String(b.category || "")),
+        );
+
+        setPricingData({ ...data, services });
+
+        // default active service -> first category alphabetically
+        if (services.length > 0) {
+          setActiveService(services[0].category);
+        }
+
         setLoading(false);
       })
       .catch((error) => {
@@ -210,7 +226,7 @@ export default function PricingPage() {
       <section className="py-2">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-4">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 md:mb-6 leading-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black mb-4 md:mb-6 leading-tight">
               WE ARE <span className="text-blue-600">OPTIMISTS</span> WHO LOVE
               <br className="hidden md:block" />
               TO WORK <span className="text-blue-600">TOGETHER</span>

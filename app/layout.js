@@ -113,7 +113,7 @@ export default function RootLayout({ children }) {
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=5"
         />
-        {/* Meta Pixel Code */}
+        {/*Facebook Meta Pixel Code */}
         <Script
           id="facebook-pixel"
           strategy="afterInteractive"

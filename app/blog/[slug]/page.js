@@ -81,15 +81,38 @@ export async function generateMetadata({ params }) {
       const imageUrl = getImageUrl(blog?.featuredImage, blog?.thumbnail);
 
       return {
-        title: `${blog?.title || "Blog"} | A2IT`,
+        title: `${blog?.title || "Blog"}`,
         description:
           blog?.excerpt ||
           blog?.content?.substring(0, 160) ||
           "Read this article from A2IT.",
+        keywords: [
+          ...(Array.isArray(blog?.tags) ? blog.tags : []),
+          ...(Array.isArray(blog?.categories)
+            ? blog.categories.map((cat) => cat?.name).filter(Boolean)
+            : []),
+          "A2IT LLC",
+          "blog",
+        ],
+        alternates: {
+          canonical: `/blog/${slug}`,
+        },
         openGraph: {
-          title: `${blog?.title || "Blog"} | A2IT`,
+          title: `${blog?.title || "Blog"} | A2IT LLC`,
           description: blog?.excerpt || blog?.content?.substring(0, 160),
+          url: `/blog/${slug}`,
+          type: "article",
           images: imageUrl ? [{ url: imageUrl }] : [],
+        },
+        twitter: {
+          card: "summary_large_image",
+          title: `${blog?.title || "Blog"} | A2IT LLC`,
+          description: blog?.excerpt || blog?.content?.substring(0, 160),
+          images: imageUrl ? [imageUrl] : ["/A2IT%20Blog.jpg"],
+        },
+        robots: {
+          index: true,
+          follow: true,
         },
       };
     }
@@ -98,8 +121,15 @@ export async function generateMetadata({ params }) {
   }
 
   return {
-    title: "A2IT Blog",
-    description: "Read the latest A2IT articles and updates.",
+    title: "Blog",
+    description: "Read the latest A2IT LLC articles and updates.",
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
   };
 }
 

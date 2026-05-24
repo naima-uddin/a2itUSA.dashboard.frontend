@@ -27,6 +27,7 @@ export default function BlogMediaLibrary({
     { value: "a2it-usa/blog", label: "A2IT USA Blog Media" },
     { value: "a2it-usa/blog/images", label: "A2IT USA Blog Images" },
     { value: "a2it-usa/blog/videos", label: "A2IT USA Blog Videos" },
+    { value: "a2it-usa/promotions", label: "A2IT USA Promotions Media" },
     { value: "a2it-usa/", label: "All A2IT USA Media" },
   ];
 

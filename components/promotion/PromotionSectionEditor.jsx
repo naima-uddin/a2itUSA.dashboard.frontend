@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { authFetch } from "@/lib/api/authFetch";
 import Gallery from "./Home/Gallery";
+import CloudinaryImageField from "@/components/shared/CloudinaryImageField";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
@@ -54,55 +55,6 @@ const uploadImageToCloudinary = async (file) => {
 
 const getInputPlaceholder = (label) =>
   `Enter ${String(label || "value").toLowerCase()}`;
-
-const ImageField = ({
-  label,
-  value,
-  onChange,
-  placeholder,
-  uploadKey,
-  uploading,
-  onUploadImage,
-}) => (
-  <div className="space-y-1 block">
-    <span className="text-xs font-medium text-slate-500">{label}</span>
-    <div className="space-y-2">
-      <input
-        value={value || ""}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={
-          placeholder ||
-          `Paste ${String(label || "image").toLowerCase()} or upload`
-        }
-        className="w-full rounded-lg border border-slate-300 px-3 py-2"
-      />
-      <div className="flex flex-wrap items-center gap-2">
-        <label className="inline-flex cursor-pointer items-center rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100">
-          {uploading ? "Uploading..." : "Upload image"}
-          <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={async (e) => {
-              const file = e.target.files?.[0];
-              if (!file) return;
-
-              try {
-                const imageUrl = await onUploadImage(uploadKey, file);
-                onChange(imageUrl);
-              } finally {
-                e.target.value = "";
-              }
-            }}
-          />
-        </label>
-        <span className="text-[11px] text-slate-500">
-          Paste a URL or upload to Cloudinary.
-        </span>
-      </div>
-    </div>
-  </div>
-);
 
 const ImageListField = ({
   label,
@@ -241,53 +193,19 @@ const RepeatableEditor = ({
 
                 if (field.type === "image") {
                   return (
-                    <div key={field.key} className="space-y-1 md:col-span-2">
-                      <span className="text-xs font-medium text-slate-500">
-                        {field.label}
-                      </span>
-                      <div className="space-y-2">
-                        <input
-                          value={value || ""}
-                          onChange={(e) =>
-                            updateItem(index, field.key, e.target.value)
-                          }
-                          className="w-full rounded-lg border border-slate-300 px-3 py-2"
-                          placeholder={
-                            field.placeholder ||
-                            `Paste ${String(field.label || "image").toLowerCase()} or upload`
-                          }
-                        />
-                        <div className="flex flex-wrap items-center gap-2">
-                          <label className="inline-flex cursor-pointer items-center rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100">
-                            {uploadingKeys[uploadKey]
-                              ? "Uploading..."
-                              : "Upload image"}
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={async (e) => {
-                                const file = e.target.files?.[0];
-                                if (!file || !onUploadImage) return;
-
-                                try {
-                                  const imageUrl = await onUploadImage(
-                                    uploadKey,
-                                    file,
-                                  );
-                                  updateItem(index, field.key, imageUrl);
-                                } finally {
-                                  e.target.value = "";
-                                }
-                              }}
-                            />
-                          </label>
-                          <span className="text-[11px] text-slate-500">
-                            Paste a URL or upload to Cloudinary.
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                    <CloudinaryImageField
+                      key={field.key}
+                      label={field.label}
+                      value={value || ""}
+                      onChange={(nextValue) =>
+                        updateItem(index, field.key, nextValue)
+                      }
+                      placeholder={field.placeholder}
+                      uploadKey={uploadKey}
+                      uploading={Boolean(uploadingKeys[uploadKey])}
+                      onUploadImage={onUploadImage}
+                      className="space-y-1 md:col-span-2"
+                    />
                   );
                 }
 
@@ -496,14 +414,15 @@ export default function PromotionSectionEditor({ section, onChange }) {
               placeholder="Enter modal button text"
             />
           </label>
-          <ImageField
+          <CloudinaryImageField
             label="Background image"
             value={config.backgroundImage || ""}
             onChange={(backgroundImage) => updateConfig({ backgroundImage })}
-            placeholder="Paste a background image URL or upload"
+            placeholder="Paste a background image URL"
             uploadKey="banner-backgroundImage"
             uploading={Boolean(uploadingKeys["banner-backgroundImage"])}
             onUploadImage={uploadImage}
+            className="space-y-1 md:col-span-2"
           />
         </div>
 
@@ -845,14 +764,15 @@ export default function PromotionSectionEditor({ section, onChange }) {
               placeholder="Enter services description"
             />
           </label>
-          <ImageField
+          <CloudinaryImageField
             label="Background image"
             value={config.backgroundImage || ""}
             onChange={(backgroundImage) => updateConfig({ backgroundImage })}
-            placeholder="Paste a background image URL or upload"
+            placeholder="Paste a background image URL"
             uploadKey="services-backgroundImage"
             uploading={Boolean(uploadingKeys["services-backgroundImage"])}
             onUploadImage={uploadImage}
+            className="space-y-1 md:col-span-2"
           />
         </div>
 
@@ -957,14 +877,15 @@ export default function PromotionSectionEditor({ section, onChange }) {
               placeholder="Enter enhancement description"
             />
           </label>
-          <ImageField
+          <CloudinaryImageField
             label="Hero image"
             value={config.heroImage || ""}
             onChange={(heroImage) => updateConfig({ heroImage })}
-            placeholder="Paste a hero image URL or upload"
+            placeholder="Paste a hero image URL"
             uploadKey="enhancement-heroImage"
             uploading={Boolean(uploadingKeys["enhancement-heroImage"])}
             onUploadImage={uploadImage}
+            className="space-y-1 md:col-span-2"
           />
         </div>
 

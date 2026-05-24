@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Plus, Search, Trash2, Edit2 } from "lucide-react";
 import DashboardLayout from "../components/DashboardLayout";
 import PromotionSectionEditor from "@/components/promotion/PromotionSectionEditor";
+import CloudinaryImageField from "@/components/shared/CloudinaryImageField";
 import {
   DEFAULT_PROMOTION_PAGE,
   createDefaultPromotionPage,
@@ -322,6 +323,7 @@ export default function PromotionalPagesDashboard() {
           logoImage: data.url,
         },
       }));
+      return data.url;
     } catch (error) {
       console.error("Footer logo upload failed:", error);
       alert(error?.message || "Footer logo upload failed");
@@ -670,45 +672,25 @@ export default function PromotionalPagesDashboard() {
                     placeholder="Footer headline"
                     className="w-full px-4 py-2 border rounded-lg"
                   />
-                  <input
+                  <CloudinaryImageField
+                    label="Footer logo"
                     value={formData.footer?.logoImage || ""}
-                    onChange={(e) =>
+                    onChange={(logoImage) =>
                       setFormData((prev) => ({
                         ...prev,
                         footer: {
                           ...(prev.footer || {}),
-                          logoImage: e.target.value,
+                          logoImage,
                         },
                       }))
                     }
                     placeholder="Paste a footer logo URL"
-                    className="w-full px-4 py-2 border rounded-lg"
+                    uploadKey="footer-logo"
+                    uploading={uploadingFooterLogo}
+                    onUploadImage={(_, file) => handleFooterLogoUpload(file)}
+                    defaultFolder="a2it-usa/promotions"
+                    className="space-y-1 md:col-span-2"
                   />
-                  <div className="md:col-span-2 flex flex-wrap items-center gap-2">
-                    <label className="inline-flex cursor-pointer items-center rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100">
-                      {uploadingFooterLogo
-                        ? "Uploading..."
-                        : "Upload footer logo"}
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={async (e) => {
-                          const file = e.target.files?.[0];
-                          if (!file) return;
-
-                          try {
-                            await handleFooterLogoUpload(file);
-                          } finally {
-                            e.target.value = "";
-                          }
-                        }}
-                      />
-                    </label>
-                    <span className="text-xs text-slate-500">
-                      Paste a URL or upload directly to Cloudinary.
-                    </span>
-                  </div>
                   <textarea
                     value={formData.footer?.description || ""}
                     onChange={(e) =>

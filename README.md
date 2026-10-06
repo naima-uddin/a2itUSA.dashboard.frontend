@@ -1,7 +1,3 @@
-# Plan: A2it Dashboard → Multi-Tenant SaaS Platform
-
-## Context
-
 আজ `A2it.USA-dashboard` হলো একটা **single-company** app: একটা Express + MongoDB backend (`a2itUSA.dashboard.backend`) আর একটা Next.js App Router frontend (`a2itUSA.dashboard.frontend`), পুরোটাই একটা company (A2IT LLC)-র জন্য hardcoded।
 
 লক্ষ্য: এটাকে একটা **multi-tenant SaaS** বানানো যেখানে 40 (পরে 1000+) company প্রত্যেকে নিজের website + admin dashboard পাবে, data একে অপরের থেকে সম্পূর্ণ isolated থাকবে।

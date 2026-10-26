@@ -220,11 +220,11 @@ const ProjectModal = ({ project, isOpen, onClose }) => {
             {/* Image Gallery */}
             {allImages.length > 0 && (
               <div className="relative">
-                <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden">
+                <div className="relative w-full bg-gray-50 flex items-center justify-center overflow-hidden max-h-[70vh]">
                   <img
                     src={allImages[currentImageIndex]}
                     alt={project.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-auto max-h-[70vh] object-contain"
                   />
 
                   {/* Navigation Arrows */}

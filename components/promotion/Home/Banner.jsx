@@ -1,12 +1,13 @@
+
 "use client";
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import PromotionModal from "@/components/shared/PromotionModal";
 
 const Banner = ({ config = {} }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const heroLines =
     Array.isArray(config.heroLines) && config.heroLines.length
       ? config.heroLines
@@ -15,17 +16,23 @@ const Banner = ({ config = {} }) => {
           "Scale Your Brand Without Limits.",
           "Optimize, and scale for global success.",
         ];
+
   const heading = config.heading || "Big Discount Going ON!!";
   const subheading =
     config.subheading ||
     "Everywhere & Every Device, Your Site Should Flow Seamlessly!";
+
   const startPrice = config.startPrice || "$99";
+
   const introText =
     config.introText ||
     "From high-performance websites to full-scale eCommerce, ERP systems, and digital marketing.";
+
   const primaryLabel = config.primaryLabel || "Start Your Project";
   const secondaryLabel = config.secondaryLabel || "Get Free Consultation";
+
   const backgroundImage = config.backgroundImage || "/banner.jpeg";
+  const mobileBackgroundImage = config.mobileBackgroundImage || "";
 
   return (
     <>
@@ -37,81 +44,260 @@ const Banner = ({ config = {} }) => {
         buttonText={config.modalButtonText || "START YOUR PROJECT NOW"}
         selectedPackage=""
       />
+
       <section
-        className="relative w-full h-160 overflow-hidden  banner-section"
-        style={{ fontFamily: "var(--font-oswald), sans-serif" }}
+        className="
+          relative isolate w-full overflow-hidden
+          min-h-[500px]
+          sm:min-h-[540px]
+          md:min-h-[580px]
+          lg:min-h-[620px]
+          xl:min-h-[660px]
+          2xl:min-h-[700px]
+          flex items-center
+          bg-slate-950
+          banner-section
+        "
+        style={{
+          fontFamily: "var(--font-oswald), sans-serif",
+        }}
       >
-        {/* Background image */}
+        {/* Desktop Background */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat banner-bg h-120 md:h-auto -mt-12 -ml-2"
-          style={{ backgroundImage: `url('${backgroundImage}')` }}
+          className="absolute inset-0 -z-20 hidden md:block"
+          style={{
+            backgroundImage: `url("${backgroundImage}")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+          aria-hidden="true"
         />
 
-        {/* Main content - left-aligned, matches provided image */}
-        <div className="relative z-10 h-full flex flex-col items-center md:items-start md:pt-48 sm:pt-1 lg:pt-50 sm:pr-2 md:pr-0 md:px-4  banner-title text-center md:text-left">
-          <div className="w-full max-w-4xl ">
-            <p className="text-slate-200/90 text-xl font-medium md:mb-3 lg:pl-10 hidden md:block">
+        {/* Mobile Background */}
+        <div
+          className="absolute inset-0 -z-20 md:hidden"
+          style={{
+            backgroundImage: `url("${
+              mobileBackgroundImage || backgroundImage
+            }")`,
+            backgroundSize: "cover",
+            backgroundPosition: mobileBackgroundImage
+              ? "center"
+              : "center top",
+            backgroundRepeat: "no-repeat",
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Overlay */}
+        <div
+          className="
+            absolute inset-0 -z-10
+            bg-gradient-to-r
+            from-black/10 via-transparent to-black/10
+            pointer-events-none
+          "
+          aria-hidden="true"
+        />
+
+        {/* Main Content */}
+        <div
+          className="
+            relative z-10 w-full
+            px-4 py-12
+            min-[480px]:px-6
+            sm:py-14
+            md:px-8 md:py-16
+            lg:px-12 lg:py-20
+            xl:px-16
+            2xl:px-24
+            banner-title
+          "
+        >
+          <div
+            className="
+              mx-auto w-full max-w-7xl
+              md:mx-0
+              text-center md:text-left
+            "
+          >
+            {/* Intro */}
+            <p
+              className="
+                hidden md:block
+                max-w-xl lg:max-w-2xl
+                mb-5 lg:mb-6
+                text-slate-100/90
+                text-base lg:text-lg xl:text-xl
+                leading-relaxed font-medium
+                md:pl-4 lg:pl-8
+              "
+            >
               {introText}
             </p>
 
-            <div className="mt-20 md:mt-8 flex flex-col sm:flex-row sm:items-center sm:gap-6 gap-3 ">
-              <div className="text-white/90 font-semibold text-4xl md:pl-16 xl:pl-28">
+            {/* Starting Price */}
+            <div
+              className="
+                mt-8 sm:mt-10
+                md:mt-0
+                md:pl-8 lg:pl-12 xl:pl-16
+              "
+            >
+              <p
+                className="
+                  text-white/95 font-semibold
+                  text-2xl
+                  min-[375px]:text-3xl
+                  sm:text-3xl
+                  md:text-3xl
+                  lg:text-4xl
+                  xl:text-[42px]
+                  leading-tight
+                  break-words
+                "
+              >
                 Starting from{" "}
-                <span className="text-[#66B2FF]">{startPrice}</span> Only
-              </div>
+                <span className="text-[#66B2FF] whitespace-nowrap">
+                  {startPrice}
+                </span>{" "}
+                Only
+              </p>
             </div>
-            <div className="mt-4 text-blue-600 md:text-slate-300 lg:text-slate-300 xl:text-slate-300 space-y-1 text-md md:pl-16 xl:pl-28 pl-4">
+
+            {/* Hero Lines */}
+            <div
+              className="
+                mt-5
+                flex flex-col
+                items-center md:items-start
+                gap-2
+                text-sm
+                min-[375px]:text-base
+                sm:text-base
+                md:text-base
+                lg:text-lg
+                leading-relaxed
+                text-white/95
+                md:pl-8 lg:pl-12 xl:pl-16
+              "
+            >
               {heroLines.map((line, index) => (
                 <div
                   key={`${line}-${index}`}
-                  className="flex items-center gap-3"
+                  className="
+                    flex items-start
+                    justify-center md:justify-start
+                    gap-2 sm:gap-3
+                    max-w-full
+                  "
                 >
-                  <span className="text-[#66B2FF] font-bold">.</span> {line}
+                  <span className="text-[#66B2FF] font-bold shrink-0">
+                    •
+                  </span>
+
+                  <span className="min-w-0 break-words">
+                    {line}
+                  </span>
                 </div>
               ))}
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-4 pl-4 md:pl-10">
+            {/* CTA Buttons */}
+            <div
+              className="
+                mt-8 sm:mt-9 lg:mt-10
+                flex flex-col
+                min-[480px]:flex-row
+                items-stretch min-[480px]:items-center
+                justify-center md:justify-start
+                gap-3 sm:gap-4
+                md:pl-4 lg:pl-8
+              "
+            >
               <button
+                type="button"
                 onClick={() => setIsModalOpen(true)}
                 aria-label="Start your project"
-                className="inline-flex items-center gap-3 bg-linear-to-r from-blue-500 to-blue-900 hover:bg-purple-700 text-white font-semibold rounded-full px-6 py-2.5 shadow-lg transition cursor-pointer"
+                className="
+                  inline-flex items-center justify-center gap-2
+                  w-full min-[480px]:w-auto
+                  min-h-12
+                  px-5 sm:px-6 py-3
+                  bg-gradient-to-r from-blue-500 to-blue-900
+                  hover:from-blue-600 hover:to-blue-950
+                  text-white font-semibold
+                  text-sm sm:text-base
+                  text-center
+                  rounded-full
+                  shadow-lg
+                  transition-all duration-200
+                  hover:-translate-y-0.5
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-blue-300
+                  cursor-pointer
+                "
               >
-                <span className="bg-linear-to-r from-[#ffffff] to-[#e7e7fd] bg-clip-text text-transparent">
-                  🚀 {primaryLabel}
-                </span>
+                <span aria-hidden="true">🚀</span>
+                <span>{primaryLabel}</span>
               </button>
 
               <a
                 href="tel:+18083015039"
                 aria-label="Call for free consultation"
-                className="inline-flex items-center gap-3 border border-white/20 text-white/90 font-semibold rounded-full px-5 py-2.5 hover:bg-white/5 transition"
+                className="
+                  inline-flex items-center justify-center gap-2
+                  w-full min-[480px]:w-auto
+                  min-h-12
+                  px-5 sm:px-6 py-3
+                  border border-white/40
+                  bg-black/10
+                  hover:bg-white/10
+                  text-white font-semibold
+                  text-sm sm:text-base
+                  text-center
+                  rounded-full
+                  transition-all duration-200
+                  focus-visible:outline-none
+                  focus-visible:ring-2
+                  focus-visible:ring-white
+                "
               >
-                <span className="bg-linear-to-r from-[#ffffff] to-[#e7e7fd] bg-clip-text text-transparent">
-                  📞 {secondaryLabel}
-                </span>
+                <span aria-hidden="true">📞</span>
+                <span>{secondaryLabel}</span>
               </a>
             </div>
           </div>
         </div>
 
-        {/* Social Media Strip - Right Side */}
-        <div className="hidden md:flex absolute top-1/2 -translate-y-1/2 right-6 -mt-16 md:right-12 lg:right-18 flex-col items-center gap-4 z-10 social-strip">
-          <div className="w-px h-10 bg-linear-to-b from-transparent via-white/30 to-white/50" />
+        {/* Desktop Social Strip */}
+        <div
+          className="
+            hidden md:flex
+            absolute top-1/2 -translate-y-1/2
+            right-4 lg:right-8 xl:right-12
+            items-center flex-col gap-4
+            z-20
+          "
+        >
+          <div className="w-px h-8 lg:h-10 bg-gradient-to-b from-transparent via-white/30 to-white/50" />
+
           <a
             href="https://wa.me/18083015039"
             aria-label="WhatsApp to +1 (808) 301-5039"
             title="WhatsApp"
-            className="p-2"
             target="_blank"
             rel="noopener noreferrer"
+            className="p-2 rounded-full hover:bg-white/10 transition"
           >
             <Image
               src="/whatsapp.svg"
               width={24}
               height={24}
               alt="WhatsApp"
-              className="w-5 h-5 lg:w-6 lg:h-6 opacity-70 hover:opacity-100 transition-opacity"
+              className="w-5 h-5 lg:w-6 lg:h-6 opacity-80 hover:opacity-100 transition-opacity"
             />
           </a>
 
@@ -119,14 +305,14 @@ const Banner = ({ config = {} }) => {
             href="mailto:info@a2itllc.com"
             aria-label="Email - info@a2itllc.com"
             title="Email"
-            className="p-2"
+            className="p-2 rounded-full hover:bg-white/10 transition"
           >
             <Image
               src="/email.svg"
               width={24}
               height={24}
               alt="Email"
-              className="w-5 h-5 lg:w-6 lg:h-6 opacity-70 hover:opacity-100 transition-opacity"
+              className="w-5 h-5 lg:w-6 lg:h-6 opacity-80 hover:opacity-100 transition-opacity"
             />
           </a>
 
@@ -134,101 +320,59 @@ const Banner = ({ config = {} }) => {
             href="https://www.google.com/maps/search/?api=1&query=16192+Coastal+Highway,+Lewes,+DE+19958"
             aria-label="Map - 16192 Coastal Highway, Lewes, DE 19958"
             title="Map"
-            className="p-2"
             target="_blank"
             rel="noopener noreferrer"
+            className="p-2 rounded-full hover:bg-white/10 transition"
           >
             <Image
               src="/map.svg"
               width={24}
               height={24}
               alt="Map"
-              className="w-5 h-5 lg:w-6 lg:h-6 opacity-70 hover:opacity-100 transition-opacity"
+              className="w-5 h-5 lg:w-6 lg:h-6 opacity-80 hover:opacity-100 transition-opacity"
             />
           </a>
 
-          {/* Vertical line */}
-          <div className="w-px h-10 bg-linear-to-b from-white/50 to-white/20" />
-          {/* Contact text - vertical */}
+          <div className="w-px h-8 lg:h-10 bg-gradient-to-b from-white/50 to-white/20" />
+
           <span
-            className="text-white/70 text-[14px] font-oswald tracking-[0.15em] uppercase"
-            style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}
+            className="
+              text-white/80 text-xs lg:text-sm
+              tracking-[0.15em] uppercase
+            "
+            style={{
+              writingMode: "vertical-rl",
+              textOrientation: "mixed",
+            }}
           >
             Contact
           </span>
         </div>
 
-        {/* Bottom Arrow */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 banner-arrow">
+        {/* Scroll Arrow */}
+        <div
+          className="
+            hidden md:block
+            absolute bottom-3 lg:bottom-5
+            left-1/2 -translate-x-1/2
+            z-10
+          "
+        >
           <Image
             src="/promotionPortfolio/down-arrow-home.png"
             width={104}
             height={104}
             alt="Scroll Down"
-            className="animate-bounce h-14 w-14 md:h-20 md:w-20 lg:h-26 lg:w-26 hidden md:block"
+            className="
+              animate-bounce
+              w-12 h-12
+              md:w-14 md:h-14
+              lg:w-16 lg:h-16
+              xl:w-20 xl:h-20
+              object-contain
+            "
           />
         </div>
-
-        <style jsx>{`
-          @media (max-width: 767px) {
-            .banner-section {
-              height: auto !important;
-              min-height: 440px !important;
-            }
-
-            .banner-bg {
-              background-position: top center !important;
-              background-size: cover !important;
-              background-repeat: no-repeat !important;
-              height: 440px !important;
-              top: 0 !important;
-              bottom: auto !important;
-            }
-
-            .banner-title {
-              padding-left: 16px !important;
-              padding-right: 16px !important;
-            }
-            .banner-title h3 {
-              font-size: 18px !important;
-            }
-            .banner-title h1 {
-              font-size: 44px !important;
-              line-height: 1.05 !important;
-              margin-top: -6px !important;
-            }
-
-            .social-strip {
-              display: flex !important;
-              right: 6px !important;
-              top: 85% !important;
-              transform: translateY(-50%) !important;
-              flex-direction: column !important;
-              gap: 3px !important;
-              z-index: 25 !important;
-            }
-
-            /* Smaller icon sizes on mobile */
-            .social-strip img,
-            .social-strip a img {
-              width: 20px !important;
-              height: 20px !important;
-            }
-
-            /* Hide vertical contact label on small screens (we show a mobile contact row instead) */
-            .social-strip span {
-              display: none !important;
-            }
-
-            .banner-arrow {
-              bottom: 16px !important;
-            }
-            .banner-arrow img {
-              width: 56px !important;
-              height: 56px !important;
-            }
-          }
-        `}</style>
       </section>
     </>
   );

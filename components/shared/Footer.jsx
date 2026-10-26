@@ -3,6 +3,7 @@
 import Logo from "./Logo";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const Footer = () => {
   const [showAllServices, setShowAllServices] = useState(false);
@@ -377,9 +378,9 @@ const Footer = () => {
               Subscribe to our newsletter for the latest updates and insights.
             </p>
             <div className="space-y-2">
-              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-sm transition-colors duration-300">
+              <Link href="/contact" className="w-full bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 text-md transition-colors duration-300">
                 Contact Us
-              </button>
+              </Link>
             </div>
           </div>
         </div>

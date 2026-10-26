@@ -39,7 +39,7 @@ const ServicesSection = ({ config = {} }) => {
       />
 
       <section
-        className="relative w-full overflow-hidden bg-center bg-cover bg-no-repeat text-white py-10 md:py-20"
+        className="relative w-full overflow-hidden bg-center bg-cover bg-no-repeat text-white py-6 md:py-14" 
         style={{ backgroundImage: `url('${sectionBackground}')` }}
       >
         <div className="absolute inset-0 bg-black/25 pointer-events-none" />

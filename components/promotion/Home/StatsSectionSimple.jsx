@@ -1,6 +1,28 @@
 "use client";
 // components/StatsSectionSimple.jsx
 import React, { useEffect, useRef, useState } from "react";
+import { FiAward, FiThumbsUp, FiTrendingUp, FiStar, FiHeart, FiZap } from "react-icons/fi";
+
+// Map icon string names → react-icon components
+const ICON_MAP = {
+  trophy: <FiAward className="w-6 h-6 sm:w-8 sm:h-8" />,
+  award: <FiAward className="w-6 h-6 sm:w-8 sm:h-8" />,
+  like: <FiThumbsUp className="w-6 h-6 sm:w-8 sm:h-8" />,
+  thumbsup: <FiThumbsUp className="w-6 h-6 sm:w-8 sm:h-8" />,
+  handshake: <FiTrendingUp className="w-6 h-6 sm:w-8 sm:h-8" />,
+  trending: <FiTrendingUp className="w-6 h-6 sm:w-8 sm:h-8" />,
+  star: <FiStar className="w-6 h-6 sm:w-8 sm:h-8" />,
+  heart: <FiHeart className="w-6 h-6 sm:w-8 sm:h-8" />,
+  zap: <FiZap className="w-6 h-6 sm:w-8 sm:h-8" />,
+};
+
+const resolveIcon = (icon) => {
+  if (!icon) return <FiStar className="w-6 h-6 sm:w-8 sm:h-8" />;
+  if (typeof icon === "string") {
+    return ICON_MAP[icon.toLowerCase()] ?? <FiStar className="w-6 h-6 sm:w-8 sm:h-8" />;
+  }
+  return icon; // already a JSX element
+};
 
 // Small CountUp component (no external deps)
 function CountUp({
@@ -81,39 +103,21 @@ const StatsSectionSimple = ({ config = {} }) => {
             end: 100,
             suffix: "%",
             label: "SUCCESSFUL PROJECTS",
-            icon: (
-              <img
-                src="https://img.icons8.com/fluency/48/trophy.png"
-                alt="Trophy"
-                className="w-6 h-6 sm:w-8 sm:h-8"
-              />
-            ),
+            icon: <FiAward className="w-6 h-6 sm:w-8 sm:h-8" />,
             gradient: "from-emerald-400 to-teal-500",
           },
           {
             end: 100,
             suffix: "%",
             label: "SATISFACTION",
-            icon: (
-              <img
-                src="https://img.icons8.com/fluency/48/like.png"
-                alt="Satisfaction"
-                className="w-6 h-6 sm:w-8 sm:h-8"
-              />
-            ),
+            icon: <FiThumbsUp className="w-6 h-6 sm:w-8 sm:h-8" />,
             gradient: "from-purple-400 to-pink-500",
           },
           {
             end: 1000,
             suffix: "+",
             label: "SUCCESSFUL DEALS",
-            icon: (
-              <img
-                src="https://img.icons8.com/fluency/48/handshake.png"
-                alt="Deals"
-                className="w-6 h-6 sm:w-8 sm:h-8"
-              />
-            ),
+            icon: <FiTrendingUp className="w-6 h-6 sm:w-8 sm:h-8" />,
             gradient: "from-blue-400 to-indigo-500",
           },
         ];
@@ -151,7 +155,7 @@ const StatsSectionSimple = ({ config = {} }) => {
                   <div
                     className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 bg-white/15 backdrop-blur-sm rounded-2xl flex items-center justify-center text-white border border-white/20 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-lg`}
                   >
-                    {stat.icon}
+                    {resolveIcon(stat.icon)}
                   </div>
 
                   {/* Text */}

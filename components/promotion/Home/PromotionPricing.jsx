@@ -296,7 +296,7 @@ const PromotionPricing = ({ config = {} }) => {
         selectedPackage={selectedPackage}
       />
 
-      <section className="relative py-20 flex items-center justify-center overflow-hidden">
+      <section className="relative py-10 flex items-center justify-center overflow-hidden">
         <style jsx>{`
           .btn-3d {
             padding: 18px 45px;
@@ -422,7 +422,7 @@ const PromotionPricing = ({ config = {} }) => {
         `}</style>
       </section>
 
-      <div className="min-h-screen bg-linear-to-b from-gray-50 to-white py-12">
+      <div className=" bg-linear-to-b from-gray-50 to-white py-4">
         {/* Header */}
         <div className="container mx-auto">
           <section className="py-2">

@@ -11,7 +11,7 @@ const Banner = () => {
     <div className="relative w-full  mx-auto aspect-[16/9] sm:aspect-[16/7] md:aspect-[16/6] lg:aspect-auto lg:h-[96vh] overflow-hidden">
       {/* Banner Image */}
       <Image
-        src="/main-banner.jpeg"
+        src="/main-banner.png" 
         alt="Banner"
         fill
         priority
